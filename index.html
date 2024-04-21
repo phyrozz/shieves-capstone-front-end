@@ -4,35 +4,102 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="tailwind.css">
-    <script src="script.js"></script>
-    <title>Homepage</title>
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
+    <title>Museo de San Pedro</title>
+    <script src="node_modules/animejs/lib/anime.min.js"></script>
 </head>
 <body>
+    <nav id="navbar" class="flex flex-nowrap gap-8 bg-slate-300 flex-row w-full py-2 px-5 items-center sticky justify-between top-0 z-50 transition-all">
+        <h1 class="font-extrabold">Museo de San Pedro</h1>
+        <ul class="flex flex-row gap-5 items-center">
+            <a href="bookings.html" class="hover:bg-slate-400 font-semibold p-3 rounded-md transition-all text-center">
+                <li>BOOK NOW</li>
+            </a>
+            <a href="#" class="hover:bg-slate-400 font-semibold p-3 rounded-md transition-all text-center">
+                <li>EVENTS</li>
+            </a>
+            <a href="#" class="hover:bg-slate-400 font-semibold p-3 rounded-md transition-all text-center">
+                <li>ABOUT US</li>
+            </a>
+            <a href="admin.html">
+                <lord-icon
+                    src="https://cdn.lordicon.com/hrjifpbq.json"
+                    trigger="hover"
+                    style="width:2em;height:2em">
+                </lord-icon>
+            </a>
+
+        </ul>
+    </nav>
     <div class="flex flex-col h-screen justify-center items-center">
-        <p class="font-bold text-lg text-slate-100">Welcome to</p>
-        <h1 class="font-thin text-5xl text-center text-slate-100">Museo de San Pedro</h1>
+        <p class="header-text font-bold text-lg text-slate-100">Welcome to</p>
+        <h1 class="header-text font-extrabold text-5xl text-center text-slate-100">Museo de San Pedro</h1>
         <p class="absolute m-auto bottom-5 text-slate-100">Scroll down to get started</p>
         <div class="absolute -z-50 bg-[url(/assets/bg.jpg)] brightness-50 bg-cover mask h-screen w-full"></div>
     </div>
     <div class="flex md:flex-row flex-col justify-center flex-wrap bg-slate-800 gap-5 p-5">
-        <a href="#">
-            <div class="md:w-80 w-full bg-slate-100 rounded-lg shadow-2xl shadow-slate-900 p-5">
-                <h2 class="font-bold text-2xl">Book Now</h2>
-                <p>Lorem ipsum...</p>
+        <a href="/bookings.html">
+            <div class="md:w-80 w-full rounded-lg shadow-2xl shadow-slate-900 overflow-hidden">
+                <div class="w-full h-full overflow-clip">
+                    <img class="w-full h-80 object-cover" src="assets/booking.jpg" alt="Booking Link Image">
+                </div>
+                <div class="p-5 bg-slate-100 relative">
+                    <lord-icon
+                        class="absolute right-4 bottom-1/2 translate-y-1/2"
+                        src="https://cdn.lordicon.com/wmlleaaf.json"
+                        trigger="hover"
+                        style="width:60px;height:50px">
+                    </lord-icon> 
+                    <h2 class="font-bold text-2xl">Book Now</h2>
+                    <p>Click to Book</p>
+                </div>
             </div>
         </a>
-        <a href="#">
-            <div class="md:w-80 w-full bg-slate-100 rounded-lg shadow-2xl shadow-slate-900 p-5">
-                <h2 class="font-bold text-2xl">Events</h2>
-                <p>Lorem ipsum...</p>
+        <a href="/events.html">
+            <div class="md:w-80 w-full rounded-lg shadow-2xl shadow-slate-900 overflow-hidden">
+                <div class="w-full h-full overflow-clip">
+                    <img class="object-cover w-full h-80" src="assets/events.jpg" alt="Booking Link Image">
+                </div>
+                <div class="p-5 bg-slate-100">
+                    <h2 class="font-bold text-2xl">Events</h2>
+                    <p>Click to proceed event</p>
+                </div>
             </div>
         </a>
-        <a href="#">
-            <div class="md:w-80 w-full bg-slate-100 rounded-lg shadow-2xl shadow-slate-900 p-5">
-                <h2 class="font-bold text-2xl">About Us</h2>
-                <p>Lorem ipsum...</p>
+        <a href="/about us.html">
+            <div class="md:w-80 w-full rounded-lg shadow-2xl shadow-slate-900 overflow-hidden">
+                <div class="w-full h-full overflow-clip">
+                    <img class="object-cover w-full h-80" src="assets/about-us.jpg" alt="Booking Link Image">
+                </div>
+                <div class="p-5 bg-slate-100">
+                    <h2 class="font-bold text-2xl">About Us</h2>
+                    <p>Click to see more</p>
+                </div>
             </div>
         </a>
     </div>
+    <script>
+        window.onscroll = function() {
+            let currentScrollPos = window.pageYOffset
+            if (currentScrollPos < 500) {
+                document.getElementById("navbar").style.top = "0"
+            } else {
+                document.getElementById("navbar").style.top = "-60px"
+            }
+        }
+
+        anime({
+            targets: ".header-text",
+            opacity: [
+                {value: 0, duration: 0},
+                {value: 1, duration: 1000}
+            ],
+            translateY: [
+                {value: -100, duration: 0},
+                {value: 0, duration: 1000}
+            ],
+            easing: "easeOutCubic"
+        })
+    </script>
 </body>
 </html>
