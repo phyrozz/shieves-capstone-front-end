@@ -848,10 +848,6 @@ video {
   display: flow-root;
 }
 
-.\!grid {
-  display: grid !important;
-}
-
 .grid {
   display: grid;
 }
@@ -1441,6 +1437,10 @@ video {
 
 .justify-items-stretch {
   justify-items: stretch;
+}
+
+.gap-2 {
+  gap: 0.5rem;
 }
 
 .gap-5 {
@@ -2296,11 +2296,6 @@ video {
   color: rgb(248 250 252 / var(--tw-text-opacity));
 }
 
-.text-stone-950 {
-  --tw-text-opacity: 1;
-  color: rgb(12 10 9 / var(--tw-text-opacity));
-}
-
 .underline {
   text-decoration-line: underline;
 }
@@ -2719,6 +2714,10 @@ video {
 
 .hover\:focus\:text-center:focus:hover {
   text-align: center;
+}
+
+.group:hover .group-hover\:block {
+  display: block;
 }
 
 @media (min-width: 640px) {
