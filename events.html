@@ -3,9 +3,117 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Museo de San Pedro</title>
+    <title>Resort Events</title>
+    <style>
+        /* Reset default margin and padding */
+        body {
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Set background image for the entire page */
+        body {
+            background-size: cover;
+        }
+
+        /* Left floating section for event details */
+        .leftBox {
+            width: 50%;
+            float: left;
+            padding: 50px;
+            box-sizing: border-box;
+        }
+
+        /* Styling for the event details container */
+        .leftBox .content {
+            color: #fff;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 40px;
+            transition: 0.5s;
+        }
+
+        /* Hover effect for the event details container */
+        .leftBox .content:hover {
+            background: #0fb973;
+        }
+
+        /* Header styling */
+        .leftBox .content h1 {
+            margin: 0;
+            padding: 0;
+            font-size: 50px;
+            text-transform: uppercase;
+        }
+
+        /* Paragraph styling */
+        .leftBox .content p {
+            margin: 10px 0 0;
+            padding: 0;
+        }
+
+        /* Right section for event summaries */
+        .events {
+            width: 50%;
+            float: right;
+            background: rgba(0, 0, 0, 0.5);
+            box-sizing: border-box;
+        }
+
+        /* Styling for event summary boxes */
+        .events ul {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            margin: 0;
+            padding: 40px;
+            box-sizing: border-box;
+        }
+
+        /* Styling for individual event summaries */
+        .events ul li {
+            list-style: none;
+            background: #ffffff;
+            box-sizing: border-box;
+            height: 200px;
+            margin: 15px 0;
+        }
+
+        /* Styling for event time */
+        .events ul li .time {
+            position: relative;
+            padding: 20px;
+            background: #922e2e;
+            box-sizing: border-box;
+        }
+    </style>
 </head>
 <body>
-    
+    <section>
+        <div class="leftBox">
+            <div class="content">
+                <h1>Upcoming Resort Events</h1>
+                <p>Join us for exciting activities, delicious food, and relaxation!</p>
+            </div>
+        </div>
+        <div class="events">
+            <ul>
+                <li>
+                    <div class="time">8:00 AM - 6:00 PM</div>
+                    <h2>DAYTIME</h2>
+                    <p>7,000 (25 PAX)</p>
+                </li>
+                <li>
+                    <div class="time">8:00 PM - 6:00 AM</div>
+                    <h2>OVERNIGHT</h2>
+                    <p>8,500 (20 PAX)</p>
+                </li>
+                <li>
+                    <div class="time">(8:00 AM - 6:00 AM) OR (8:00 PM - 6:00 AM)</div>
+                    <h2>22 HOURS</h2>
+                    <p>14,500</p>
+                </li>
+            </ul>
+        </div>
+    </section>
 </body>
 </html>
