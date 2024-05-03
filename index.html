@@ -45,6 +45,7 @@
             <a id="login-btn" href="admin.html" class="hover:bg-slate-400 font-semibold p-3 rounded-md transition-all text-center group">
                 <li class="flex flex-row items-center gap-2">
                     <lord-icon
+                        id="login-btn-icon"
                         src="https://cdn.lordicon.com/hrjifpbq.json"
                         trigger="hover"
                         style="width:2em;height:2em">
@@ -118,8 +119,15 @@
         document.addEventListener("DOMContentLoaded", () => {
             gsap.from(".header-text", { opacity: 0, y: 75, duration: 0.50, ease: "easeOut" });
         });
+        document.getElementById("login-btn").addEventListener("mouseenter", () => {
+            var tl = new TimelineMax({ paused: true });
+            tl.from("#login-btn-icon", {x: 50, duration: 0.20 })
+            tl.from("#login-btn-text", { opacity: 0, x: 20, duration: 0.25 });
 
-        document.getElementById("login-btn").addEventListener("mouseenter", () => fadeNavbarItemTextIn("#login-btn-text"));
+            if (!tl.isActive()) {
+                tl.play(0);
+            }
+        });
         document.querySelectorAll('.navbar-item').forEach(item => {
             item.addEventListener('mouseenter', () => {
                 bounceNavbarItem(item);
@@ -135,15 +143,6 @@
                 onHomeItemHoverOut(item);
             });
         });
-
-        function fadeNavbarItemTextIn(target) {
-            var tl = new TimelineMax({ paused: true });
-            tl.from(target, { opacity: 0, x: 20, duration: 0.25 });
-
-            if (!tl.isActive()) {
-                tl.play(0);
-            }
-        };
 
         function bounceNavbarItem(target) {
             var tl = new TimelineMax({ paused: true });
