@@ -4,58 +4,151 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About Us</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: 'Montserrat', sans-serif;
-            background-color: #87ceeb; /* Sky Blue */
-            color: #333;
-            padding: 20px;
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-            background-color: #F0F0F0; /* Light Gray */
-            border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-        }
-
-        h1 {
-            font-size: 32px;
-            margin-bottom: 20px;
-            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
-            color: #333; /* Dark Gray */
-        }
-
-        p {
-            font-size: 16px;
-            line-height: 1.6;
-        }
-
-        a {
-            color: #0077cc; /* Blue */
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        a:hover {
-            color: #0055aa; /* Darker Blue */
-            text-decoration: underline;
-        }
-    </style>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="tailwind.css">
 </head>
-<body>
-    <div class="container">
-        <h1>About Us</h1>
-        <p>Museo De San Pedro is located at #122 Magsasaysay, San Pedro City, Laguna. It's only a 17-minute drive from HBC San Pedro. You can also take a jeepney ride on the "estrella trip" route, heading to Magsasay (beside HBC). Advise the driver to drop you off at "Museo De San Pedro" in front of Villa Consolascion. Alternatively, use the Waze Mobile App to locate us.</p>
-        <p>Contact us at <a href="mailto:info@museodesanpedro.com">info@museodesanpedro.com</a>.</p>
+<body class="bg-slate-800">
+    <div class="m-10 flex flex-col gap-10">
+        <div class="bg-gradient-to-r from-slate-200 to-slate-300 p-10 flex flex-col gap-5 rounded-lg shadow-xl text-center">
+            <h1 class="font-satisfy text-6xl">About Us</h1>
+            <p class="text-sm">Museo De San Pedro is located at #122 Magsasaysay, San Pedro City, Laguna. It's only a 17-minute drive from HBC San Pedro. You can also take a jeepney ride on the "estrella trip" route, heading to Magsasay (beside HBC). Advise the driver to drop you off at "Museo De San Pedro" in front of Villa Consolascion. Alternatively, use the Waze Mobile App to locate us.</p>
+        </div>
+        <div class="w-full text-center mt-5 mb-0">
+            <h1 class="font-satisfy text-4xl font-bold text-slate-50">All In Packages</h1>
+        </div>
+        <div class="flex flex-row gap-3 flex-wrap justify-center">
+            <!-- Package containers -->
+            <div class="md:w-96 w-full bg-gradient-to-r from-slate-200 to-slate-300 p-10 flex flex-col gap-5 rounded-lg shadow-xl text-center">
+                <!-- Package name, pax, and price -->
+                <div class="flex flex-col gap-1">
+                    <p class="font-black text-4xl">PHP 50,000</p>
+                    <p class="font-extrabold text-xs">(50 pax)</p>
+                </div>
+                <!-- Food caterings, decorations, and venue -->
+                <div class="flex flex-row flex-wrap gap-5 justify-between">
+                    <div class="flex flex-col gap-2 m-auto">
+                        <h1 class="font-satisfy text-2xl">Food Catering</h1>
+                        <ul class="text-sm">
+                            <li>4 Main Course</li>
+                            <li>Unli Rice</li>
+                            <li>Unli Iced Tea/Water</li>
+                            <li>Dessert</li>
+                            <li>Waiters</li>
+                        </ul>
+                    </div>
+                    <div class="flex flex-col gap-2 m-auto">
+                        <h1 class="font-satisfy text-2xl">Decorations</h1>
+                        <ul class="text-sm">
+                            <li>Theme of your choice set-up</li>
+                            <li>Celebrant's chair</li>
+                            <li>Flower/Balloon Arrangement</li>
+                            <li>Tables and chairs set-up</li>
+                            <li>Cake Table set-up</li>
+                            <li>Back Drop set-up</li>
+                        </ul>
+                    </div>
+                    <div class="flex flex-col gap-2 m-auto">
+                        <h1 class="font-satisfy text-2xl">Venue</h1>
+                        <ul class="text-sm">
+                            <li>Function Area</li>
+                            <li>Swimming Pool</li>
+                            <li>Basic Sound System</li>
+                            <li>3 Air-conditioned System</li>
+                            <li>Videoke Room</li>
+                            <li>1 Kubo</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <!-- Package containers -->
+            <div class="md:w-96 w-full bg-gradient-to-r from-slate-200 to-slate-300 p-10 flex flex-col gap-5 rounded-lg shadow-xl text-center">
+                <!-- Package name, pax, and price -->
+                <div class="flex flex-col gap-1">
+                    <p class="font-black text-4xl">PHP 60,000</p>
+                    <p class="font-extrabold text-xs">(75 pax)</p>
+                </div>
+                <!-- Food caterings, decorations, and venue -->
+                <div class="flex flex-row flex-wrap gap-5 justify-between">
+                    <div class="flex flex-col gap-2 m-auto">
+                        <h1 class="font-satisfy text-2xl">Food Catering</h1>
+                        <ul class="text-sm">
+                            <li>4 Main Course</li>
+                            <li>Unli Rice</li>
+                            <li>Unli Iced Tea/Water</li>
+                            <li>Dessert</li>
+                            <li>Waiters</li>
+                        </ul>
+                    </div>
+                    <div class="flex flex-col gap-2 m-auto">
+                        <h1 class="font-satisfy text-2xl">Decorations</h1>
+                        <ul class="text-sm">
+                            <li>Theme of your choice set-up</li>
+                            <li>Celebrant's chair</li>
+                            <li>Flower/Balloon Arrangement</li>
+                            <li>Tables and chairs set-up</li>
+                            <li>Cake Table set-up</li>
+                            <li>Back Drop set-up</li>
+                        </ul>
+                    </div>
+                    <div class="flex flex-col gap-2 m-auto">
+                        <h1 class="font-satisfy text-2xl">Venue</h1>
+                        <ul class="text-sm">
+                            <li>Function Area</li>
+                            <li>Swimming Pool</li>
+                            <li>Basic Sound System</li>
+                            <li>3 Air-conditioned System</li>
+                            <li>Videoke Room</li>
+                            <li>1 Kubo</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="md:w-96 w-full bg-gradient-to-r from-slate-200 to-slate-300 p-10 flex flex-col gap-5 rounded-lg shadow-xl text-center">
+                <!-- Package name, pax, and price -->
+                <div class="flex flex-col gap-1">
+                    <p class="font-black text-4xl">PHP 70,000</p>
+                    <p class="font-extrabold text-xs">(100 pax)</p>
+                </div>
+                <!-- Food caterings, decorations, and venue -->
+                <div class="flex flex-row flex-wrap gap-5 justify-between">
+                    <div class="flex flex-col gap-2 m-auto">
+                        <h1 class="font-satisfy text-2xl">Food Catering</h1>
+                        <ul class="text-sm">
+                            <li>4 Main Course</li>
+                            <li>Unli Rice</li>
+                            <li>Unli Iced Tea/Water</li>
+                            <li>Dessert</li>
+                            <li>Waiters</li>
+                        </ul>
+                    </div>
+                    <div class="flex flex-col gap-2 m-auto">
+                        <h1 class="font-satisfy text-2xl">Decorations</h1>
+                        <ul class="text-sm">
+                            <li>Theme of your choice set-up</li>
+                            <li>Celebrant's chair</li>
+                            <li>Flower/Balloon Arrangement</li>
+                            <li>Tables and chairs set-up</li>
+                            <li>Cake Table set-up</li>
+                            <li>Back Drop set-up</li>
+                        </ul>
+                    </div>
+                    <div class="flex flex-col gap-2 m-auto">
+                        <h1 class="font-satisfy text-2xl">Venue</h1>
+                        <ul class="text-sm">
+                            <li>Function Area</li>
+                            <li>Swimming Pool</li>
+                            <li>Basic Sound System</li>
+                            <li>3 Air-conditioned System</li>
+                            <li>Videoke Room</li>
+                            <li>1 Kubo</li>
+                        </ul>
+                    </div>
+                </div>
+                
+        
+        <p class="text-white">Contact us at <a class="hover:underline font-bold" href="mailto:info@museodesanpedro.com">info@museodesanpedro.com</a>.</p>
     </div>
 </body>
 </html>
