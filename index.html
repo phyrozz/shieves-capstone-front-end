@@ -48,8 +48,8 @@
     <div class="flex flex-col h-screen justify-center items-center">
         <p class="header-text font-bold text-lg text-slate-100">Welcome to</p>
         <h1 class="header-text font-extrabold text-5xl text-center text-slate-100">Museo de San Pedro</h1>
-        <p class="absolute m-auto bottom-5 text-slate-100">Scroll down to get started</p>
-        <div class="absolute -z-50 bg-[url(/assets/bg.jpg)] brightness-50 bg-cover mask h-screen w-full"></div>
+        <p id="scroll-down-text" class="absolute m-auto bottom-5 text-slate-100">Scroll down to get started</p>
+        <div id="header-bg" class="absolute -z-50 bg-[url(/assets/bg.jpg)] filter brightness-50 bg-cover mask h-screen w-full"></div>
     </div>
     <div class="flex md:flex-row flex-col justify-center flex-wrap bg-slate-800 gap-5 p-5">
         <a class="home-item" href="/bookings.html">
@@ -145,15 +145,28 @@
             }
         }
 
-        // Navbar animation
         let prevScrollpos = window.pageYOffset;
-        window.onscroll = function() {
+        window.onscroll = function () {
             let currentScrollPos = window.pageYOffset;
+            let scrollDownText = document.getElementById("scroll-down-text");
+            let navbar = document.getElementById("navbar");
+
             if (prevScrollpos > currentScrollPos) {
-                document.getElementById("navbar").style.top = "0";
+                navbar.style.top = "0";
             } else {
-                document.getElementById("navbar").style.top = "-75px";
+                navbar.style.top = "-75px";
             }
+
+            console.log(currentScrollPos)
+            if (currentScrollPos > 350) {
+                gsap.to("#header-bg", 0.50, {filter: "brightness(50%) blur(8px)"});
+                scrollDownText.style.display = "none";
+                
+            } else {
+                gsap.to("#header-bg", 0.50, {filter: "brightness(50%) blur(0px)"});
+                scrollDownText.style.display = "block";
+            }
+
             prevScrollpos = currentScrollPos;
         };
     </script>
