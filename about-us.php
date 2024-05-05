@@ -13,10 +13,16 @@
 </head>
 <body class="bg-slate-800">
     <?php include "./components/navbar.php"; ?>
-    <div class="mt-28 m-10 flex flex-col gap-10">
-        <div class="bg-gradient-to-t from-slate-300 to-slate-200 p-10 flex flex-col gap-5 rounded-lg shadow-xl text-center">
-            <h1 class="font-satisfy text-6xl">About Us</h1>
-            <p class="text-sm">Museo De San Pedro is located at #122 Magsasaysay, San Pedro City, Laguna. It's only a 17-minute drive from HBC San Pedro. You can also take a jeepney ride on the "estrella trip" route, heading to Magsasay (beside HBC). Advise the driver to drop you off at "Museo De San Pedro" in front of Villa Consolascion. Alternatively, use the Waze Mobile App to locate us.</p>
+    <div class="flex flex-col h-96 justify-center items-center">
+        <h1 class="header-text mt-28 font-satisfy text-6xl text-center text-slate-100">About Us</h1>
+        <div id="header-bg" class="absolute -z-50 bg-[url(/assets/bg.jpg)] filter brightness-50 bg-cover mask h-96 w-full"></div>
+    </div>
+    <div class="m-10 flex flex-col gap-10 items-center">
+        <div class="bg-gradient-to-t from-slate-300 to-slate-200 p-10 flex flex-col gap-5 rounded-lg shadow-xl text-center items-center md:w-1/2 w-full">
+            <h1 class="font-satisfy text-5xl">Where to find?</h1>
+            <p class="text-sm font-bold">Museo De San Pedro is located at #122 Magsasaysay, San Pedro City, Laguna.</p>
+            <p class="text-sm">It's only a 17-minute drive from HBC San Pedro. You can also take a jeepney ride on the "estrella trip" route, heading to Magsasay (beside HBC). Advise the driver to drop you off at "Museo De San Pedro" in front of Villa Consolascion. Alternatively, use the Waze Mobile App to locate us.</p>
+            <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d941.3497232969933!2d121.03387312189574!3d14.338998936361174!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397d6e6c433d123%3A0x4be58cfd35018b40!2sMuseo%20de%20San%20Pedro!5e1!3m2!1sen!2sph!4v1714867684158!5m2!1sen!2sph" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
         </div>
         <div class="w-full text-center mt-5 mb-0">
             <h1 class="font-satisfy text-4xl font-bold text-slate-50">All In Packages</h1>
@@ -151,7 +157,10 @@
                 </div>
             </div>
         </div>
-        <p class="text-white text-center m-auto">Contact us at <a class="hover:underline font-bold" href="mailto:info@museodesanpedro.com">info@museodesanpedro.com</a></p>
+        <div class="flex flex-col gap-0 w-full">
+            <p class="text-white text-center">Ready to dig in? <a class="hover:underline font-bold" href="./bookings.php">Book now</a> online!</p>
+            <p class="text-white text-center">or you can contact us at <a class="hover:underline font-bold" href="mailto:info@museodesanpedro.com">info@museodesanpedro.com</a></p>
+        </div>
     </div>
     <script>
         document.getElementById("login-btn").addEventListener("mouseenter", () => {

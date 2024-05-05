@@ -1,7 +1,5 @@
-
-
 <nav id="navbar" class="flex flex-nowrap gap-8 bg-slate-300 flex-row w-full py-2 px-5 items-center fixed justify-center md:justify-between top-0 z-50 transition-all">
-    <h1 class="font-extrabold text-lg md:block hidden">Museo de San Pedro</h1>
+    <h1 class="font-satisfy font-extrabold text-xl md:block hidden">Museo de San Pedro</h1>
     <ul class="flex flex-row gap-5 items-center">
         <a href="/index.php" class="navbar-item hover:bg-slate-400 font-bold text-sm p-3 rounded-md transition-all text-center">
             <li class="flex flex-row items-center gap-2"> 
