@@ -5,10 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Booking Page</title>
     <link rel="stylesheet" href="tailwind.css">
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <script src="https://cdn.lordicon.com/lordicon.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 </head>
-<body class="bg-slate-800">
-    <div class="container mx-auto mt-8">
+<body class="bg-gray-100">
+    <?php include "./components/navbar.php"; ?>
+    <div class="container mx-auto mt-28">
         <div class="max-w-md mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
             <div class="py-4 px-6">
                 <h2 class="text-2xl font-bold text-gray-800">Book a Event</h2>
@@ -34,5 +36,46 @@
             </div>
         </div>
     </div>
+    <script>
+        document.getElementById("login-btn").addEventListener("mouseenter", () => {
+            var tl = new TimelineMax({ paused: true });
+            tl.from("#login-btn-icon", {x: 50, duration: 0.20 })
+            tl.from("#login-btn-text", { opacity: 0, x: 20, duration: 0.25 });
+
+            if (!tl.isActive()) {
+                tl.play(0);
+            }
+        });
+        document.querySelectorAll('.navbar-item').forEach(item => {
+            item.addEventListener('mouseenter', () => {
+                bounceNavbarItem(item);
+            });
+        });
+
+        function bounceNavbarItem(target) {
+            var tl = new TimelineMax({ paused: true });
+            tl.to(target, { y: -20, duration: 0.1, ease: "easeIn" })
+            .to(target, { y: 0, duration: 0.1, ease: "easeOut" });
+
+            if (!tl.isActive()) {
+                tl.play(0);
+            }
+        };
+
+        let prevScrollpos = window.pageYOffset;
+        window.onscroll = function () {
+            let currentScrollPos = window.pageYOffset;
+            let scrollDownText = document.getElementById("scroll-down-text");
+            let navbar = document.getElementById("navbar");
+
+            if (prevScrollpos > currentScrollPos) {
+                navbar.style.top = "0";
+            } else {
+                navbar.style.top = "-75px";
+            }
+
+            prevScrollpos = currentScrollPos;
+        };
+    </script>
 </body>
 </html>
