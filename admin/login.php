@@ -1,9 +1,11 @@
 <?php
 
 $host="localhost";
-$user="root";
-$password="";
-$db="user";
+$user="shieves";
+$password="Msdpfree123@";
+$db="id22151551_user";
+
+session_start();
 
 $data=mysqli_connect($host,$user,$password,$db);
 if($data===false)
@@ -24,11 +26,15 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
 
     if($row["usertype"]=="user")
     {
+        $_SESSION ["username"]=$username;
+        
         header("location:user_home.php");
     }
 
     elseif($row["usertype"]=="admin")
     {
+        $_SESSION ["username"]=$username;
+        
         header("location:admin_home.php");
     }
 
