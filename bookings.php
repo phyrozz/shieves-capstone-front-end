@@ -41,6 +41,7 @@ if (isset($_POST["submit"])) {
     <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
     <script src="https://cdn.lordicon.com/lordicon.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body class="bg-gray-100">
     <?php include "./components/navbar.php"; ?>
@@ -58,6 +59,10 @@ if (isset($_POST["submit"])) {
                         <input type="email" id="email" name="email" class="form-input w-full">
                     </div>
                     <div class="mb-4">
+                        <label for="name" class="block text-gray-700 font-semibold mb-2">Mobile Number</label>
+                        <input type="text" id="phonenumber" name="phonenumber" class="form-input w-full">
+                    </div>
+                    <div class="mb-4">
                         <label for="checkin" class="block text-gray-700 font-semibold mb-2">Check-in Date</label>
                         <input type="date" id="checkin" name="checkin" class="form-input w-full">
                     </div>
@@ -65,7 +70,7 @@ if (isset($_POST["submit"])) {
                         <label for="checkout" class="block text-gray-700 font-semibold mb-2">Check-out Date</label>
                         <input type="date" id="checkout" name="checkout" class="form-input w-full">
                     </div>
-                    <button type="submit" name="submit" class="bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600 transition duration-200">Book Now</button>
+                    <button id="booknow" type="submit" class="bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600 transition duration-200">Book Now</button>
                 </form>
             </div>
         </div>
@@ -110,6 +115,40 @@ if (isset($_POST["submit"])) {
 
             prevScrollpos = currentScrollPos;
         };
+
+            const button = document.getElementById("booknow");
+
+        button.addEventListener("click", (event) => {
+            event.preventDefault()
+            Swal.fire({
+        title: "Do you wish to proceed?",
+        text: "You won't be able to revert this!",
+        icon: "warning",
+        showCancelButton: true,
+        confirmButtonText: "Yes",
+        cancelButtonText: "No",
+        reverseButtons: true
+        }).then((result) => {
+        if (result.isConfirmed) {
+            Swal.fire({
+            title: "Booked",
+            text: "You have successfully booked",
+            icon: "success"
+            });
+        } else if (
+            /* Read more about handling dismissals below */
+            result.dismiss === Swal.DismissReason.cancel
+        ) {
+            Swal.fire({
+            title: "Cancelled",
+            text: "You have cancelled your book",
+            icon: "error"
+            });
+        }
+        });
+        });    
+
+        
     </script>
 </body>
 </html>
