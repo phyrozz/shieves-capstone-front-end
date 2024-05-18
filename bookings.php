@@ -1,3 +1,31 @@
+<?php
+if (isset($_POST["submit"])) {
+    $servername = "localhost";
+    $username = "root";
+    $password = "";
+    $dbname = "museodesanpedro";
+
+    // Create connection
+    $conn = new mysqli($servername, $username, $password, $dbname);
+
+    // Check connection
+    if ($conn->connect_error) {
+        die("Connection failed: " . $conn->connect_error);
+    }
+
+    $name = $_POST["name"];
+    $email = $_POST["email"];
+    $checkin = $_POST["checkin"];
+    $checkout = $_POST["checkout"];
+
+    $stmt = $conn->prepare("INSERT INTO bookings (email, name, time_in, time_out) VALUES (?, ?, ?, ?)");
+    $stmt->bind_param("ssss", $name, $email, $checkin, $checkout);
+    $stmt->execute();
+
+    $stmt->close();
+    $conn->close();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,6 +36,9 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="tailwind.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
     <script src="https://cdn.lordicon.com/lordicon.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -17,8 +48,8 @@
     <div class="container mx-auto mt-28">
         <div class="max-w-md mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
             <div class="py-4 px-6">
-                <h2 class="text-2xl font-bold text-gray-800">Book an Event</h2>
-                <form action="#" method="POST" class="mt-4">
+                <h2 class="text-2xl font-bold text-gray-800">Book a Event</h2>
+                <form method="POST" class="mt-4">
                     <div class="mb-4">
                         <label for="name" class="block text-gray-700 font-semibold mb-2">Name</label>
                         <input type="text" id="name" name="name" class="form-input w-full">
