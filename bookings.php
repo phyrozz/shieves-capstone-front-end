@@ -45,12 +45,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <h2 class="text-2xl font-bold text-gray-800">Book a Event</h2>
                 <form id="booking-form" method="POST" class="mt-4">
                     <div class="mb-4">
-                        <label for="name" class="block text-gray-700 font-semibold mb-2">Name</label>
-                        <input type="text" id="name" name="name" class="form-input w-full">
+                        <label for="name" class="block text-gray-700 font-semibold">Name</label>
+                        <input type="text" id="name" name="name" class="form-input w-full p-2 border-b border-gray-400">
                     </div>
                     <div class="mb-4">
-                        <label for="email" class="block text-gray-700 font-semibold mb-2">Email</label>
-                        <input type="email" id="email" name="email" class="form-input w-full">
+                        <label for="email" class="block text-gray-700 font-semibold">Email</label>
+                        <input type="email" id="email" name="email" class="form-input w-full p-2 border-b border-gray-400">
                     </div>
                     <div class="mb-4">
                         <label for="phonenumber" class="block text-gray-700 font-semibold mb-2">Mobile Number</label>
@@ -61,8 +61,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <input type="date" id="checkin" name="checkin" class="form-input w-full">
                     </div>
                     <div class="mb-6">
-                        <label for="checkout" class="block text-gray-700 font-semibold mb-2">Check-out Date</label>
-                        <input type="date" id="checkout" name="checkout" class="form-input w-full">
+                        <label for="checkout" class="block text-gray-700 font-semibold">Check-out Date</label>
+                        <input type="date" id="checkout" name="checkout" class="form-input w-full p-2 border-b border-gray-400">
                     </div>
                     <button id="booknow" type="button" class="bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600 transition duration-200">Book Now</button>
                 </form>
