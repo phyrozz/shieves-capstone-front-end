@@ -9,4 +9,3 @@ if (isset($_SESSION['username'])) {
 // Redirect to the user login page.
 header('Location: login.php');
 exit;
-?>

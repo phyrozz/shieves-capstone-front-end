@@ -1,98 +1,77 @@
 <?php
-
-$host="localhost";
-$user="shieves";
-$password="Msdpfree123@";
-$db="id22151551_user";
+include "../conn.php";
 
 session_start();
 
-$data=mysqli_connect($host,$user,$password,$db);
-if($data===false)
-{
-    die("connection error");
-}
-
 if($_SERVER["REQUEST_METHOD"]=="POST")
 {
-    $username=$_POST["username"];
-    $password=$_POST["password"];
+  $username=$_POST["username"];
+  $password=$_POST["password"];
 
-    $sql= "SELECT * FROM login WHERE username= '".$username."' AND password= '".$password."' ";
+  $sql= "SELECT * FROM admins WHERE username= '".$username."' AND password= '".$password."' ";
 
-    $result=mysqli_query($data, $sql);
+  $result=mysqli_query($conn, $sql);
 
-    $row=mysqli_fetch_array($result);
+  $row=mysqli_fetch_array($result);
 
-    if($row["usertype"]=="user")
-    {
-        $_SESSION ["username"]=$username;
-        
-        header("location:user_home.php");
-    }
+  if($row)
+  {
+    $_SESSION ["username"]=$username;
+    
+    header("location:admin_home.php");
+    exit();
+  }
 
-    elseif($row["usertype"]=="admin")
-    {
-        $_SESSION ["username"]=$username;
-        
-        header("location:admin_home.php");
-    }
-
-    else
-    {
-        echo "username or password incorrect";
-    }
+  else
+  {
+    $_SESSION["error"] = "Incorrect username or password. Please try again.";
+    header("Location: " . $_SERVER["PHP_SELF"]);
+    exit();
+  }
 }
-
-
 ?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Museo de San Pedro Admin</title>
-    
-    <!-- custom css file link -->
-    <link rel="stylesheet" href="style.css">
-    
-
-     <center>
-
-          <h1>Welcome to Museo de San Pedro!</h1>
-          <br><br><br><br>
-          <div style="background-color: lightblue; width: 500px;">
-          <br><br>
-
-          <form action="#" method="POST">
-
-     <div>
-         <label>Username</label>
-         <input type="text" name="username" required>
-     </div> 
-     <br><br>
-     
-     <div>
-         <label>Password</label>
-         <input type="text" name="password" required>
-     </div> 
-     <br><br>
-     
-     <div>
-
-         <input type="submit" value="login" required>
-     </div>
-    <br><br>
-    <p>Go Back to <a href= "admin_host.php" class="btn">Admin Page</a></p>
-     </center>
-
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Museo de San Pedro - Admin Login</title>
+  <link rel="stylesheet" href="../tailwind.css">
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 <body>
+  <div class="w-screen h-screen bg-gradient-to-br from-slate-950 to-violet-950 flex justify-center items-center text-slate-50">
+    <div id="login-container" class="w-96 bg-slate-950 flex flex-col items-start rounded-lg shadow-2xl shadow-slate-950 px-8 py-10">
+      <h1 class="font-black text-3xl">Log in</h1>
+      <form class="flex flex-col w-full py-5" method="POST">
+        <div class="w-full flex flex-col">
+          <span class="text-xs font-bold tracking-wider text-slate-400">USER NAME</span>
+          <input type="text" name="username" class="mt-1 mb-5 p-2 bg-gray-800 rounded-md transition-all" maxlength="255" required />
+        </div>
+        <div class="w-full flex flex-col">
+          <span class="text-xs font-bold tracking-wider text-slate-400">PASSWORD</span>
+          <input type="password" name="password" class="mt-1 mb-5 p-2 bg-gray-800 rounded-md transition-all" minlength="8" maxlength="255" required />
+        </div>
+        <div class="w-full flex flex-row justify-end items-center">
+          <input id="login-btn" type="submit" class="text-xs font-bold tracking-wider bg-gray-800 px-5 py-2 rounded-md hover:bg-gray-900 cursor-pointer transition-all" value="LOGIN" />
+        </div>
+      </form>
+    </div>
+  </div>
 
-    
+  <script>
+    gsap.from("#login-container", { scale: 0, duration: 0.25, ease: "easeInOut" });
 
+    <?php if (isset($_SESSION['error'])): ?>
+      Swal.fire({
+        title: 'Error',
+        text: '<?php echo $_SESSION['error']; ?>',
+        icon: 'warning',
+      });
+      <?php unset($_SESSION['error']); ?>
+    <?php endif; ?>
+  </script>
 </body>
 </html>

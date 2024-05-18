@@ -1,29 +1,23 @@
 <?php
-if (isset($_POST["submit"])) {
-    $servername = "localhost";
-    $username = "root";
-    $password = "";
-    $dbname = "museodesanpedro";
+include "./conn.php";
 
-    // Create connection
-    $conn = new mysqli($servername, $username, $password, $dbname);
-
-    // Check connection
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    }
-
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST["name"];
     $email = $_POST["email"];
+    $phone_number = $_POST["phonenumber"];
     $checkin = $_POST["checkin"];
     $checkout = $_POST["checkout"];
 
-    $stmt = $conn->prepare("INSERT INTO bookings (email, name, time_in, time_out) VALUES (?, ?, ?, ?)");
-    $stmt->bind_param("ssss", $name, $email, $checkin, $checkout);
+    $stmt = $conn->prepare("INSERT INTO bookings (email, name, phone_number, time_in, time_out) VALUES (?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssss", $email, $name, $phone_number, $checkin, $checkout);
     $stmt->execute();
 
     $stmt->close();
     $conn->close();
+
+    // Redirect to avoid form resubmission
+    header("Location: " . $_SERVER['REQUEST_URI']);
+    exit();
 }
 ?>
 <!DOCTYPE html>
@@ -49,7 +43,7 @@ if (isset($_POST["submit"])) {
         <div class="max-w-md mx-auto bg-white rounded-lg shadow-lg overflow-hidden">
             <div class="py-4 px-6">
                 <h2 class="text-2xl font-bold text-gray-800">Book a Event</h2>
-                <form method="POST" class="mt-4">
+                <form id="booking-form" method="POST" class="mt-4">
                     <div class="mb-4">
                         <label for="name" class="block text-gray-700 font-semibold mb-2">Name</label>
                         <input type="text" id="name" name="name" class="form-input w-full">
@@ -59,7 +53,7 @@ if (isset($_POST["submit"])) {
                         <input type="email" id="email" name="email" class="form-input w-full">
                     </div>
                     <div class="mb-4">
-                        <label for="name" class="block text-gray-700 font-semibold mb-2">Mobile Number</label>
+                        <label for="phonenumber" class="block text-gray-700 font-semibold mb-2">Mobile Number</label>
                         <input type="text" id="phonenumber" name="phonenumber" class="form-input w-full">
                     </div>
                     <div class="mb-4">
@@ -70,7 +64,7 @@ if (isset($_POST["submit"])) {
                         <label for="checkout" class="block text-gray-700 font-semibold mb-2">Check-out Date</label>
                         <input type="date" id="checkout" name="checkout" class="form-input w-full">
                     </div>
-                    <button id="booknow" type="submit" class="bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600 transition duration-200">Book Now</button>
+                    <button id="booknow" type="button" class="bg-blue-500 text-white font-semibold py-2 px-4 rounded hover:bg-blue-600 transition duration-200">Book Now</button>
                 </form>
             </div>
         </div>
@@ -134,6 +128,8 @@ if (isset($_POST["submit"])) {
             title: "Booked",
             text: "You have successfully booked",
             icon: "success"
+            }).then(() => {
+                document.getElementById("booking-form").submit();
             });
         } else if (
             /* Read more about handling dismissals below */
