@@ -22,7 +22,7 @@
         <p id="scroll-down-text" class="absolute m-auto bottom-5 text-slate-100">Scroll down to get started</p>
         <div id="header-bg" class="absolute -z-50 bg-[url(/assets/bg.jpg)] filter brightness-50 bg-cover mask h-screen w-full"></div>
     </div>
-    <div class="flex md:flex-row flex-col justify-center flex-wrap bg-slate-800 gap-5 p-5">
+    <div class="flex md:flex-row flex-col justify-center flex-wrap bg-gradient-to-br from-slate-950 to-violet-950 gap-5 p-5">
         <a class="home-item" href="/bookings.php">
             <div class="md:w-80 w-full rounded-lg shadow-2xl shadow-slate-900 overflow-hidden">
                 <div class="w-full h-full overflow-clip">
