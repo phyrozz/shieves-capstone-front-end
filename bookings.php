@@ -5,20 +5,27 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $name = $_POST["name"];
     $email = $_POST["email"];
     $phone_number = $_POST["phonenumber"];
+
     $checkin = $_POST["checkin"];
     $checkout = $_POST["checkout"];
-
-    $stmt = $conn->prepare("INSERT INTO bookings (email, name, phone_number, time_in, time_out) VALUES (?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssss", $email, $name, $phone_number, $checkin, $checkout);
+    $package = $_POST["packagename"];
+    $stmt = $conn->prepare("INSERT INTO bookings (email, name, phone_number, time_in, time_out, package_id) VALUES (?, ?, ?, ?, ?, ?)");
+    $stmt->bind_param("sssssi", $email, $name, $phone_number, $checkin, $checkout, $package);
     $stmt->execute();
 
     $stmt->close();
-    $conn->close();
 
     // Redirect to avoid form resubmission
     header("Location: " . $_SERVER['REQUEST_URI']);
     exit();
 }
+
+// Retrieve all package names
+$packageStmt = $conn->prepare("SELECT id AS package_id, name, price FROM packages");
+$packageStmt->execute();
+$packagesResult = $packageStmt->get_result();
+$packageStmt->close();
+$conn->close();
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -56,6 +63,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <div class="mb-4">
                             <label for="phonenumber" class="block text-gray-700 font-bold text-sm pb-2 tracking-wide">MOBILE NUMBER</label>
                             <input type="text" id="phonenumber" name="phonenumber" pattern="09\d{2}-\d{3}-\d{4}" class="form-input w-full p-2 rounded-md shadow-lg">
+                        </div>
+                        <div class="mb-4">
+                            <label for="packagename" class="block text-gray-700 font-bold text-sm pb-2 tracking-wide">CHOOSE A PACKAGE</label>
+                            <select type="text" id="packagename" name="packagename" class="form-input w-full p-2 rounded-md shadow-lg">
+                                <?php
+                                while ($package = $packagesResult->fetch_assoc()) {
+                                    echo "<option value='" . htmlspecialchars($package['package_id']) . "'>" . htmlspecialchars($package['name']) . " - PHP " . number_format(htmlspecialchars($package['price'])) . "</option>";
+                                }
+                                ?>
+                            </select>
                         </div>
                         <div class="mb-4">
                             <label for="checkin" class="block text-gray-700 font-bold text-sm pb-2 tracking-wide">CHECK-IN DATE</label>

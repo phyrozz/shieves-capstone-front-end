@@ -20,7 +20,11 @@ while ($statusRow = $statusesResult->fetch_assoc()) {
 $statusStmt->close();
 
 // Retrieve all bookings with their statuses
-$stmt = $conn->prepare("SELECT bookings.id as booking_id, bookings.name AS full_name, bookings.email, bookings.phone_number, bookings.status_id, statuses.name AS status_name FROM bookings INNER JOIN statuses ON bookings.status_id = statuses.id");
+$stmt = $conn->prepare("SELECT bookings.id as booking_id, bookings.name AS full_name, bookings.email, bookings.phone_number, bookings.status_id, statuses.name AS status_name, packages.name AS package_name, packages.price as package_price
+                        FROM bookings 
+                        INNER JOIN statuses ON bookings.status_id = statuses.id
+                        INNER JOIN packages ON bookings.package_id = packages.id
+                        ");
 $stmt->execute();
 $result = $stmt->get_result();
 ?>
@@ -55,6 +59,7 @@ $result = $stmt->get_result();
                                 <td>NAME</td>
                                 <td>EMAIL</td>
                                 <td>CONTACT NUMBER</td>
+                                <td>PACKAGE</td>
                                 <td>STATUS</td>
                             </tr>
                         </thead>
@@ -65,6 +70,7 @@ $result = $stmt->get_result();
                             echo "<td><p class='text-left'>" . htmlspecialchars($row["full_name"]) . "</p></td>";
                             echo "<td><p class='text-left'>" . htmlspecialchars($row["email"]) . "</p></td>";
                             echo "<td><p class='text-left'>" . htmlspecialchars($row["phone_number"]) . "</p></td>";
+                            echo "<td><p class='text-left'>" . htmlspecialchars($row["package_name"]) . "</p></td>";
                             echo "<td>";
                             echo "<select class='text-sm' onchange='updateStatus(this, " . $row['booking_id'] . ")'>";
                             foreach ($statuses as $status) {
