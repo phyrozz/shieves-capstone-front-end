@@ -1,8 +1,11 @@
 <?php
-$servername = "localhost";
-$username = "root";
-$password = "";
-$dbname = "museo_de_san_pedro";
+// Get environment variables
+$env = parse_ini_file('.env');
+
+$servername = $env["HOST_NAME"];
+$username = $env["DB_USERNAME"];
+$password = $env["DB_PASSWORD"];
+$dbname = $env["DB_NAME"];
 
 // Create connection
 $conn = new mysqli($servername, $username, $password, $dbname);
