@@ -11,7 +11,7 @@
     <script src="https://cdn.lordicon.com/lordicon.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 </head>
-<body class="bg-slate-800">
+<body class="bg-gradient-to-br from-slate-950 to-violet-950">
     <?php include "./components/navbar.php"; ?>
     <div class="flex flex-col h-96 justify-center items-center">
         <h1 class="header-text mt-28 font-satisfy text-6xl text-center text-slate-100">About Us</h1>

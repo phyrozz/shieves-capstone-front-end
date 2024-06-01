@@ -62,10 +62,10 @@ $result = $stmt->get_result();
                         <?php
                         while ($row = $result->fetch_assoc()) {
                             echo "<tr >";
-                            echo "<td class='text-left'>" . htmlspecialchars($row["full_name"]) . "</td>";
-                            echo "<td class='text-left'>" . htmlspecialchars($row["email"]) . "</td>";
-                            echo "<td class='text-left'>" . htmlspecialchars($row["phone_number"]) . "</td>";
-                            echo "<td class='text-left'>";
+                            echo "<td><p class='text-left'>" . htmlspecialchars($row["full_name"]) . "</p></td>";
+                            echo "<td><p class='text-left'>" . htmlspecialchars($row["email"]) . "</p></td>";
+                            echo "<td><p class='text-left'>" . htmlspecialchars($row["phone_number"]) . "</p></td>";
+                            echo "<td>";
                             echo "<select class='text-sm' onchange='updateStatus(this, " . $row['booking_id'] . ")'>";
                             foreach ($statuses as $status) {
                                 $selected = $row["status_id"] == $status['id'] ? "selected" : "";
