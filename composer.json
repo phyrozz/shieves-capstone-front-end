@@ -1,0 +1,14 @@
+{
+    "name": "phyrozz/front-end",
+    "type": "project",
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "https://github.com/xendit/xendit-php.git"
+        }
+    ],
+    "require": {
+        "xendit/xendit-php": "^5.0",
+        "ramsey/uuid": "^4.7"
+    }
+}
