@@ -1,32 +1,3 @@
-<?php
-include "./conn.php";
-
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $name = $_POST["name"];
-    $email = $_POST["email"];
-    $phone_number = $_POST["phonenumber"];
-
-    $checkin = $_POST["checkin"];
-    $checkout = $_POST["checkout"];
-    $package = $_POST["packagename"];
-    $stmt = $conn->prepare("INSERT INTO bookings (email, name, phone_number, time_in, time_out, package_id) VALUES (?, ?, ?, ?, ?, ?)");
-    $stmt->bind_param("sssssi", $email, $name, $phone_number, $checkin, $checkout, $package);
-    $stmt->execute();
-
-    $stmt->close();
-
-    // Redirect to avoid form resubmission
-    header("Location: " . $_SERVER['REQUEST_URI']);
-    exit();
-}
-
-// Retrieve all package names
-$packageStmt = $conn->prepare("SELECT id AS package_id, name, price FROM packages");
-$packageStmt->execute();
-$packagesResult = $packageStmt->get_result();
-$packageStmt->close();
-$conn->close();
-?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -43,54 +14,62 @@ $conn->close();
     <script src="https://cdn.lordicon.com/lordicon.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="/node_modules/axios/dist/axios.min.js"></script>
 </head>
 <body>
     <?php include "./components/navbar.php"; ?>
     <div class="h-screen w-full bg-gradient-to-br from-slate-950 to-violet-950 flex justify-center items-center">
         <div id="booking-form-container" class="container">
-            <div class="max-w-md mx-auto bg-gradient-to-t from-slate-300 to-slate-200 rounded-lg shadow-2xl overflow-hidden">
+            <div class="max-w-md mx-auto bg-slate-950 rounded-lg shadow-2xl overflow-hidden">
                 <div class="py-4 px-6">
-                    <h2 class="text-3xl font-bold text-gray-800 font-satisfy text-center p-3">Book an Event</h2>
+                    <h2 class="text-3xl font-bold text-white font-satisfy text-center p-3">Book an Event</h2>
                     <form id="booking-form" method="POST" class="mt-4">
                         <div class="mb-4">
-                            <label for="name" class="block text-gray-700 font-bold text-sm pb-2 tracking-wide">NAME</label>
-                            <input type="text" id="name" name="name" class="form-input w-full p-2 rounded-md shadow-lg">
+                            <label for="name" class="block text-gray-300 font-bold text-sm pb-2 tracking-wide">NAME</label>
+                            <input type="text" id="name" name="name" class="form-input w-full p-2 bg-gray-800 text-white rounded-md shadow-lg" required>
                         </div>
                         <div class="mb-4">
-                            <label for="email" class="block text-gray-700 font-bold text-sm pb-2 tracking-wide">EMAIL</label>
-                            <input type="email" id="email" name="email" class="form-input w-full p-2 rounded-md shadow-lg">
+                            <label for="email" class="block text-gray-300 font-bold text-sm pb-2 tracking-wide">EMAIL</label>
+                            <input type="email" id="email" name="email" class="form-input w-full p-2 bg-gray-800 text-white rounded-md shadow-lg">
                         </div>
                         <div class="mb-4">
-                            <label for="phonenumber" class="block text-gray-700 font-bold text-sm pb-2 tracking-wide">MOBILE NUMBER</label>
-                            <input type="text" id="phonenumber" name="phonenumber" pattern="09\d{2}-\d{3}-\d{4}" class="form-input w-full p-2 rounded-md shadow-lg">
+                            <label for="phonenumber" class="block text-gray-300 font-bold text-sm pb-2 tracking-wide">MOBILE NUMBER</label>
+                            <input type="text" id="phonenumber" name="phonenumber" pattern="09\d{2}-\d{3}-\d{4}" class="form-input w-full p-2 bg-gray-800 text-white rounded-md shadow-lg" required>
                         </div>
                         <div class="mb-4">
-                            <label for="packagename" class="block text-gray-700 font-bold text-sm pb-2 tracking-wide">CHOOSE A PACKAGE</label>
-                            <select type="text" id="packagename" name="packagename" class="form-input w-full p-2 rounded-md shadow-lg">
+                            <label for="packagename" class="block text-gray-300 font-bold text-sm pb-2 tracking-wide">CHOOSE A PACKAGE</label>
+                            <select type="text" id="packagename" name="packagename" class="form-input w-full p-2 bg-gray-800 text-white rounded-md shadow-lg" required>
                                 <?php
+                                include "./conn.php";
+                                // Retrieve all package names
+                                $packageStmt = $conn->prepare("SELECT id AS package_id, name, price FROM packages");
+                                $packageStmt->execute();
+                                $packagesResult = $packageStmt->get_result();
+                                $packageStmt->close();
+                                $conn->close();
+
                                 while ($package = $packagesResult->fetch_assoc()) {
-                                    echo "<option value='" . htmlspecialchars($package['package_id']) . "'>" . htmlspecialchars($package['name']) . " - PHP " . number_format(htmlspecialchars($package['price'])) . "</option>";
+                                    echo "<option value='" . htmlspecialchars($package['package_id']) . "' data-name='" . htmlspecialchars($package['name']) . "' data-price='" . htmlspecialchars($package['price']) . "'>" . htmlspecialchars($package['name']) . " - PHP " . number_format(htmlspecialchars($package['price'])) . "</option>";
                                 }
                                 ?>
                             </select>
                         </div>
                         <div class="mb-4">
-                            <label for="checkin" class="block text-gray-700 font-bold text-sm pb-2 tracking-wide">CHECK-IN DATE</label>
-                            <input type="date" id="checkin" name="checkin" min class="form-input w-full p-2 rounded-md shadow-lg">
+                            <label for="checkin" class="block text-gray-300 font-bold text-sm pb-2 tracking-wide">CHECK-IN DATE</label>
+                            <input type="date" id="checkin" name="checkin" min class="form-input w-full p-2 bg-gray-800 text-white rounded-md shadow-lg" required>
                         </div>
                         <div class="mb-6">
-                            <label for="checkout" class="block text-gray-700 font-bold text-sm pb-2 tracking-wide">CHECK-OUT DATE</label>
-                            <input type="date" id="checkout" name="checkout" class="form-input w-full p-2 rounded-md shadow-lg">
+                            <label for="checkout" class="block text-gray-300 font-bold text-sm pb-2 tracking-wide">CHECK-OUT DATE</label>
+                            <input type="date" id="checkout" name="checkout" class="form-input w-full p-2 bg-gray-800 text-white rounded-md shadow-lg" required>
                         </div>
                         <div class="flex w-full justify-end items-center">
-                            <button id="booknow" type="button" class="bg-blue-500 text-white font-semibold py-2 px-4 rounded-md hover:bg-blue-600 transition duration-200">Book Now</button>
+                            <button id="booknow" type="button" class="text-xs font-bold tracking-wider bg-gray-800 px-5 py-2 rounded-md hover:bg-gray-900 cursor-pointer transition-all text-white">BOOK NOW</button>
                         </div>
                     </form>
                 </div>
             </div>
         </div>
     </div>
-    
     <script>
         gsap.from("#booking-form-container", { scale: 0, duration: 0.25, ease: "easeInOut" });
 
@@ -117,82 +96,105 @@ $conn->close();
             checkoutInput.max = maxCheckoutDate;
         });
 
+        document.getElementById("booknow").addEventListener("click", (event) => {
+            event.preventDefault();
 
-        document.getElementById("login-btn").addEventListener("mouseenter", () => {
-            var tl = new TimelineMax({ paused: true });
-            tl.from("#login-btn-icon", {x: 50, duration: 0.20 })
-            tl.from("#login-btn-text", { opacity: 0, x: 20, duration: 0.25 });
-
-            if (!tl.isActive()) {
-                tl.play(0);
-            }
-        });
-        document.querySelectorAll('.navbar-item').forEach(item => {
-            item.addEventListener('mouseenter', () => {
-                bounceNavbarItem(item);
-            });
-        });
-
-        function bounceNavbarItem(target) {
-            var tl = new TimelineMax({ paused: true });
-            tl.to(target, { y: -20, duration: 0.1, ease: "easeIn" })
-            .to(target, { y: 0, duration: 0.1, ease: "easeOut" });
-
-            if (!tl.isActive()) {
-                tl.play(0);
-            }
-        };
-
-        let prevScrollpos = window.pageYOffset;
-        window.onscroll = function () {
-            let currentScrollPos = window.pageYOffset;
-            let scrollDownText = document.getElementById("scroll-down-text");
-            let navbar = document.getElementById("navbar");
-
-            if (prevScrollpos > currentScrollPos) {
-                navbar.style.top = "0";
-            } else {
-                navbar.style.top = "-75px";
+            // Validate the form
+            const form = document.getElementById("booking-form");
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
             }
 
-            prevScrollpos = currentScrollPos;
-        };
+            // Get selected package details
+            const packageSelect = document.getElementById('packagename');
+            const selectedOption = packageSelect.options[packageSelect.selectedIndex];
+            const packageName = selectedOption.getAttribute('data-name');
+            const packagePrice = selectedOption.getAttribute('data-price');
 
-            const button = document.getElementById("booknow");
+            // Show confirmation dialog
+            Swal.fire({
+                title: "Do you wish to proceed?",
+                text: "You will be redirected to another page for online payment.",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonText: "Yes",
+                cancelButtonText: "No",
+                reverseButtons: true
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const formData = new FormData(form);
+                    formData.append('description', packageName);
+                    formData.append('amount', packagePrice);
 
-        button.addEventListener("click", (event) => {
-            event.preventDefault()
-            Swal.fire({
-        title: "Do you wish to proceed?",
-        text: "You won't be able to revert this!",
-        icon: "warning",
-        showCancelButton: true,
-        confirmButtonText: "Yes",
-        cancelButtonText: "No",
-        reverseButtons: true
-        }).then((result) => {
-        if (result.isConfirmed) {
-            Swal.fire({
-            title: "Booked",
-            text: "You have successfully booked",
-            icon: "success"
-            }).then(() => {
-                document.getElementById("booking-form").submit();
-            });
-        } else if (
-            /* Read more about handling dismissals below */
-            result.dismiss === Swal.DismissReason.cancel
-        ) {
-            Swal.fire({
-            title: "Cancelled",
-            text: "You have cancelled your book",
-            icon: "error"
-            });
-        }
+                    axios.post('api/bookings/submit_booking.php', formData)
+                        .then(response => {
+                            if (response.data.status === 'success') {
+                                // Redirect to the invoice URL
+                                window.location.href = response.data.invoice_url;
+                            } else {
+                                Swal.fire({
+                                    title: "Error",
+                                    text: response.data.message,
+                                    icon: "error"
+                                });
+                            }
+                        })
+                        .catch(error => {
+                            Swal.fire({
+                                title: "Error",
+                                text: "There was an error submitting your booking. Please try again.",
+                                icon: "error"
+                            });
+                        });
+                } else if (result.dismiss === Swal.DismissReason.cancel) {
+                    Swal.fire({
+                        title: "Cancelled",
+                        text: "You have cancelled your book",
+                        icon: "error"
+                    });
+                }
+            })
+            // .then((result) => {
+            //     if (result.isConfirmed) {
+            //         // Collect form data
+            //         const formData = new FormData(form);
+
+            //         // Send the data using Axios
+            //         axios.post('api/bookings/submit_booking.php', formData)
+            //             .then(response => {
+            //                 if (response.data.status === 'success') {
+            //                     Swal.fire({
+            //                         title: "Booked",
+            //                         text: "You have successfully booked",
+            //                         icon: "success"
+            //                     }).then(() => {
+            //                         form.reset(); // Reset form fields after successful booking
+            //                     });
+            //                 } else {
+            //                     Swal.fire({
+            //                         title: "Error",
+            //                         text: response.data.message,
+            //                         icon: "error"
+            //                     });
+            //                 }
+            //             })
+            //             .catch(error => {
+            //                 Swal.fire({
+            //                     title: "Error",
+            //                     text: "There was an error submitting your booking. Please try again.",
+            //                     icon: "error"
+            //                 });
+            //             });
+            //     } else if (result.dismiss === Swal.DismissReason.cancel) {
+            //         Swal.fire({
+            //             title: "Cancelled",
+            //             text: "You have cancelled your book",
+            //             icon: "error"
+            //         });
+            //     }
+            // });
         });
-        });    
-
-        
     </script>
 </body>
 </html>

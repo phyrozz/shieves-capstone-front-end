@@ -3,3 +3,4 @@ tailwind.css
 .env
 htdocs.zip
 .vscode
+/vendor/

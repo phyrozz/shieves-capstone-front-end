@@ -21,16 +21,6 @@
                 <p class="navbar-item-text">BOOK NOW</p>
             </li>
         </a>
-        <a href="/about-us.php" class="navbar-item hover:bg-slate-400 font-bold text-sm p-3 rounded-md transition-all text-center">
-            <li class="flex flex-row items-center gap-2">
-                <lord-icon
-                    src="https://cdn.lordicon.com/jnzhohhs.json"
-                    trigger="hover"
-                    style="width:1.5em;height:1.5em">
-                </lord-icon>
-                <p class="navbar-item-text">ABOUT US</p>
-            </li>
-        </a>
         <a id="login-btn" href="admin/login.php" class="hover:bg-slate-400 font-semibold p-3 rounded-md transition-all text-center group">
             <li class="flex flex-row items-center gap-2">
                 <lord-icon
