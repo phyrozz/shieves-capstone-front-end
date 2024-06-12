@@ -11,10 +11,12 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/node_modules/flatpickr/dist/flatpickr.min.css">
     <script src="https://cdn.lordicon.com/lordicon.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script src="/node_modules/axios/dist/axios.min.js"></script>
+    <script src="/node_modules/flatpickr/dist/flatpickr.min.js"></script>
 </head>
 <body>
     <?php include "./components/navbar.php"; ?>
@@ -37,8 +39,8 @@
                             <input type="text" id="phonenumber" name="phonenumber" pattern="09\d{2}-\d{3}-\d{4}" class="form-input w-full p-2 bg-gray-800 text-white rounded-md shadow-lg" required>
                         </div>
                         <div class="mb-4">
-                            <label for="packagename" class="block text-gray-300 font-bold text-sm pb-2 tracking-wide">CHOOSE A PACKAGE</label>
-                            <select type="text" id="packagename" name="packagename" class="form-input w-full p-2 bg-gray-800 text-white rounded-md shadow-lg" required>
+                            <label for="package" class="block text-gray-300 font-bold text-sm pb-2 tracking-wide">CHOOSE A PACKAGE</label>
+                            <select type="text" id="package" name="package" class="form-input w-full p-2 bg-gray-800 text-white rounded-md shadow-lg" required>
                                 <?php
                                 include "./conn.php";
                                 // Retrieve all package names
@@ -54,14 +56,20 @@
                                 ?>
                             </select>
                         </div>
-                        <div class="mb-4">
+                        <!-- <div class="mb-4">
                             <label for="checkin" class="block text-gray-300 font-bold text-sm pb-2 tracking-wide">CHECK-IN DATE</label>
                             <input type="date" id="checkin" name="checkin" min class="form-input w-full p-2 bg-gray-800 text-white rounded-md shadow-lg" required>
                         </div>
                         <div class="mb-6">
                             <label for="checkout" class="block text-gray-300 font-bold text-sm pb-2 tracking-wide">CHECK-OUT DATE</label>
                             <input type="date" id="checkout" name="checkout" class="form-input w-full p-2 bg-gray-800 text-white rounded-md shadow-lg" required>
+                        </div> -->
+
+                        <div class="mb-4">
+                            <label for="checkinout" class="block text-gray-300 font-bold text-sm pb-2 tracking-wide">CHECK-IN & OUT</label>
+                            <input id="checkinout" name="checkinout" type="text" class="form-input w-full p-2 bg-gray-800 text-white rounded-md shadow-lg" required />
                         </div>
+                        
                         <div class="flex w-full justify-end items-center">
                             <button id="booknow" type="button" class="text-xs font-bold tracking-wider bg-gray-800 px-5 py-2 rounded-md hover:bg-gray-900 cursor-pointer transition-all text-white">BOOK NOW</button>
                         </div>
@@ -73,28 +81,37 @@
     <script>
         gsap.from("#booking-form-container", { scale: 0, duration: 0.25, ease: "easeInOut" });
 
-        // Add dynamic min and max date values for the check in and out date pickers
-        const checkinInput = document.getElementById('checkin');
-        const checkoutInput = document.getElementById('checkout');
-
-        // Set the minimum check-in date to today
-        const today = new Date().toISOString().split('T')[0];
-        checkinInput.min = today;
-
-        // Event listener to update the checkout date based on the check-in date
-        checkinInput.addEventListener('change', function() {
-            const checkinDate = new Date(this.value);
-            checkinDate.setDate(checkinDate.getDate() + 1); // Minimum checkout is the day after check-in
-
-            const minCheckoutDate = checkinDate.toISOString().split('T')[0];
-            checkoutInput.min = minCheckoutDate;
-            checkoutInput.value = ''; // Reset the checkout date if check-in date changes
-
-            // Optionally, set a max checkout date (e.g., max 30 days after check-in)
-            checkinDate.setDate(checkinDate.getDate() + 29); // 30 days total including the first day
-            const maxCheckoutDate = checkinDate.toISOString().split('T')[0];
-            checkoutInput.max = maxCheckoutDate;
+        flatpickr('#checkinout', {
+            mode: "range",
+            minDate: new Date().fp_incr(1),
+            altInput: true,
+            altFormat: "F j, Y",
+            dateFormat: "Y-m-d",
+            maxDate: new Date().fp_incr(30), // 30 days from now
         });
+
+        // // Add dynamic min and max date values for the check in and out date pickers
+        // const checkinInput = document.getElementById('checkin');
+        // const checkoutInput = document.getElementById('checkout');
+
+        // // Set the minimum check-in date to today
+        // const today = new Date().toISOString().split('T')[0];
+        // checkinInput.min = today;
+
+        // // Event listener to update the checkout date based on the check-in date
+        // checkinInput.addEventListener('change', function() {
+        //     const checkinDate = new Date(this.value);
+        //     checkinDate.setDate(checkinDate.getDate() + 1); // Minimum checkout is the day after check-in
+
+        //     const minCheckoutDate = checkinDate.toISOString().split('T')[0];
+        //     checkoutInput.min = minCheckoutDate;
+        //     checkoutInput.value = ''; // Reset the checkout date if check-in date changes
+
+        //     // Optionally, set a max checkout date (e.g., max 30 days after check-in)
+        //     checkinDate.setDate(checkinDate.getDate() + 29); // 30 days total including the first day
+        //     const maxCheckoutDate = checkinDate.toISOString().split('T')[0];
+        //     checkoutInput.max = maxCheckoutDate;
+        // });
 
         document.getElementById("booknow").addEventListener("click", (event) => {
             event.preventDefault();
@@ -107,7 +124,7 @@
             }
 
             // Get selected package details
-            const packageSelect = document.getElementById('packagename');
+            const packageSelect = document.getElementById('package');
             const selectedOption = packageSelect.options[packageSelect.selectedIndex];
             const packageName = selectedOption.getAttribute('data-name');
             const packagePrice = selectedOption.getAttribute('data-price');

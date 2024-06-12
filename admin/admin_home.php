@@ -97,7 +97,7 @@ $result = $stmt->get_result();
     <script>
         function updateStatus(select, bookingId) {
             const newStatusId = select.value;
-            axios.post('update_status.php', { booking_id: bookingId, new_status_id: newStatusId })
+            axios.post('../api/admin/update_status.php', { booking_id: bookingId, new_status_id: newStatusId })
                 .then(response => {
                     console.log(response.data);
                 })

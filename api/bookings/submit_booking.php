@@ -12,25 +12,59 @@ $url = 'https://api.xendit.co/v2/invoices';
 
 try {
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        // Retrieve form data
-        $name = $_POST["name"];
-        $email = $_POST["email"];
-        $phone_number = $_POST["phonenumber"];
-        $checkin = $_POST["checkin"];
-        $checkout = $_POST["checkout"];
-        $package = $_POST["packagename"];
-        $description = "Booking for " . $name;
-        $amount = $_POST["amount"];
+        // Retrieve form data with proper sanitation of inputs
+        $name = filter_input(INPUT_POST, "name", FILTER_SANITIZE_STRING);
+        $email = filter_input(INPUT_POST, "email", FILTER_SANITIZE_EMAIL);
+        $phone_number = filter_input(INPUT_POST, "phonenumber", FILTER_SANITIZE_STRING);
+        $dateRange = filter_input(INPUT_POST, "checkinout", FILTER_SANITIZE_STRING);
+        $package = filter_input(INPUT_POST, "package", FILTER_SANITIZE_STRING);
+        $amount = filter_input(INPUT_POST, "amount", FILTER_VALIDATE_FLOAT);
+        $packagename = filter_input(INPUT_POST, "description", FILTER_SANITIZE_STRING);
+
+        // Validate required fields
+        if (!$name || !$email || !$phone_number || !$dateRange || !$package || !$amount) {
+            throw new Exception("Invalid input");
+        }
+
+        // Split the date range into check-in and check-out dates
+        $dates = explode(" to ", $dateRange);
+
+        // Handle cases where only one date is provided
+        if (count($dates) == 1) {
+            $checkin = $dates[0];
+            $checkout = $dates[0]; // Same day for check-in and check-out
+        } else {
+            $checkin = $dates[0];
+            $checkout = $dates[1];
+        }
+
+        // Calculate the invoice duration in seconds
+        $checkinTimestamp = strtotime($checkin);
+        $currentTimestamp = time();
+        $invoiceDuration = $checkinTimestamp - $currentTimestamp;
+
+        // Ensure the invoice duration is a positive number
+        if ($invoiceDuration < 0) {
+            throw new Exception("Check-in date must be in the future.");
+        }
+
+        // Ensure the email is valid
+        if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+            throw new Exception("Invalid email address");
+        }
 
         // Generate a UUID for the external_id
         $externalId = Uuid::uuid4()->toString();
+
+        // Description for the invoice
+        $description = "Booking for " . $name . " - " . $packagename;
 
         // The data to be sent in the POST request
         $data = [
             "external_id" => $externalId,
             "description" => $description,
             "amount" => $amount,
-            "invoice_duration" => 172800,
+            "invoice_duration" => $invoiceDuration,
             "currency" => "PHP",
             "reminder_time" => 1
         ];
@@ -41,7 +75,7 @@ try {
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_HTTPHEADER, [
             'Content-Type: application/json',
-            'Authorization: Basic ' . $apiKey
+            'Authorization: Basic ' . $apiKey,
         ]);
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
         $response = curl_exec($ch);
