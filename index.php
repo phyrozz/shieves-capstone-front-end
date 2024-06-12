@@ -34,7 +34,7 @@
                 </div>
             </div>
             
-            <div class="w-full text-center mt-5 mb-0">
+            <div class="w-full text-center mt-10 mb-0">
                 <h1 class="font-satisfy text-6xl font-bold text-slate-50">All In Packages</h1>
             </div>
             <div class="flex flex-row gap-3 flex-wrap justify-center cursor-default">
@@ -167,7 +167,149 @@
                     </div>
                 </div>
             </div>
-            <div class="flex flex-col gap-0 w-full">
+
+            <div class="w-full text-center mt-10 mb-0">
+                <h1 class="font-satisfy text-5xl font-bold text-slate-50">or book with our other Packages!</h1>
+            </div>
+            <div class="flex flex-row gap-3 flex-wrap justify-center cursor-default">
+                <div class="package-container md:w-96 w-full bg-gradient-to-tr from-violet-950 to-indigo-900 p-10 flex flex-col gap-5 rounded-lg shadow-xl text-center text-white hover:shadow-2xl hover:shadow-slate-300 transition-shadow">
+                    <div class="flex flex-col gap-1">
+                        <p class="font-satisfy text-3xl font-bold">Wedding Package</p>
+                        <p class="font-black text-4xl">PHP 50,000</p>
+                        <p class="font-extrabold text-xs">(50 pax)</p>
+                    </div>
+                    <div class="flex flex-row flex-wrap gap-5 justify-between">
+                        <div class="flex flex-col gap-2 m-auto">
+                            <h1 class="font-satisfy text-2xl">Food Catering</h1>
+                            <ul class="text-sm">
+                               
+                            </ul>
+                        </div>
+                        <div class="flex flex-col gap-2 m-auto">
+                            <h1 class="font-satisfy text-2xl">Decorations</h1>
+                            <ul class="text-sm">
+                             
+                            </ul>
+                        </div>
+                        <div class="flex flex-col gap-2 m-auto">
+                            <h1 class="font-satisfy text-2xl">Venue</h1>
+                            <ul class="text-sm">
+                               
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="package-container md:w-96 w-full bg-gradient-to-tr from-violet-950 to-indigo-900 p-10 flex flex-col gap-5 rounded-lg shadow-xl text-center text-white hover:shadow-2xl hover:shadow-slate-300 transition-shadow">
+                    <div class="flex flex-col gap-1">
+                        <p class="font-satisfy text-3xl font-bold">Daytime Swimming</p>
+                        <p class="font-black text-4xl">PHP 7,000</p>
+                        <p class="font-extrabold text-xs">(25 pax)</p>
+                    </div>
+                    <div class="flex flex-row flex-wrap gap-5 justify-between">
+                        <div class="flex flex-col gap-2 m-auto">
+                            <h1 class="font-satisfy text-2xl">Food Catering</h1>
+                            <ul class="text-sm">
+                               
+                            </ul>
+                        </div>
+                        <div class="flex flex-col gap-2 m-auto">
+                            <h1 class="font-satisfy text-2xl">Decorations</h1>
+                            <ul class="text-sm">
+                             
+                            </ul>
+                        </div>
+                        <div class="flex flex-col gap-2 m-auto">
+                            <h1 class="font-satisfy text-2xl">Venue</h1>
+                            <ul class="text-sm">
+                               
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="package-container md:w-96 w-full bg-gradient-to-tr from-violet-950 to-indigo-900 p-10 flex flex-col gap-5 rounded-lg shadow-xl text-center text-white hover:shadow-2xl hover:shadow-slate-300 transition-shadow">
+                    <div class="flex flex-col gap-1">
+                        <p class="font-satisfy text-3xl font-bold">Overnight Swimming</p>
+                        <p class="font-black text-4xl">PHP 8,500</p>
+                        <p class="font-extrabold text-xs">(20 pax)</p>
+                    </div>
+                    <div class="flex flex-row flex-wrap gap-5 justify-between">
+                        <div class="flex flex-col gap-2 m-auto">
+                            <h1 class="font-satisfy text-2xl">Food Catering</h1>
+                            <ul class="text-sm">
+                               
+                            </ul>
+                        </div>
+                        <div class="flex flex-col gap-2 m-auto">
+                            <h1 class="font-satisfy text-2xl">Decorations</h1>
+                            <ul class="text-sm">
+                             
+                            </ul>
+                        </div>
+                        <div class="flex flex-col gap-2 m-auto">
+                            <h1 class="font-satisfy text-2xl">Venue</h1>
+                            <ul class="text-sm">
+                               
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="package-container md:w-96 w-full bg-gradient-to-tr from-violet-950 to-indigo-900 p-10 flex flex-col gap-5 rounded-lg shadow-xl text-center text-white hover:shadow-2xl hover:shadow-slate-300 transition-shadow">
+                    <div class="flex flex-col gap-1">
+                        <p class="font-satisfy text-3xl font-bold">Swimming</p>
+                        <p class="font-black text-4xl">PHP 14,500</p>
+                        <p class="font-extrabold text-xs">(22 hrs)</p>
+                    </div>
+                    <div class="flex flex-row flex-wrap gap-5 justify-between">
+                        <div class="flex flex-col gap-2 m-auto">
+                            <h1 class="font-satisfy text-2xl">Food Catering</h1>
+                            <ul class="text-sm">
+                               
+                            </ul>
+                        </div>
+                        <div class="flex flex-col gap-2 m-auto">
+                            <h1 class="font-satisfy text-2xl">Decorations</h1>
+                            <ul class="text-sm">
+                             
+                            </ul>
+                        </div>
+                        <div class="flex flex-col gap-2 m-auto">
+                            <h1 class="font-satisfy text-2xl">Venue</h1>
+                            <ul class="text-sm">
+                               
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="package-container md:w-96 w-full bg-gradient-to-tr from-violet-950 to-indigo-900 p-10 flex flex-col gap-5 rounded-lg shadow-xl text-center text-white hover:shadow-2xl hover:shadow-slate-300 transition-shadow">
+                    <div class="flex flex-col gap-1">
+                        <p class="font-satisfy text-3xl font-bold">Events Venue (Function and Pool Area)</p>
+                        <p class="font-black text-4xl">PHP 20,000</p>
+                        <p class="font-extrabold text-xs">(8 hrs - 50/75/100 pax)</p>
+                    </div>
+                    <div class="flex flex-row flex-wrap gap-5 justify-between">
+                        <div class="flex flex-col gap-2 m-auto">
+                            <h1 class="font-satisfy text-2xl">Food Catering</h1>
+                            <ul class="text-sm">
+                               
+                            </ul>
+                        </div>
+                        <div class="flex flex-col gap-2 m-auto">
+                            <h1 class="font-satisfy text-2xl">Decorations</h1>
+                            <ul class="text-sm">
+                             
+                            </ul>
+                        </div>
+                        <div class="flex flex-col gap-2 m-auto">
+                            <h1 class="font-satisfy text-2xl">Venue</h1>
+                            <ul class="text-sm">
+                               
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="flex flex-col gap-0 w-full mt-10">
                 <p class="text-white text-center">Ready to dig in? <a class="hover:underline font-bold" href="./bookings.php">Book now</a> online!</p>
                 <p class="text-white text-center">or you can contact us at <a class="hover:underline font-bold" href="mailto:info@museodesanpedro.com">info@museodesanpedro.com</a></p>
             </div>
