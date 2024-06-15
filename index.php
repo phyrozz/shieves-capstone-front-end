@@ -169,7 +169,7 @@
             </div>
 
             <div class="w-full text-center mt-10 mb-0">
-                <h1 class="font-satisfy text-5xl font-bold text-slate-50">or book with our other Packages!</h1>
+                <h1 class="font-satisfy text-5xl font-bold text-slate-50">or book with our other <u>Packages!</u></h1>
             </div>
             <div class="flex flex-row gap-3 flex-wrap justify-center cursor-default">
                 <div class="package-container md:w-96 w-full bg-gradient-to-tr from-violet-950 to-indigo-900 p-10 flex flex-col gap-5 rounded-lg shadow-xl text-center text-white hover:shadow-2xl hover:shadow-slate-300 transition-shadow">
@@ -310,7 +310,7 @@
             </div>
 
             <div class="flex flex-col gap-0 w-full mt-10">
-                <p class="text-white text-center">Ready to dig in? <a class="hover:underline font-bold" href="./bookings.php">Book now</a> online!</p>
+                <p class="text-white text-center">Ready to stay in? <a class="hover:underline font-bold" href="./bookings.php">Book now</a> online!</p>
                 <p class="text-white text-center">or you can contact us at <a class="hover:underline font-bold" href="mailto:info@museodesanpedro.com">info@museodesanpedro.com</a></p>
             </div>
         </div>
@@ -319,30 +319,6 @@
         // GSAP animation events
         document.addEventListener("DOMContentLoaded", () => {
             gsap.from(".header-text", { opacity: 0, y: 75, duration: 0.50, ease: "easeOut" });
-        });
-        document.getElementById("login-btn").addEventListener("mouseenter", () => {
-            var tl = new TimelineMax({ paused: true });
-            tl.from("#login-btn-icon", {x: 50, duration: 0.20 })
-            tl.from("#login-btn-text", { opacity: 0, x: 20, duration: 0.25 });
-
-            if (!tl.isActive()) {
-                tl.play(0);
-            }
-        });
-        document.querySelectorAll('.navbar-item').forEach(item => {
-            item.addEventListener('mouseenter', () => {
-                bounceNavbarItem(item);
-            });
-        });
-        document.querySelectorAll('.home-item').forEach(item => {
-            item.addEventListener('mouseenter', () => {
-                onHomeItemHoverIn(item);
-            });
-        });
-        document.querySelectorAll('.home-item').forEach(item => {
-            item.addEventListener('mouseleave', () => {
-                onHomeItemHoverOut(item);
-            });
         });
         document.querySelectorAll('.package-container').forEach(item => {
             item.addEventListener('mouseenter', () => {
@@ -354,35 +330,6 @@
                 onPackageItemHoverOut(item);
             });
         });
-
-
-        function bounceNavbarItem(target) {
-            var tl = new TimelineMax({ paused: true });
-            tl.to(target, { y: -20, duration: 0.1, ease: "easeIn" })
-            .to(target, { y: 0, duration: 0.1, ease: "easeOut" });
-
-            if (!tl.isActive()) {
-                tl.play(0);
-            }
-        }
-
-        function onHomeItemHoverIn(target) {
-            var tl = new TimelineMax({ paused: true });
-            tl.to(target, { scale: 1.05, duration: 0.1, ease: "easeIn" });
-
-            if (!tl.isActive()) {
-                tl.play(0);
-            }
-        }
-
-        function onHomeItemHoverOut(target) {
-            var tl = new TimelineMax({ paused: true });
-            tl.to(target, { scale: 1, duration: 0.25, ease: "easeOut" });
-
-            if (!tl.isActive()) {
-                tl.play(0);
-            }
-        }
 
         function onPackageItemHoverIn(target) {
             var tl = new TimelineMax({ paused: true });

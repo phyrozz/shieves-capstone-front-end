@@ -33,4 +33,59 @@
             </li>
         </a>
     </ul>
+    <script>
+    document.getElementById("login-btn").addEventListener("mouseenter", () => {
+        var tl = new TimelineMax({ paused: true });
+        tl.from("#login-btn-icon", {x: 50, duration: 0.20 })
+        tl.from("#login-btn-text", { opacity: 0, x: 20, duration: 0.25 });
+
+        if (!tl.isActive()) {
+            tl.play(0);
+        }
+    });
+
+    document.querySelectorAll('.navbar-item').forEach(item => {
+        item.addEventListener('mouseenter', () => {
+            bounceNavbarItem(item);
+        });
+    });
+    document.querySelectorAll('.home-item').forEach(item => {
+        item.addEventListener('mouseenter', () => {
+            onHomeItemHoverIn(item);
+        });
+    });
+    document.querySelectorAll('.home-item').forEach(item => {
+        item.addEventListener('mouseleave', () => {
+            onHomeItemHoverOut(item);
+        });
+    });
+
+    function bounceNavbarItem(target) {
+        var tl = new TimelineMax({ paused: true });
+        tl.to(target, { y: -20, duration: 0.1, ease: "easeIn" })
+        .to(target, { y: 0, duration: 0.1, ease: "easeOut" });
+
+        if (!tl.isActive()) {
+            tl.play(0);
+        }
+    }
+
+    function onHomeItemHoverIn(target) {
+        var tl = new TimelineMax({ paused: true });
+        tl.to(target, { scale: 1.05, duration: 0.1, ease: "easeIn" });
+
+        if (!tl.isActive()) {
+            tl.play(0);
+        }
+    }
+
+    function onHomeItemHoverOut(target) {
+        var tl = new TimelineMax({ paused: true });
+        tl.to(target, { scale: 1, duration: 0.25, ease: "easeOut" });
+
+        if (!tl.isActive()) {
+            tl.play(0);
+        }
+    }
+    </script>
 </nav>

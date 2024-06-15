@@ -19,12 +19,23 @@ while ($statusRow = $statusesResult->fetch_assoc()) {
 }
 $statusStmt->close();
 
-// Retrieve all bookings with their statuses
+$limit = 20; // Number of records per page
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$offset = ($page - 1) * $limit;
+
+$totalStmt = $conn->prepare("SELECT COUNT(*) as count FROM bookings");
+$totalStmt->execute();
+$totalResult = $totalStmt->get_result();
+$totalRecords = $totalResult->fetch_assoc()['count'];
+$totalStmt->close();
+$totalPages = ceil($totalRecords / $limit);
+
 $stmt = $conn->prepare("SELECT bookings.id as booking_id, bookings.name AS full_name, bookings.email, bookings.phone_number, bookings.status_id, statuses.name AS status_name, packages.name AS package_name, packages.price as package_price
                         FROM bookings 
                         INNER JOIN statuses ON bookings.status_id = statuses.id
                         INNER JOIN packages ON bookings.package_id = packages.id
-                        ");
+                        LIMIT ?, ?");
+$stmt->bind_param("ii", $offset, $limit);
 $stmt->execute();
 $result = $stmt->get_result();
 ?>
@@ -64,26 +75,36 @@ $result = $stmt->get_result();
                             </tr>
                         </thead>
                         <tbody>
-                        <?php
-                        while ($row = $result->fetch_assoc()) {
-                            echo "<tr >";
-                            echo "<td><p class='text-left'>" . htmlspecialchars($row["full_name"]) . "</p></td>";
-                            echo "<td><p class='text-left'>" . htmlspecialchars($row["email"]) . "</p></td>";
-                            echo "<td><p class='text-left'>" . htmlspecialchars($row["phone_number"]) . "</p></td>";
-                            echo "<td><p class='text-left'>" . htmlspecialchars($row["package_name"]) . "</p></td>";
-                            echo "<td>";
-                            echo "<select class='text-sm' onchange='updateStatus(this, " . $row['booking_id'] . ")'>";
-                            foreach ($statuses as $status) {
-                                $selected = $row["status_id"] == $status['id'] ? "selected" : "";
-                                echo "<option value='" . htmlspecialchars($status['id']) . "' $selected>" . htmlspecialchars($status['name']) . "</option>";
-                            }
-                            echo "</select>";
-                            echo "</td>";
-                            echo "</tr>";
-                        }
-                        ?>
+                        <?php while ($row = $result->fetch_assoc()): ?>
+                            <tr>
+                                <td><p class='text-left'><?= htmlspecialchars($row["full_name"]) ?></p></td>
+                                <td><p class='text-left'><?= htmlspecialchars($row["email"]) ?></p></td>
+                                <td><p class='text-left'><?= htmlspecialchars($row["phone_number"]) ?></p></td>
+                                <td><p class='text-left'><?= htmlspecialchars($row["package_name"]) ?></p></td>
+                                <td>
+                                    <select class='text-sm' onchange='updateStatus(this, <?= $row["booking_id"] ?>)'>
+                                        <?php foreach ($statuses as $status): ?>
+                                            <option value='<?= htmlspecialchars($status["id"]) ?>' <?= $row["status_id"] == $status["id"] ? "selected" : "" ?>><?= htmlspecialchars($status["name"]) ?></option>
+                                        <?php endforeach; ?>
+                                    </select>
+                                </td>
+                            </tr>
+                        <?php endwhile; ?>
                         </tbody>
                       </table>
+                    </div>
+                    <div class="flex justify-center mt-4 mb-3">
+                        <?php if ($page > 1): ?>
+                            <a href="?page=<?= $page - 1 ?>" class="mx-1 px-3 py-1 bg-gray-300 text-gray-800 hover:bg-gray-400 transition-colors rounded">&laquo; Previous</a>
+                        <?php endif; ?>
+
+                        <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                            <a href="?page=<?= $i ?>" class="mx-1 px-3 py-1 <?= $i == $page ? 'bg-blue-500 text-white hover:bg-blue-600' : 'bg-gray-300 hover:bg-gray-400' ?> transition-colors rounded"><?= $i ?></a>
+                        <?php endfor; ?>
+
+                        <?php if ($page < $totalPages): ?>
+                            <a href="?page=<?= $page + 1 ?>" class="mx-1 px-3 py-1 bg-gray-300 text-gray-800 hover:bg-gray-400 transition-colors rounded">Next &raquo;</a>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>

@@ -11,7 +11,7 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="/node_modules/flatpickr/dist/flatpickr.min.css">
+    <link rel="stylesheet" type="text/css" href="/node_modules/flatpickr/dist/themes/dark.css">
     <script src="https://cdn.lordicon.com/lordicon.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -87,7 +87,7 @@
             altInput: true,
             altFormat: "F j, Y",
             dateFormat: "Y-m-d",
-            maxDate: new Date().fp_incr(30), // 30 days from now
+            maxDate: new Date().fp_incr(90), // 90 days from now
         });
 
         // // Add dynamic min and max date values for the check in and out date pickers
