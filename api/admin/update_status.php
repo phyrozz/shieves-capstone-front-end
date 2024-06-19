@@ -1,5 +1,5 @@
 <?php
-include "../conn.php";
+include "../../conn.php";
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // For some reason, this line makes php read JSON post requests
