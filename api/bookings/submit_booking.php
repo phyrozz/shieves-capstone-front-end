@@ -66,7 +66,8 @@ try {
             "amount" => $amount,
             "invoice_duration" => $invoiceDuration,
             "currency" => "PHP",
-            "reminder_time" => 1
+            "reminder_time" => 1,
+            "success_redirect_url" => "http://localhost/api/bookings/check_booking_status.php"
         ];
 
         // Send the invoice creation request to the API
@@ -105,8 +106,13 @@ try {
 
             $stmt->close();
 
-            // Send a JSON response with the invoice URL
-            echo json_encode(["status" => "success", "message" => "Booking successful", "invoice_url" => $invoiceUrl]);
+            // Send a JSON response with the invoice URL and invoice ID
+            echo json_encode([
+                "status" => "success",
+                "message" => "Booking successful",
+                "invoice_url" => $invoiceUrl,
+                "invoice_id" => $invoiceId
+            ]);
         } else {
             throw new Exception("Failed to create invoice: " . $responseData['message']);
         }

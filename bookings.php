@@ -36,7 +36,7 @@
                         </div>
                         <div class="mb-4">
                             <label for="phonenumber" class="block text-gray-300 font-bold text-sm pb-2 tracking-wide">MOBILE NUMBER</label>
-                            <input type="text" id="phonenumber" name="phonenumber" pattern="09\d{2}-\d{3}-\d{4}" class="form-input w-full p-2 bg-gray-800 text-white rounded-md shadow-lg" required>
+                            <input type="text" id="phonenumber" name="phonenumber" pattern="^09\d{9}$" title="Invalid mobile number" class="form-input w-full p-2 bg-gray-800 text-white rounded-md shadow-lg" required>
                         </div>
                         <div class="mb-4">
                             <label for="package" class="block text-gray-300 font-bold text-sm pb-2 tracking-wide">CHOOSE A PACKAGE</label>

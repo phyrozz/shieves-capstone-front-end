@@ -4,11 +4,11 @@
         <a href="admin_home.php" class="navbar-item hover:bg-slate-400 font-bold text-sm p-3 rounded-md transition-all text-center">
             <li class="flex flex-row items-center gap-2"> 
                 <lord-icon
-                    src="https://cdn.lordicon.com/wmwqvixz.json"
+                    src="https://cdn.lordicon.com/wmlleaaf.json"
                     trigger="hover"
                     style="width:1.5em;height:1.5em">
                 </lord-icon>
-                <p class="navbar-item-text">HOME</p>
+                <p class="navbar-item-text">BOOKINGS</p>
             </li>
         </a>
         <a href="#" class="navbar-item hover:bg-slate-400 font-bold text-sm p-3 rounded-md transition-all text-center">
