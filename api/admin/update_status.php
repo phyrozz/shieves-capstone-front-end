@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     // Prepare and execute the UPDATE query to update the status of the booking
     $stmt = $conn->prepare("UPDATE bookings SET status_id = ? WHERE id = ?");
-    $stmt->bind_param("ii", $newStatusId, $bookingId);
+    $stmt->bind_param("is", $newStatusId, $bookingId);
     
     if ($stmt->execute()) {
         echo json_encode(["success" => true, "message" => "Status updated successfully"]);
