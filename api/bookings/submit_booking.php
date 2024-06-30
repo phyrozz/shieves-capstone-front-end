@@ -53,11 +53,27 @@ try {
             throw new Exception("Invalid email address");
         }
 
-        // Generate a UUID for the external_id
+        // Generate a UUID for the external_id and booking_id
         $externalId = Uuid::uuid4()->toString();
+        $bookingId = Uuid::uuid4()->toString();
 
         // Description for the invoice
         $description = "Booking for " . $name . " - " . $packagename;
+
+        // Insert the booking into the database
+        $stmt = $conn->prepare("INSERT INTO bookings (id, email, name, phone_number, time_in, time_out, package_id) VALUES (?, ?, ?, ?, ?, ?, ?)");
+
+        if ($stmt === false) {
+            throw new Exception("Failed to prepare the SQL statement: " . $conn->error);
+        }
+
+        $stmt->bind_param("ssssssi", $bookingId, $email, $name, $phone_number, $checkin, $checkout, $package);
+
+        if (!$stmt->execute()) {
+            throw new Exception("Failed to execute the SQL statement: " . $stmt->error);
+        }
+
+        $stmt->close();
 
         // The data to be sent in the POST request
         $data = [
@@ -67,7 +83,10 @@ try {
             "invoice_duration" => $invoiceDuration,
             "currency" => "PHP",
             "reminder_time" => 1,
-            "success_redirect_url" => "http://localhost/api/bookings/check_booking_status.php"
+            "success_redirect_url" => "http://localhost/bookings/success.php?booking_id=" . $bookingId,
+            "metadata" => [
+                "booking_id" => $bookingId
+            ]
         ];
 
         // Send the invoice creation request to the API
@@ -92,13 +111,14 @@ try {
             $invoiceId = $responseData['id'];
             $invoiceUrl = $responseData['invoice_url'];
 
-            $stmt = $conn->prepare("INSERT INTO bookings (email, name, phone_number, time_in, time_out, package_id, invoice_id) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            // Update the booking with the invoice ID
+            $stmt = $conn->prepare("UPDATE bookings SET invoice_id = ? WHERE id = ?");
 
             if ($stmt === false) {
                 throw new Exception("Failed to prepare the SQL statement: " . $conn->error);
             }
 
-            $stmt->bind_param("sssssis", $email, $name, $phone_number, $checkin, $checkout, $package, $invoiceId);
+            $stmt->bind_param("ss", $invoiceId, $bookingId);
 
             if (!$stmt->execute()) {
                 throw new Exception("Failed to execute the SQL statement: " . $stmt->error);

@@ -1,3 +1,5 @@
+<?php session_start(); ?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -56,15 +58,6 @@
                                 ?>
                             </select>
                         </div>
-                        <!-- <div class="mb-4">
-                            <label for="checkin" class="block text-gray-300 font-bold text-sm pb-2 tracking-wide">CHECK-IN DATE</label>
-                            <input type="date" id="checkin" name="checkin" min class="form-input w-full p-2 bg-gray-800 text-white rounded-md shadow-lg" required>
-                        </div>
-                        <div class="mb-6">
-                            <label for="checkout" class="block text-gray-300 font-bold text-sm pb-2 tracking-wide">CHECK-OUT DATE</label>
-                            <input type="date" id="checkout" name="checkout" class="form-input w-full p-2 bg-gray-800 text-white rounded-md shadow-lg" required>
-                        </div> -->
-
                         <div class="mb-4">
                             <label for="checkinout" class="block text-gray-300 font-bold text-sm pb-2 tracking-wide">CHECK-IN & OUT</label>
                             <input id="checkinout" name="checkinout" type="text" class="form-input w-full p-2 bg-gray-800 text-white rounded-md shadow-lg" required />
@@ -90,29 +83,6 @@
             maxDate: new Date().fp_incr(90), // 90 days from now
         });
 
-        // // Add dynamic min and max date values for the check in and out date pickers
-        // const checkinInput = document.getElementById('checkin');
-        // const checkoutInput = document.getElementById('checkout');
-
-        // // Set the minimum check-in date to today
-        // const today = new Date().toISOString().split('T')[0];
-        // checkinInput.min = today;
-
-        // // Event listener to update the checkout date based on the check-in date
-        // checkinInput.addEventListener('change', function() {
-        //     const checkinDate = new Date(this.value);
-        //     checkinDate.setDate(checkinDate.getDate() + 1); // Minimum checkout is the day after check-in
-
-        //     const minCheckoutDate = checkinDate.toISOString().split('T')[0];
-        //     checkoutInput.min = minCheckoutDate;
-        //     checkoutInput.value = ''; // Reset the checkout date if check-in date changes
-
-        //     // Optionally, set a max checkout date (e.g., max 30 days after check-in)
-        //     checkinDate.setDate(checkinDate.getDate() + 29); // 30 days total including the first day
-        //     const maxCheckoutDate = checkinDate.toISOString().split('T')[0];
-        //     checkoutInput.max = maxCheckoutDate;
-        // });
-
         document.getElementById("booknow").addEventListener("click", (event) => {
             event.preventDefault();
 
@@ -132,7 +102,7 @@
             // Show confirmation dialog
             Swal.fire({
                 title: "Do you wish to proceed?",
-                text: "You will be redirected to another page for online payment.",
+                text: "You will be redirected to another page for online payment. Make sure to prepare your payment before proceeding.",
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonText: "Yes",
@@ -172,46 +142,20 @@
                     });
                 }
             })
-            // .then((result) => {
-            //     if (result.isConfirmed) {
-            //         // Collect form data
-            //         const formData = new FormData(form);
-
-            //         // Send the data using Axios
-            //         axios.post('api/bookings/submit_booking.php', formData)
-            //             .then(response => {
-            //                 if (response.data.status === 'success') {
-            //                     Swal.fire({
-            //                         title: "Booked",
-            //                         text: "You have successfully booked",
-            //                         icon: "success"
-            //                     }).then(() => {
-            //                         form.reset(); // Reset form fields after successful booking
-            //                     });
-            //                 } else {
-            //                     Swal.fire({
-            //                         title: "Error",
-            //                         text: response.data.message,
-            //                         icon: "error"
-            //                     });
-            //                 }
-            //             })
-            //             .catch(error => {
-            //                 Swal.fire({
-            //                     title: "Error",
-            //                     text: "There was an error submitting your booking. Please try again.",
-            //                     icon: "error"
-            //                 });
-            //             });
-            //     } else if (result.dismiss === Swal.DismissReason.cancel) {
-            //         Swal.fire({
-            //             title: "Cancelled",
-            //             text: "You have cancelled your book",
-            //             icon: "error"
-            //         });
-            //     }
-            // });
         });
+
+        // Check for success message in session and display SweetAlert
+        <?php
+        if (isset($_SESSION['success_message'])) {
+            echo "Swal.fire({
+                title: 'Payment Successful!',
+                text: '" . $_SESSION['success_message'] . "',
+                icon: 'success',
+                confirmButtonText: 'OK'
+            });";
+            unset($_SESSION['success_message']); // Clear success message after displaying
+        }
+        ?>
     </script>
 </body>
 </html>

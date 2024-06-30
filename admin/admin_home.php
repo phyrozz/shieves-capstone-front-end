@@ -68,69 +68,75 @@ $result = $stmt->get_result();
     <script src="https://cdn.lordicon.com/lordicon.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="../node_modules/axios/dist/axios.min.js"></script>
-
+    <link href="https://cdn.datatables.net/2.0.8/css/dataTables.dataTables.css" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
+    <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
 </head>
 <body>
-    <div class="bg-gradient-to-br from-slate-950 to-violet-950 h-screen">
+    <div class="flex min-h-screen">
         <?php include "../components/admin_navbar.php"; ?>
-        <div class="w-full flex flex-row justify-end gap-3 p-3">
-            <form class="flex flex-row gap-2" method="GET" action="">
-                <input 
-                    type="text" 
-                    name="search" 
-                    placeholder="Search..." 
-                    class="p-2 w-96 rounded-md"
-                    value="<?= htmlspecialchars(isset($_GET['search']) ? $_GET['search'] : '') ?>"
-                />
-                <input type="submit" value="Search" class="p-2 bg-slate-800 text-white rounded-md cursor-pointer" />
-            </form>
-        </div>
-        <div class="flex flex-col items-center justify-center px-3 pb-3 ">
-            <table class="table w-full text-left rtl:text-right bg-slate-950 text-white">
-                <thead>
-                    <tr class="font-bold text-sm">
-                        <th scope="col" class="px-6 py-3">NAME</th>
-                        <th scope="col" class="px-6 py-3">EMAIL</th>
-                        <th scope="col" class="px-6 py-3">CONTACT NUMBER</th>
-                        <th scope="col" class="px-6 py-3">PACKAGE</th>
-                        <th scope="col" class="px-6 py-3">STATUS</th>
-                        <th scope="col" class="px-6 py-3">PAYMENT STATUS</th>
-                    </tr>
-                </thead>
-                <tbody>
-                <?php while ($row = $result->fetch_assoc()): ?>
-                    <tr class="odd:bg-slate-800 even:bg-slate-900">
-                        <td class="px-6 py-4"><p class='text-left'><?= htmlspecialchars($row["full_name"]) ?></p></td>
-                        <td class="px-6 py-4"><p class='text-left'><?= htmlspecialchars($row["email"]) ?></p></td>
-                        <td class="px-6 py-4"><p class='text-left'><?= htmlspecialchars($row["phone_number"]) ?></p></td>
-                        <td class="px-6 py-4"><p class='text-left'><?= htmlspecialchars($row["package_name"]) ?></p></td>
-                        <td class="px-6 py-4">
-                            <select class='border-2 rounded-md p-1 bg-slate-700 border-slate-800' onchange='updateStatus(this, <?= $row["booking_id"] ?>)'>
-                                <?php foreach ($statuses as $status): ?>
-                                    <option value='<?= htmlspecialchars($status["id"]) ?>' <?= $row["status_id"] == $status["id"] ? "selected" : "" ?>><?= htmlspecialchars($status["name"]) ?></option>
-                                <?php endforeach; ?>
-                            </select>
-                        </td>
-                        <td class="px-6 py-4"><p class='text-left'><?= htmlspecialchars($row["payment_status_name"]) ?></p></td>
-                    </tr>
-                <?php endwhile; ?>
-                </tbody>
-            </table>
-            <div class="flex justify-center mt-4 mb-3">
-                <?php if ($page > 1): ?>
-                    <a href="?page=<?= $page - 1 ?>&search=<?= htmlspecialchars($search) ?>" class="mx-1 px-3 py-1 bg-slate-700 text-white hover:bg-slate-800 transition-colors rounded">&laquo; Previous</a>
-                <?php endif; ?>
+        <div class="flex-1 p-8 bg-gradient-to-br from-white to-slate-100 h-screen col-span-9">
+            <!-- <div class="w-full flex flex-row justify-between gap-3 p-3">
+                <h1 class="text-4xl font-satisfy text-white">Bookings</h1>
+                <form class="flex flex-row gap-2" method="GET" action="">
+                    <input 
+                        type="text" 
+                        name="search" 
+                        placeholder="Search..." 
+                        class="p-2 w-96 rounded-md"
+                        value="<?= htmlspecialchars(isset($_GET['search']) ? $_GET['search'] : '') ?>"
+                    />
+                    <input type="submit" value="Search" class="p-2 bg-slate-800 text-white rounded-md cursor-pointer" />
+                </form>
+            </div> -->
+            <div class="p-5">
+                <table id="bookings-table" class="stripe">
+                    <thead>
+                        <tr>
+                            <th scope="col">NAME</th>
+                            <th scope="col">EMAIL</th>
+                            <th scope="col">CONTACT NUMBER</th>
+                            <th scope="col">PACKAGE</th>
+                            <th scope="col">STATUS</th>
+                            <th scope="col">PAYMENT STATUS</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                    <?php while ($row = $result->fetch_assoc()): ?>
+                        <tr>
+                            <td><p><?= htmlspecialchars($row["full_name"]) ?></p></td>
+                            <td><p><?= htmlspecialchars($row["email"]) ?></p></td>
+                            <td><p><?= htmlspecialchars($row["phone_number"]) ?></p></td>
+                            <td><p><?= htmlspecialchars($row["package_name"]) ?></p></td>
+                            <td>
+                                <select onchange='updateStatus(this, "<?= $row["booking_id"] ?>")'>
+                                    <?php foreach ($statuses as $status): ?>
+                                        <option value='<?= htmlspecialchars($status["id"]) ?>' <?= $row["status_id"] == $status["id"] ? "selected" : "" ?>><?= htmlspecialchars($status["name"]) ?></option>
+                                    <?php endforeach; ?>
+                                </select>
+                            </td>
+                            <td><p><?= htmlspecialchars($row["payment_status_name"]) ?></p></td>
+                        </tr>
+                    <?php endwhile; ?>
+                    </tbody>
+                </table>
+                <!-- <div class="flex justify-center mt-4 mb-3">
+                    <?php if ($page > 1): ?>
+                        <a href="?page=<?= $page - 1 ?>&search=<?= htmlspecialchars($search) ?>" class="mx-1 px-3 py-1 bg-slate-700 text-white hover:bg-slate-800 transition-colors rounded">&laquo; Previous</a>
+                    <?php endif; ?>
 
-                <?php for ($i = 1; $i <= $totalPages; $i++): ?>
-                    <a href="?page=<?= $i ?>&search=<?= htmlspecialchars($search) ?>" class="mx-1 px-3 py-1 <?= $i == $page ? 'bg-slate-800 text-white hover:bg-slate-800' : 'bg-slate-700 text-white hover:bg-slate-800' ?> transition-colors rounded"><?= $i ?></a>
-                <?php endfor; ?>
+                    <?php for ($i = 1; $i <= $totalPages; $i++): ?>
+                        <a href="?page=<?= $i ?>&search=<?= htmlspecialchars($search) ?>" class="mx-1 px-3 py-1 <?= $i == $page ? 'bg-slate-800 text-white hover:bg-slate-800' : 'bg-slate-700 text-white hover:bg-slate-800' ?> transition-colors rounded"><?= $i ?></a>
+                    <?php endfor; ?>
 
-                <?php if ($page < $totalPages): ?>
-                    <a href="?page=<?= $page + 1 ?>&search=<?= htmlspecialchars($search) ?>" class="mx-1 px-3 py-1 bg-slate-700 text-white hover:bg-slate-800 transition-colors rounded">Next &raquo;</a>
-                <?php endif; ?>
+                    <?php if ($page < $totalPages): ?>
+                        <a href="?page=<?= $page + 1 ?>&search=<?= htmlspecialchars($search) ?>" class="mx-1 px-3 py-1 bg-slate-700 text-white hover:bg-slate-800 transition-colors rounded">Next &raquo;</a>
+                    <?php endif; ?>
+                </div> -->
             </div>
         </div>
     </div>
+    
     
 
     <script>
@@ -144,6 +150,8 @@ $result = $stmt->get_result();
                     console.error('There was an error!', error);
                 });
         }
+
+        new DataTable('#bookings-table', {});
     </script>
 </body>
 </html>
