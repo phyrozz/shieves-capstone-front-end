@@ -18,7 +18,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
   {
     $_SESSION ["username"]=$username;
     
-    header("location:admin_home.php");
+    header("location:booked_client.php");
     exit();
   }
 

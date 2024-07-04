@@ -73,11 +73,16 @@ $result = $stmt->get_result();
     <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
 </head>
 <body>
-    <div class="flex min-h-screen">
-        <?php include "../components/admin_navbar.php"; ?>
-        <div class="flex-1 p-8 bg-gradient-to-br from-white to-slate-100 h-screen col-span-9 pl-72">
+    <div class="flex">
+        <?php 
+        $activeLink = "bookings.php";
+        include "../components/admin_navbar.php";
+        ?>
+        <div class="flex-1 p-8 bg-slate-200 h-screen">
+            <h1 class="text-3xl font-bold text-gray-800 mb-6">Bookings</h1>
+
             <!-- <div class="w-full flex flex-row justify-between gap-3 p-3">
-                <h1 class="text-4xl font-satisfy text-white">Client Booking</h1>
+                <h1 class="text-4xl font-satisfy text-white">Bookings</h1>
                 <form class="flex flex-row gap-2" method="GET" action="">
                     <input 
                         type="text" 
@@ -89,7 +94,7 @@ $result = $stmt->get_result();
                     <input type="submit" value="Search" class="p-2 bg-slate-800 text-white rounded-md cursor-pointer" />
                 </form>
             </div> -->
-            <div class="p-5">
+            <div class="bg-white rounded-lg shadow mb-6 p-5">
                 <table id="bookings-table" class="stripe">
                     <thead>
                         <tr>

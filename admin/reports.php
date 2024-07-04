@@ -18,9 +18,12 @@
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <div class="flex min-h-screen bg-slate-200">
+<div class="flex min-h-screen bg-slate-200">
         <?php include "../components/admin_navbar.php"; ?>
-        <div class="flex-1 p-8">
+        <div class="w-64 bg-white shadow-md">
+            <!-- Sidebar content here -->
+        </div>
+        <div class="flex-1 ml-64 p-8";>
             <h1 class="text-3xl font-bold text-gray-800 mb-6">Reports</h1>
             
             <div class="bg-white p-6 rounded-lg shadow mb-6">
