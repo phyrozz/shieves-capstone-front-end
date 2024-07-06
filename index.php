@@ -309,6 +309,7 @@
             <div class="flex flex-col gap-0 w-full mt-10">
                 <p class="text-white text-center">Ready to stay in? <a class="hover:underline font-bold" href="./bookings.php">Book now</a> online!</p>
                 <p class="text-white text-center">or you can contact us at <a class="hover:underline font-bold" href="mailto:info@museodesanpedro.com">info@museodesanpedro.com</a></p>
+                <p class="mt-5 text-white text-center">Are you an admin? <a class="hover:underline font-bold" href="admin/login.php">Log in here</a></p>
             </div>
         </div>
     </div>

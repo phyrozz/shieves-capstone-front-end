@@ -96,11 +96,15 @@ $result = $stmt->get_result();
                         <td><p><?= htmlspecialchars($row["phone_number"]) ?></p></td>
                         <td><p><?= htmlspecialchars($row["package_name"]) ?></p></td>
                         <td>
+                            <?php if ($row["payment_status_name"] == "Paid"): ?>
+                            <p><?= htmlspecialchars($row["status_name"]) ?></p>
+                            <?php else: ?>
                             <select onchange='updateStatus(this, "<?= $row["booking_id"] ?>")'>
                                 <?php foreach ($statuses as $status): ?>
                                     <option value='<?= htmlspecialchars($status["id"]) ?>' <?= $row["status_id"] == $status["id"] ? "selected" : "" ?>><?= htmlspecialchars($status["name"]) ?></option>
                                 <?php endforeach; ?>
-                            </select>
+                            </select>                                
+                            <?php endif; ?>
                         </td>
                         <td><p><?= htmlspecialchars($row["payment_status_name"]) ?></p></td>
                     </tr>

@@ -21,7 +21,7 @@
                 <p class="navbar-item-text">BOOK NOW</p>
             </li>
         </a>
-        <a id="login-btn" href="admin/login.php" class="hover:bg-slate-400 font-semibold p-3 rounded-md transition-all text-center group">
+        <a id="login-btn" href="login.php" class="hover:bg-slate-400 font-semibold p-3 rounded-md transition-all text-center group">
             <li class="flex flex-row items-center gap-2">
                 <lord-icon
                     id="login-btn-icon"

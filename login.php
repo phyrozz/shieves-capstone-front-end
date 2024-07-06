@@ -1,14 +1,14 @@
 <?php
-include "../conn.php";
+include "conn.php";
 
 session_start();
 
 if($_SERVER["REQUEST_METHOD"]=="POST")
 {
-  $username=$_POST["username"];
+  $email=$_POST["email"];
   $password=$_POST["password"];
 
-  $sql= "SELECT * FROM admins WHERE username= '".$username."' AND password= '".$password."' ";
+  $sql= "SELECT * FROM registered_users WHERE email= '".$email."' AND password= '".$password."' ";
 
   $result=mysqli_query($conn, $sql);
 
@@ -16,15 +16,15 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
 
   if($row)
   {
-    $_SESSION ["username"]=$username;
+    $_SESSION ["email"]=$email;
     
-    header("location:booked_client.php");
+    header("location: bookings.php");
     exit();
   }
 
   else
   {
-    $_SESSION["error"] = "Incorrect username or password. Please try again.";
+    $_SESSION["error"] = "Incorrect email or password. Please try again.";
     header("Location: " . $_SERVER["PHP_SELF"]);
     exit();
   }
@@ -36,7 +36,7 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Museo de San Pedro - Admin Login</title>
+  <title>Museo de San Pedro - Customer Login</title>
   <link rel="stylesheet" href="../tailwind.css">
   <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
@@ -44,11 +44,11 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
 <body>
   <div class="w-screen h-screen bg-gradient-to-br from-slate-950 to-violet-950 flex justify-center items-center text-slate-50">
     <div id="login-container" class="w-96 bg-slate-950 flex flex-col items-start rounded-lg shadow-2xl shadow-slate-950 px-8 py-10">
-      <h1 class="font-black text-3xl">Log in as Admin</h1>
+      <h1 class="font-black text-3xl">Log in</h1>
       <form class="flex flex-col w-full py-5" method="POST">
         <div class="w-full flex flex-col">
-          <span class="text-xs font-bold tracking-wider text-slate-400">USER NAME</span>
-          <input type="text" name="username" class="mt-1 mb-5 p-2 bg-gray-800 rounded-md transition-all" maxlength="255" required />
+          <span class="text-xs font-bold tracking-wider text-slate-400">EMAIL</span>
+          <input type="email" name="email" class="mt-1 mb-5 p-2 bg-gray-800 rounded-md transition-all" maxlength="255" required />
         </div>
         <div class="w-full flex flex-col">
           <span class="text-xs font-bold tracking-wider text-slate-400">PASSWORD</span>
