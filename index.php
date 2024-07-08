@@ -15,7 +15,7 @@
     <?php include "./components/navbar.php"; ?>
     <div class="flex flex-col h-screen justify-center items-center">
         <p class="header-text font-bold text-lg text-slate-100">Welcome to</p>
-        <h1 class="font-satisfy mt-2 header-text font-extrabold text-6xl text-center text-slate-100">Museo de San Pedro</h1>
+        <h1 class="font-serif mt-2 header-text font-extrabold text-6xl text-center text-slate-100">Museo de San Pedro</h1>
         <p id="scroll-down-text" class="absolute m-auto bottom-5 text-slate-100">Scroll down to get started</p>
         <div id="header-bg" class="absolute -z-50 bg-[url(/assets/bg.jpg)] filter brightness-50 bg-cover mask h-screen w-full"></div>
     </div>
