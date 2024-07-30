@@ -7,21 +7,46 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="tailwind.css">
+    <link rel="stylesheet" href="node_modules/swiper/swiper-bundle.min.css">
     <script src="https://cdn.lordicon.com/lordicon.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
-    <title>Museo de San Pedro</title>    
+    <script src="node_modules/swiper/swiper-bundle.min.js"></script>
+    <title>Museo de San Pedro</title>
 </head>
 <body>
     <?php include "./components/navbar.php"; ?>
-    <div class="flex flex-col h-screen justify-center items-center">
-        <p class="header-text font-bold text-lg text-slate-100">Welcome to</p>
-        <h1 class="font-serif mt-2 header-text font-extrabold text-6xl text-center text-slate-100">Museo de San Pedro</h1>
-        <p id="scroll-down-text" class="absolute m-auto bottom-5 text-slate-100">Scroll down to get started</p>
+    <div class="flex flex-col h-[75vh] justify-center items-center text-white cursor-default">
+        <p class="font-satisfy md:text-2xl text-lg">Welcome to</p>
+        <h1 class="md:text-6xl text-4xl font-satisfy text-center text-pretty font-bold header-text">Museo de San Pedro</h1>
         <div id="header-bg" class="absolute -z-50 bg-[url(/assets/bg.jpg)] filter brightness-50 bg-cover mask h-screen w-full"></div>
     </div>
 
-    <div class="flex md:flex-row flex-col justify-center flex-wrap bg-gradient-to-br from-slate-950 to-violet-950 gap-5 p-5">
-        <div class="m-10 flex flex-col gap-10 items-center">
+    <div class="flex md:flex-row flex-col justify-center flex-wrap bg-gradient-to-br from-slate-950 to-violet-950 gap-5">
+        <!-- Showcase component -->
+        <div id="showcase" class="grid grid-cols-2 pt-40 pb-20 md:px-48 px-10 gap-12 justify-center items-center">
+            <div class="w-full md:col-span-1 col-span-2 text-white md:text-end text-center leading-3">
+                <h1 class="text-6xl font-satisfy font-bold mb-8">A Resort Like No Other...</h1>
+                <p class="text-sm text-pretty mb-3">Welcome to the <u><b>ultimate getaway</b></u> at our serene resort, where we offer a variety of packages to suit every occasion and preference. Nestled in a picturesque location, our resort provides the perfect backdrop for your dream wedding. Exchange vows amidst stunning natural beauty, with customized wedding packages designed to create unforgettable memories. For those seeking relaxation and a touch of romance, our night swimming experience offers a tranquil escape under the stars, with beautifully lit pools and a serene ambiance. Our overnight packages provide a comfortable and luxurious stay, allowing you to unwind and recharge in our elegantly appointed rooms.</p>
+                <p class="text-sm text-pretty">In addition to our specialized packages, our resort features an array of amenities to enhance your stay. Enjoy delectable cuisine at our on-site restaurant, indulge in a rejuvenating spa treatment, or explore the nearby attractions for a taste of local culture. Whether you're planning a grand celebration or a peaceful retreat, our dedicated staff is here to ensure that your experience is nothing short of exceptional. Discover the perfect blend of luxury and tranquility at our resort, where every moment is crafted to provide you with a memorable and relaxing stay.</p>
+            </div>
+            <div class="w-full h-[500px] cursor-pointer md:col-span-1 col-span-2 transition-all md:hover:scale-105 md:hover:rotate-3 md:hover:shadow-2xl md:hover:shadow-slate-300">
+                <div class="swiper-container w-full h-full relative overflow-hidden">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide"><img class="w-full h-full object-cover" src="assets/showcase-1.jpg" alt="Image 1"></div>
+                        <div class="swiper-slide"><img class="w-full h-full object-cover" src="assets/showcase-2.jpg" alt="Image 2"></div>
+                        <div class="swiper-slide"><img class="w-full h-full object-cover" src="assets/showcase-3.jpg" alt="Image 3"></div>
+                        <div class="swiper-slide"><img class="w-full h-full object-cover" src="assets/showcase-4.jpg" alt="Image 4"></div>
+                        <div class="swiper-slide"><img class="w-full h-full object-cover" src="assets/showcase-5.jpg" alt="Image 5"></div>
+                    </div>
+                    <div class="swiper-pagination"></div>
+                    <div class="swiper-button-prev"></div>
+                    <div class="swiper-button-next"></div>
+                </div>
+            </div>
+        </div>
+        
+
+        <div id="our-location" class="m-10 mt-20 flex flex-col gap-10 items-center">
             <div class="text-white md:mx-40 mx-0 md:text-left text-center">
                 <h1 class="font-satisfy text-6xl font-bold mb-10">Where to find?</h1>
                 <p class="text-sm font-bold mb-5">Museo De San Pedro is located at #122 Magsasaysay, San Pedro City, Laguna.</p>
@@ -31,7 +56,7 @@
                 </div>
             </div>
             
-            <div class="w-full text-center mt-10 mb-0">
+            <div id="packages" class="w-full text-center mt-20 mb-0">
                 <h1 class="font-satisfy text-6xl font-bold text-slate-50">All In Packages</h1>
             </div>
             <div class="flex flex-row gap-3 flex-wrap justify-center cursor-default">
@@ -165,8 +190,8 @@
                 </div>
             </div>
 
-            <div class="w-full text-center mt-10 mb-0">
-                <h1 class="font-satisfy text-5xl font-bold text-slate-50">or book with our other <u>Packages!</u></h1>
+            <div class="w-full text-center mt-20 mb-0">
+                <h1 class="font-satisfy text-5xl text-slate-50">or book with our other <b><u>Packages!</u></b></h1>
             </div>
             <div class="flex flex-row gap-3 flex-wrap justify-center cursor-default">
                 <div class="package-container md:w-96 w-full bg-gradient-to-tr from-violet-950 to-indigo-900 p-10 flex flex-col gap-5 rounded-lg shadow-xl text-center text-white hover:shadow-2xl hover:shadow-slate-300 transition-shadow">
@@ -175,52 +200,12 @@
                         <p class="font-black text-4xl">PHP 50,000</p>
                         <p class="font-extrabold text-xs">(50 pax)</p>
                     </div>
-                    <div class="flex flex-row flex-wrap gap-5 justify-between">
-                        <div class="flex flex-col gap-2 m-auto">
-                            <h1 class="font-satisfy text-2xl">Food Catering</h1>
-                            <ul class="text-sm">
-                               
-                            </ul>
-                        </div>
-                        <div class="flex flex-col gap-2 m-auto">
-                            <h1 class="font-satisfy text-2xl">Decorations</h1>
-                            <ul class="text-sm">
-                             
-                            </ul>
-                        </div>
-                        <div class="flex flex-col gap-2 m-auto">
-                            <h1 class="font-satisfy text-2xl">Venue</h1>
-                            <ul class="text-sm">
-                               
-                            </ul>
-                        </div>
-                    </div>
                 </div>
                 <div class="package-container md:w-96 w-full bg-gradient-to-tr from-violet-950 to-indigo-900 p-10 flex flex-col gap-5 rounded-lg shadow-xl text-center text-white hover:shadow-2xl hover:shadow-slate-300 transition-shadow">
                     <div class="flex flex-col gap-1">
                         <p class="font-satisfy text-3xl font-bold">Daytime Swimming</p>
                         <p class="font-black text-4xl">PHP 7,000</p>
                         <p class="font-extrabold text-xs">(25 pax)</p>
-                    </div>
-                    <div class="flex flex-row flex-wrap gap-5 justify-between">
-                        <div class="flex flex-col gap-2 m-auto">
-                            <h1 class="font-satisfy text-2xl">Food Catering</h1>
-                            <ul class="text-sm">
-                               
-                            </ul>
-                        </div>
-                        <div class="flex flex-col gap-2 m-auto">
-                            <h1 class="font-satisfy text-2xl">Decorations</h1>
-                            <ul class="text-sm">
-                             
-                            </ul>
-                        </div>
-                        <div class="flex flex-col gap-2 m-auto">
-                            <h1 class="font-satisfy text-2xl">Venue</h1>
-                            <ul class="text-sm">
-                               
-                            </ul>
-                        </div>
                     </div>
                 </div>
                 <div class="package-container md:w-96 w-full bg-gradient-to-tr from-violet-950 to-indigo-900 p-10 flex flex-col gap-5 rounded-lg shadow-xl text-center text-white hover:shadow-2xl hover:shadow-slate-300 transition-shadow">
@@ -229,26 +214,6 @@
                         <p class="font-black text-4xl">PHP 8,500</p>
                         <p class="font-extrabold text-xs">(20 pax)</p>
                     </div>
-                    <div class="flex flex-row flex-wrap gap-5 justify-between">
-                        <div class="flex flex-col gap-2 m-auto">
-                            <h1 class="font-satisfy text-2xl">Food Catering</h1>
-                            <ul class="text-sm">
-                               
-                            </ul>
-                        </div>
-                        <div class="flex flex-col gap-2 m-auto">
-                            <h1 class="font-satisfy text-2xl">Decorations</h1>
-                            <ul class="text-sm">
-                             
-                            </ul>
-                        </div>
-                        <div class="flex flex-col gap-2 m-auto">
-                            <h1 class="font-satisfy text-2xl">Venue</h1>
-                            <ul class="text-sm">
-                               
-                            </ul>
-                        </div>
-                    </div>
                 </div>
                 <div class="package-container md:w-96 w-full bg-gradient-to-tr from-violet-950 to-indigo-900 p-10 flex flex-col gap-5 rounded-lg shadow-xl text-center text-white hover:shadow-2xl hover:shadow-slate-300 transition-shadow">
                     <div class="flex flex-col gap-1">
@@ -256,52 +221,12 @@
                         <p class="font-black text-4xl">PHP 14,500</p>
                         <p class="font-extrabold text-xs">(22 hrs)</p>
                     </div>
-                    <div class="flex flex-row flex-wrap gap-5 justify-between">
-                        <div class="flex flex-col gap-2 m-auto">
-                            <h1 class="font-satisfy text-2xl">Food Catering</h1>
-                            <ul class="text-sm">
-                               
-                            </ul>
-                        </div>
-                        <div class="flex flex-col gap-2 m-auto">
-                            <h1 class="font-satisfy text-2xl">Decorations</h1>
-                            <ul class="text-sm">
-                             
-                            </ul>
-                        </div>
-                        <div class="flex flex-col gap-2 m-auto">
-                            <h1 class="font-satisfy text-2xl">Venue</h1>
-                            <ul class="text-sm">
-                               
-                            </ul>
-                        </div>
-                    </div>
                 </div>
                 <div class="package-container md:w-96 w-full bg-gradient-to-tr from-violet-950 to-indigo-900 p-10 flex flex-col gap-5 rounded-lg shadow-xl text-center text-white hover:shadow-2xl hover:shadow-slate-300 transition-shadow">
                     <div class="flex flex-col gap-1">
                         <p class="font-satisfy text-3xl font-bold">Events Venue (Function and Pool Area)</p>
                         <p class="font-black text-4xl">PHP 20,000</p>
                         <p class="font-extrabold text-xs">(8 hrs - 50/75/100 pax)</p>
-                    </div>
-                    <div class="flex flex-row flex-wrap gap-5 justify-between">
-                        <div class="flex flex-col gap-2 m-auto">
-                            <h1 class="font-satisfy text-2xl">Food Catering</h1>
-                            <ul class="text-sm">
-                               
-                            </ul>
-                        </div>
-                        <div class="flex flex-col gap-2 m-auto">
-                            <h1 class="font-satisfy text-2xl">Decorations</h1>
-                            <ul class="text-sm">
-                             
-                            </ul>
-                        </div>
-                        <div class="flex flex-col gap-2 m-auto">
-                            <h1 class="font-satisfy text-2xl">Venue</h1>
-                            <ul class="text-sm">
-                               
-                            </ul>
-                        </div>
                     </div>
                 </div>
             </div>
@@ -314,9 +239,35 @@
         </div>
     </div>
     <script>
+        let navbar = document.getElementById("navbar");
+        let navbarTitle = document.getElementById("navbar-title");
+
         // GSAP animation events
         document.addEventListener("DOMContentLoaded", () => {
-            gsap.from(".header-text", { opacity: 0, y: 75, duration: 0.50, ease: "easeOut" });
+
+            // For the showcase component
+            const swiper = new Swiper('.swiper-container', {
+                loop: true,
+                pagination: {
+                    el: '.swiper-pagination',
+                    clickable: true,
+                },
+                navigation: {
+                    nextEl: '.swiper-button-next',
+                    prevEl: '.swiper-button-prev',
+                },
+                autoplay: {
+                    delay: 2500,
+                    disableOnInteraction: false,
+                },
+            });
+
+            navbarTitle.style.display = "none";
+            navbar.classList.remove("bg-slate-950");
+            navbar.classList.remove("shadow-2xl");
+            navbar.classList.add("bg-transparent");
+
+            gsap.from(".header-text", { opacity: 0, duration: 0.50, ease: "easeOut" });
         });
         document.querySelectorAll('.package-container').forEach(item => {
             item.addEventListener('mouseenter', () => {
@@ -347,29 +298,35 @@
             }
         };
 
+
         let prevScrollpos = window.pageYOffset;
         window.onscroll = function () {
             let currentScrollPos = window.pageYOffset;
-            let scrollDownText = document.getElementById("scroll-down-text");
-            let navbar = document.getElementById("navbar");
 
-            if (prevScrollpos > currentScrollPos) {
-                navbar.style.top = "0";
+            if (pageYOffset < 600) {
+                navbarTitle.style.display = "none";
+                navbar.classList.remove("bg-slate-950");
+                navbar.classList.remove("shadow-2xl");
+                navbar.classList.add("bg-transparent");
+                navbar.classList.remove("transition-colors");
             } else {
-                navbar.style.top = "-75px";
+                navbarTitle.style.display = "block";
+                navbar.classList.add("bg-slate-950");
+                navbar.classList.add("shadow-2xl");
+                navbar.classList.remove("bg-transparent");
+                navbar.classList.add("transition-colors");
             }
 
-            console.log(currentScrollPos)
-            if (currentScrollPos > 350) {
-                gsap.to("#header-bg", 0.50, {filter: "brightness(50%) blur(8px)"});
-                scrollDownText.style.display = "none";
-                
-            } else {
-                gsap.to("#header-bg", 0.50, {filter: "brightness(50%) blur(0px)"});
-                scrollDownText.style.display = "block";
-            }
+            if (window.innerWidth < 768) {
+                if (prevScrollpos > currentScrollPos) {
+                    navbar.style.top = "0";
+                } else {
+                    navbar.style.top = "-100px";
+                }
 
-            prevScrollpos = currentScrollPos;
+                prevScrollpos = currentScrollPos;
+            }
+            
         };
     </script>
 </body>
