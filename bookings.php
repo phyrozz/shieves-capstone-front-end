@@ -80,7 +80,7 @@
             altInput: true,
             altFormat: "F j, Y",
             dateFormat: "Y-m-d",
-            maxDate: new Date().fp_incr(90), // 90 days from now
+            maxDate: new Date().fp_incr(90),
         });
 
         document.getElementById("booknow").addEventListener("click", (event) => {
@@ -99,50 +99,108 @@
             const packageName = selectedOption.getAttribute('data-name');
             const packagePrice = selectedOption.getAttribute('data-price');
 
-            // Show confirmation dialog
-            Swal.fire({
-                title: "Do you wish to proceed?",
-                text: "You will be redirected to another page for online payment. Make sure to prepare your payment before proceeding.",
-                icon: "warning",
-                showCancelButton: true,
-                confirmButtonText: "Yes",
-                cancelButtonText: "No",
-                reverseButtons: true
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    const formData = new FormData(form);
-                    formData.append('description', packageName);
-                    formData.append('amount', packagePrice);
+            // Submit form data to generate invoice
+            const formData = new FormData(form);
+            formData.append('package_name', packageName);
+            formData.append('package_price', packagePrice);
 
-                    axios.post('api/bookings/submit_booking.php', formData)
-                        .then(response => {
-                            if (response.data.status === 'success') {
-                                // Redirect to the invoice URL
-                                window.location.href = response.data.invoice_url;
-                            } else {
-                                Swal.fire({
-                                    title: "Error",
-                                    text: response.data.message,
-                                    icon: "error"
-                                });
-                            }
-                        })
-                        .catch(error => {
-                            Swal.fire({
-                                title: "Error",
-                                text: "There was an error submitting your booking. Please try again.",
-                                icon: "error"
-                            });
-                        });
-                } else if (result.dismiss === Swal.DismissReason.cancel) {
+            axios.post('api/bookings/generate_invoice.php', formData, { responseType: 'blob' })
+            .then(response => {
+                if (response.status === 'error') {
                     Swal.fire({
-                        title: "Cancelled",
-                        text: "You have cancelled your book",
-                        icon: "error"
+                        title: "Duplicate Booking",
+                        text: response.data.message,
+                        icon: "error",
+                        confirmButtonText: "OK"
+                    });
+                    return;
+                } else {
+                    Swal.fire({
+                        title: 'Booking Successful!',
+                        text: 'An invoice will be generated for you. Please download and present it to the receptionist to verify your booking.',
+                        icon: 'success',
+                        confirmButtonText: 'OK'
                     });
                 }
+
+                // Generate invoice if no error
+                const url = window.URL.createObjectURL(new Blob([response.data]));
+                const link = document.createElement('a');
+                link.href = url;
+                link.setAttribute('download', 'Invoice.pdf');
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
             })
+            .catch(error => {
+                Swal.fire({
+                    title: "Error",
+                    text: "There was an error generating your invoice. Please try again later.",
+                    icon: "error"
+                });
+            });
         });
+
+        // document.getElementById("booknow").addEventListener("click", (event) => {
+        //     event.preventDefault();
+
+        //     // Validate the form
+        //     const form = document.getElementById("booking-form");
+        //     if (!form.checkValidity()) {
+        //         form.reportValidity();
+        //         return;
+        //     }
+
+        //     // Get selected package details
+        //     const packageSelect = document.getElementById('package');
+        //     const selectedOption = packageSelect.options[packageSelect.selectedIndex];
+        //     const packageName = selectedOption.getAttribute('data-name');
+        //     const packagePrice = selectedOption.getAttribute('data-price');
+
+        //     // Show confirmation dialog
+        //     Swal.fire({
+        //         title: "Do you wish to proceed?",
+        //         text: "You will be redirected to another page for online payment. Make sure to prepare your payment before proceeding.",
+        //         icon: "warning",
+        //         showCancelButton: true,
+        //         confirmButtonText: "Yes",
+        //         cancelButtonText: "No",
+        //         reverseButtons: true
+        //     }).then((result) => {
+        //         if (result.isConfirmed) {
+        //             const formData = new FormData(form);
+        //             formData.append('description', packageName);
+        //             formData.append('amount', packagePrice);
+
+        //             axios.post('api/bookings/submit_booking.php', formData)
+        //                 .then(response => {
+        //                     if (response.data.status === 'success') {
+        //                         // Redirect to the invoice URL
+        //                         window.location.href = response.data.invoice_url;
+        //                     } else {
+        //                         Swal.fire({
+        //                             title: "Error",
+        //                             text: response.data.message,
+        //                             icon: "error"
+        //                         });
+        //                     }
+        //                 })
+        //                 .catch(error => {
+        //                     Swal.fire({
+        //                         title: "Error",
+        //                         text: "There was an error submitting your booking. Please try again.",
+        //                         icon: "error"
+        //                     });
+        //                 });
+        //         } else if (result.dismiss === Swal.DismissReason.cancel) {
+        //             Swal.fire({
+        //                 title: "Cancelled",
+        //                 text: "You have cancelled your book",
+        //                 icon: "error"
+        //             });
+        //         }
+        //     })
+        // });
 
         // Check for success message in session and display SweetAlert
         <?php

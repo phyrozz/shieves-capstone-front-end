@@ -30,7 +30,7 @@
         </ul>
     </div>
 
-    <div class="flex justify-end items-center flex-1">
+    <!-- <div class="flex justify-end items-center flex-1">
         <a id="login-btn" href="login.php" class="hover:bg-slate-900 font-bold text-sm p-3 rounded-md transition-all text-center">
             <li class="flex flex-row items-center gap-2">
                 <lord-icon
@@ -43,7 +43,7 @@
                 <p id="login-btn-text" class="text-nowrap">LOG IN</p>
             </li>
         </a>
-    </div>
+    </div> -->
 </nav>
 
 
