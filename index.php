@@ -7,6 +7,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="tailwind.css">
+    <link rel="stylesheet" href="css/theme.css">
     <link rel="stylesheet" href="node_modules/swiper/swiper-bundle.min.css">
     <script src="https://cdn.lordicon.com/lordicon.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
@@ -21,10 +22,10 @@
         <div id="header-bg" class="absolute -z-50 bg-[url(/assets/bg.jpg)] filter brightness-50 bg-cover mask h-screen w-full"></div>
     </div>
 
-    <div class="flex md:flex-row flex-col justify-center flex-wrap bg-gradient-to-br from-slate-950 to-violet-950 gap-5">
+    <div class="flex md:flex-row flex-col justify-center flex-wrap bg-gradient-to-br bg-secondary gap-5">
         <!-- Showcase component -->
         <div id="showcase" class="grid grid-cols-2 pt-40 pb-20 md:px-48 px-10 gap-12 justify-center items-center">
-            <div class="w-full md:col-span-1 col-span-2 text-white md:text-end text-center leading-3">
+            <div class="w-full md:col-span-1 col-span-2 text-primary md:text-end text-center leading-3">
                 <h1 class="text-6xl font-satisfy font-bold mb-8">A Resort Like No Other...</h1>
                 <p class="text-sm text-pretty mb-3">Welcome to the <u><b>ultimate getaway</b></u> at our serene resort, where we offer a variety of packages to suit every occasion and preference. Nestled in a picturesque location, our resort provides the perfect backdrop for your dream wedding. Exchange vows amidst stunning natural beauty, with customized wedding packages designed to create unforgettable memories. For those seeking relaxation and a touch of romance, our night swimming experience offers a tranquil escape under the stars, with beautifully lit pools and a serene ambiance. Our overnight packages provide a comfortable and luxurious stay, allowing you to unwind and recharge in our elegantly appointed rooms.</p>
                 <p class="text-sm text-pretty">In addition to our specialized packages, our resort features an array of amenities to enhance your stay. Enjoy delectable cuisine at our on-site restaurant, indulge in a rejuvenating spa treatment, or explore the nearby attractions for a taste of local culture. Whether you're planning a grand celebration or a peaceful retreat, our dedicated staff is here to ensure that your experience is nothing short of exceptional. Discover the perfect blend of luxury and tranquility at our resort, where every moment is crafted to provide you with a memorable and relaxing stay.</p>
@@ -47,7 +48,7 @@
         
 
         <div id="our-location" class="m-10 mt-20 flex flex-col gap-10 items-center">
-            <div class="text-white md:mx-40 mx-0 md:text-left text-center">
+            <div class="text-primary md:mx-40 mx-0 md:text-left text-center">
                 <h1 class="font-satisfy text-6xl font-bold mb-10">Where to find?</h1>
                 <p class="text-sm font-bold mb-5">Museo De San Pedro is located at #122 Magsasaysay, San Pedro City, Laguna.</p>
                 <p class="text-sm">It's only a 17-minute drive from HBC San Pedro. You can also take a jeepney ride on the "estrella trip" route, heading to Magsasay (beside HBC). Advise the driver to drop you off at "Museo De San Pedro" in front of Villa Consolascion. Alternatively, use the Waze Mobile App to locate us.</p>
@@ -57,11 +58,11 @@
             </div>
             
             <div id="packages" class="w-full text-center mt-20 mb-0">
-                <h1 class="font-satisfy text-6xl font-bold text-slate-50">All In Packages</h1>
+                <h1 class="font-satisfy text-6xl font-bold text-primary">All In Packages</h1>
             </div>
             <div class="flex flex-row gap-3 flex-wrap justify-center cursor-default">
                 <!-- Package containers -->
-                <div class="package-container md:w-96 w-full bg-gradient-to-tr from-violet-950 to-indigo-900 p-10 flex flex-col gap-5 rounded-lg shadow-xl text-center text-white hover:shadow-2xl shadow-black hover:shadow-slate-300 transition-shadow">
+                <div class="package-container md:w-96 w-full bg-primary p-10 flex flex-col gap-5 rounded-lg text-center text-primary shadow-lg shadow-[--color-primary-shadow] transition-shadow">
                     <!-- Package name, pax, and price -->
                     <div class="flex flex-col gap-1">
                         <p class="font-black text-4xl">PHP 50,000</p>
@@ -104,7 +105,7 @@
                     </div>
                 </div>
                 <!-- Package containers -->
-                <div class="package-container md:w-96 w-full bg-gradient-to-tr from-violet-950 to-indigo-900 p-10 flex flex-col gap-5 rounded-lg shadow-xl text-center text-white hover:shadow-2xl shadow-black hover:shadow-slate-300 transition-shadow">
+                <div class="package-container md:w-96 w-full bg-primary p-10 flex flex-col gap-5 rounded-lg text-center text-primary shadow-lg shadow-[--color-primary-shadow] transition-shadow">
                     <!-- Package name, pax, and price -->
                     <div class="flex flex-col gap-1">
                         <p class="font-black text-4xl">PHP 60,000</p>
@@ -146,7 +147,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="package-container md:w-96 w-full bg-gradient-to-tr from-violet-950 to-indigo-900 p-10 flex flex-col gap-5 rounded-lg shadow-xl text-center text-white hover:shadow-2xl shadow-black hover:shadow-slate-300 transition-shadow">
+                <div class="package-container md:w-96 w-full bg-primary p-10 flex flex-col gap-5 rounded-lg text-center text-primary shadow-lg shadow-[--color-primary-shadow] transition-shadow">
                     <!-- Package name, pax, and price -->
                     <div class="flex flex-col gap-1">
                         <p class="font-black text-4xl">PHP 70,000</p>
@@ -191,38 +192,38 @@
             </div>
 
             <div class="w-full text-center mt-20 mb-0">
-                <h1 class="font-satisfy text-5xl text-slate-50">or book with our other <b><u>Packages!</u></b></h1>
+                <h1 class="font-satisfy text-5xl text-primary">or book with our other <b><u>Packages!</u></b></h1>
             </div>
             <div class="flex flex-row gap-3 flex-wrap justify-center cursor-default">
-                <div class="package-container md:w-96 w-full bg-gradient-to-tr from-violet-950 to-indigo-900 p-10 flex flex-col gap-5 rounded-lg shadow-xl text-center text-white hover:shadow-2xl shadow-black hover:shadow-slate-300 transition-shadow">
+                <div class="package-container md:w-96 w-full bg-primary p-10 flex flex-col gap-5 rounded-lg text-center text-primary shadow-lg shadow-[--color-primary-shadow] transition-shadow">
                     <div class="flex flex-col gap-1">
                         <p class="font-satisfy text-3xl font-bold">Wedding Package</p>
                         <p class="font-black text-4xl">PHP 50,000</p>
                         <p class="font-extrabold text-xs">(50 pax)</p>
                     </div>
                 </div>
-                <div class="package-container md:w-96 w-full bg-gradient-to-tr from-violet-950 to-indigo-900 p-10 flex flex-col gap-5 rounded-lg shadow-xl text-center text-white hover:shadow-2xl shadow-black hover:shadow-slate-300 transition-shadow">
+                <div class="package-container md:w-96 w-full bg-primary p-10 flex flex-col gap-5 rounded-lg text-center text-primary shadow-lg shadow-[--color-primary-shadow] transition-shadow">
                     <div class="flex flex-col gap-1">
                         <p class="font-satisfy text-3xl font-bold">Daytime Swimming</p>
                         <p class="font-black text-4xl">PHP 7,000</p>
                         <p class="font-extrabold text-xs">(25 pax)</p>
                     </div>
                 </div>
-                <div class="package-container md:w-96 w-full bg-gradient-to-tr from-violet-950 to-indigo-900 p-10 flex flex-col gap-5 rounded-lg shadow-xl text-center text-white hover:shadow-2xl shadow-black hover:shadow-slate-300 transition-shadow">
+                <div class="package-container md:w-96 w-full bg-primary p-10 flex flex-col gap-5 rounded-lg text-center text-primary shadow-lg shadow-[--color-primary-shadow] transition-shadow">
                     <div class="flex flex-col gap-1">
                         <p class="font-satisfy text-3xl font-bold">Overnight Swimming</p>
                         <p class="font-black text-4xl">PHP 8,500</p>
                         <p class="font-extrabold text-xs">(20 pax)</p>
                     </div>
                 </div>
-                <div class="package-container md:w-96 w-full bg-gradient-to-tr from-violet-950 to-indigo-900 p-10 flex flex-col gap-5 rounded-lg shadow-xl text-center text-white hover:shadow-2xl shadow-black hover:shadow-slate-300 transition-shadow">
+                <div class="package-container md:w-96 w-full bg-primary p-10 flex flex-col gap-5 rounded-lg text-center text-primary shadow-lg shadow-[--color-primary-shadow] transition-shadow">
                     <div class="flex flex-col gap-1">
                         <p class="font-satisfy text-3xl font-bold">Swimming</p>
                         <p class="font-black text-4xl">PHP 14,500</p>
                         <p class="font-extrabold text-xs">(22 hrs)</p>
                     </div>
                 </div>
-                <div class="package-container md:w-96 w-full bg-gradient-to-tr from-violet-950 to-indigo-900 p-10 flex flex-col gap-5 rounded-lg shadow-xl text-center text-white hover:shadow-2xl shadow-black hover:shadow-slate-300 transition-shadow">
+                <div class="package-container md:w-96 w-full bg-primary p-10 flex flex-col gap-5 rounded-lg text-center text-primary shadow-lg shadow-[--color-primary-shadow] transition-shadow">
                     <div class="flex flex-col gap-1">
                         <p class="font-satisfy text-3xl font-bold">Events Venue (Function and Pool Area)</p>
                         <p class="font-black text-4xl">PHP 20,000</p>
@@ -231,10 +232,10 @@
                 </div>
             </div>
 
-            <div class="flex flex-col gap-0 w-full mt-10">
-                <p class="text-white text-center">Ready to stay in? <a class="hover:underline font-bold" href="./bookings.php">Book now</a> online!</p>
-                <p class="text-white text-center">or you can contact us at <a class="hover:underline font-bold" href="mailto:info@museodesanpedro.com">info@museodesanpedro.com</a></p>
-                <p class="mt-5 text-white text-center">Are you an admin? <a class="hover:underline font-bold" href="admin/login.php">Log in here</a></p>
+            <div class="text-primary flex flex-col gap-0 w-full mt-10">
+                <p class="text-center">Ready to stay in? <a class="hover:underline font-bold" href="./bookings.php">Book now</a> online!</p>
+                <p class="text-center">or you can contact us at <a class="hover:underline font-bold" href="mailto:info@museodesanpedro.com">info@museodesanpedro.com</a></p>
+                <p class="mt-5 text-center">Are you an admin? <a class="hover:underline font-bold" href="admin/login.php">Log in here</a></p>
             </div>
         </div>
     </div>
@@ -263,8 +264,8 @@
             });
 
             navbarTitle.style.display = "none";
-            navbar.classList.remove("bg-slate-950");
-            navbar.classList.remove("shadow-2xl");
+            navbar.classList.remove("bg-primary");
+            navbar.classList.remove("shadow-lg");
             navbar.classList.add("bg-transparent");
 
             gsap.from(".header-text", { opacity: 0, duration: 0.50, ease: "easeOut" });
@@ -303,18 +304,20 @@
         window.onscroll = function () {
             let currentScrollPos = window.pageYOffset;
 
-            if (pageYOffset < 600) {
+            if (pageYOffset < 400) {
                 navbarTitle.style.display = "none";
-                navbar.classList.remove("bg-slate-950");
-                navbar.classList.remove("shadow-2xl");
+                navbar.classList.remove("bg-primary");
+                // navbar.classList.remove("shadow-2xl");
                 navbar.classList.add("bg-transparent");
-                navbar.classList.remove("transition-colors");
+                navbar.classList.add("text-secondary");
+                navbar.classList.remove("text-primary");
             } else {
                 navbarTitle.style.display = "block";
-                navbar.classList.add("bg-slate-950");
-                navbar.classList.add("shadow-2xl");
+                navbar.classList.add("bg-primary");
+                // navbar.classList.add("shadow-2xl");
+                navbar.classList.remove("text-secondary");
+                navbar.classList.add("text-primary");
                 navbar.classList.remove("bg-transparent");
-                navbar.classList.add("transition-colors");
             }
 
             if (window.innerWidth < 768) {

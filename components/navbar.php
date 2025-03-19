@@ -1,28 +1,28 @@
-<nav id="navbar" class="flex items-center text-white bg-slate-950 w-full py-2 px-5 fixed top-0 z-50 shadow-2xl shadow-black">
+<nav id="navbar" class="flex items-center text-primary bg-primary w-full py-2 px-5 fixed top-0 z-50">
     <div class="flex justify-start items-center flex-1">
-        <ul class="flex flex-row gap-5 items-center transition-all">
+        <ul class="flex flex-row gap-5 items-center">
             <h1 id="navbar-title" class="font-satisfy font-extrabold text-xl md:block hidden text-nowrap cursor-default">Museo de San Pedro</h1>
-            <a href="/index.php" class="navbar-item hover:bg-slate-900 font-bold text-sm p-3 rounded-md transition-all text-center">
+            <a href="/index.php" class="navbar-item font-bold text-sm p-3 rounded-md text-center">
                 <li class="flex flex-row items-center gap-2"> 
                     <p class="navbar-item-text text-nowrap">HOME</p>
                 </li>
             </a>
-            <a href="#showcase" class="navbar-item hover:bg-slate-900 font-bold text-sm p-3 rounded-md transition-all text-center">
+            <a href="#showcase" class="navbar-item font-bold text-sm p-3 rounded-md text-center">
                 <li class="flex flex-row items-center gap-2"> 
                     <p class="navbar-item-text text-nowrap">SHOWCASE</p>
                 </li>
             </a>
-            <a href="#our-location" class="navbar-item hover:bg-slate-900 font-bold text-sm p-3 rounded-md transition-all text-center">
+            <a href="#our-location" class="navbar-item font-bold text-sm p-3 rounded-md text-center">
                 <li class="flex flex-row items-center gap-2"> 
                     <p class="navbar-item-text text-nowrap">OUR LOCATION</p>
                 </li>
             </a>
-            <a href="#packages" class="navbar-item hover:bg-slate-900 font-bold text-sm p-3 rounded-md transition-all text-center">
+            <a href="#packages" class="navbar-item font-bold text-sm p-3 rounded-md text-center">
                 <li class="flex flex-row items-center gap-2"> 
                     <p class="navbar-item-text text-nowrap">PACKAGES</p>
                 </li>
             </a>
-            <a href="/bookings.php" class="navbar-item hover:bg-slate-900 font-bold text-sm p-3 rounded-md transition-all text-center">
+            <a href="/bookings.php" class="navbar-item font-bold text-sm p-3 rounded-md text-center">
                 <li class="flex flex-row items-center gap-2"> 
                     <p class="navbar-item-text text-nowrap">BOOK NOW</p>
                 </li>
@@ -31,7 +31,7 @@
     </div>
 
     <!-- <div class="flex justify-end items-center flex-1">
-        <a id="login-btn" href="login.php" class="hover:bg-slate-900 font-bold text-sm p-3 rounded-md transition-all text-center">
+        <a id="login-btn" href="login.php" class="hover:bg-slate-900 font-bold text-sm p-3 rounded-md  text-center">
             <li class="flex flex-row items-center gap-2">
                 <lord-icon
                     id="login-btn-icon"
