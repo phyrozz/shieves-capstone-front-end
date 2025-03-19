@@ -4,3 +4,5 @@ tailwind.css
 htdocs.zip
 .vscode
 /vendor/
+**/fpdf
+*.zip

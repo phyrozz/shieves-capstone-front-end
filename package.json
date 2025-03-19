@@ -18,6 +18,7 @@
     "flatpickr": "^4.6.13",
     "fullcalendar": "^6.1.11",
     "live-server": "^1.2.2",
-    "sweetalert2": "^11.11.0"
+    "sweetalert2": "^11.11.0",
+    "swiper": "^11.1.8"
   }
 }

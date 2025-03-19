@@ -68,11 +68,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link rel="stylesheet" href="../tailwind.css">
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
 </head>
 <body>
     <div class="w-screen h-screen bg-gradient-to-br from-slate-950 to-violet-950 flex justify-center items-center text-slate-50">
         <div id="signup-container" class="w-96 bg-slate-950 flex flex-col items-start rounded-lg shadow-2xl shadow-slate-950 px-8 py-10">
-            <h1 class="font-black text-3xl" style="font-family: cursive;">CREATE NEW ACCOUNT</h1>
+            <h1 class="font-black text-3xl font-satisfy">Create New Account</h1>
             <form class="flex flex-col w-full py-5" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
                 <?php if (!empty($errors)): ?>
                     <div class="mb-4 p-4 bg-red-100 text-red-600 rounded">
@@ -94,7 +97,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
                 <div class="w-full flex flex-col">
                     <span class="text-xs font-bold tracking-wider text-slate-400">CONTACT NUMBER</span>
-                    <input type="text" id="contact_number" name="contact_number" value="<?= htmlspecialchars($contact_number ?? '') ?>" class="mt-1 mb-5 p-2 bg-gray-800 rounded-md transition-all text-white" required>
+                    <input
+                        type="text"
+                        id="contact_number" 
+                        name="contact_number" 
+                        value="<?= htmlspecialchars($contact_number ?? '') ?>" 
+                        class="mt-1 mb-5 p-2 bg-gray-800 rounded-md transition-all text-white" 
+                        pattern="09[0-9]{9}" 
+                        title="Invalid phone number." 
+                        oninput="this.value = this.value.replace(/[^0-9]/g, '').slice(0, 11)" 
+                        required
+                    >
                 </div>
 
                 <div class="w-full flex flex-col">
