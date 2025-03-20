@@ -16,7 +16,7 @@
 </head>
 <body>
     <?php include "./components/navbar.php"; ?>
-    <div class="flex flex-col h-[75vh] justify-center items-center text-white cursor-default">
+    <div class="flex flex-col h-[75vh] justify-center items-center text-secondary cursor-default">
         <p class="font-satisfy md:text-2xl text-lg">Welcome to</p>
         <h1 class="md:text-6xl text-4xl font-satisfy text-center text-pretty font-bold header-text">Museo de San Pedro</h1>
         <div id="header-bg" class="absolute -z-50 bg-[url(/assets/bg.jpg)] filter brightness-50 bg-cover mask h-screen w-full"></div>
@@ -62,7 +62,7 @@
             </div>
             <div class="flex flex-row gap-3 flex-wrap justify-center cursor-default">
                 <!-- Package containers -->
-                <div class="package-container md:w-96 w-full bg-primary p-10 flex flex-col gap-5 rounded-lg text-center text-primary shadow-lg shadow-[--color-primary-shadow] transition-shadow">
+                <div class="package-container md:w-96 w-full bg-primary p-10 flex flex-col gap-5 rounded-lg text-center text-primary shadow-lg shadow-black transition-shadow">
                     <!-- Package name, pax, and price -->
                     <div class="flex flex-col gap-1">
                         <p class="font-black text-4xl">PHP 50,000</p>
@@ -105,7 +105,7 @@
                     </div>
                 </div>
                 <!-- Package containers -->
-                <div class="package-container md:w-96 w-full bg-primary p-10 flex flex-col gap-5 rounded-lg text-center text-primary shadow-lg shadow-[--color-primary-shadow] transition-shadow">
+                <div class="package-container md:w-96 w-full bg-primary p-10 flex flex-col gap-5 rounded-lg text-center text-primary shadow-lg shadow-black transition-shadow">
                     <!-- Package name, pax, and price -->
                     <div class="flex flex-col gap-1">
                         <p class="font-black text-4xl">PHP 60,000</p>
@@ -147,7 +147,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="package-container md:w-96 w-full bg-primary p-10 flex flex-col gap-5 rounded-lg text-center text-primary shadow-lg shadow-[--color-primary-shadow] transition-shadow">
+                <div class="package-container md:w-96 w-full bg-primary p-10 flex flex-col gap-5 rounded-lg text-center text-primary shadow-lg shadow-black transition-shadow">
                     <!-- Package name, pax, and price -->
                     <div class="flex flex-col gap-1">
                         <p class="font-black text-4xl">PHP 70,000</p>
@@ -195,35 +195,35 @@
                 <h1 class="font-satisfy text-5xl text-primary">or book with our other <b><u>Packages!</u></b></h1>
             </div>
             <div class="flex flex-row gap-3 flex-wrap justify-center cursor-default">
-                <div class="package-container md:w-96 w-full bg-primary p-10 flex flex-col gap-5 rounded-lg text-center text-primary shadow-lg shadow-[--color-primary-shadow] transition-shadow">
+                <div class="package-container md:w-96 w-full bg-primary p-10 flex flex-col gap-5 rounded-lg text-center text-primary shadow-lg shadow-black transition-shadow">
                     <div class="flex flex-col gap-1">
                         <p class="font-satisfy text-3xl font-bold">Wedding Package</p>
                         <p class="font-black text-4xl">PHP 50,000</p>
                         <p class="font-extrabold text-xs">(50 pax)</p>
                     </div>
                 </div>
-                <div class="package-container md:w-96 w-full bg-primary p-10 flex flex-col gap-5 rounded-lg text-center text-primary shadow-lg shadow-[--color-primary-shadow] transition-shadow">
+                <div class="package-container md:w-96 w-full bg-primary p-10 flex flex-col gap-5 rounded-lg text-center text-primary shadow-lg shadow-black transition-shadow">
                     <div class="flex flex-col gap-1">
                         <p class="font-satisfy text-3xl font-bold">Daytime Swimming</p>
                         <p class="font-black text-4xl">PHP 7,000</p>
                         <p class="font-extrabold text-xs">(25 pax)</p>
                     </div>
                 </div>
-                <div class="package-container md:w-96 w-full bg-primary p-10 flex flex-col gap-5 rounded-lg text-center text-primary shadow-lg shadow-[--color-primary-shadow] transition-shadow">
+                <div class="package-container md:w-96 w-full bg-primary p-10 flex flex-col gap-5 rounded-lg text-center text-primary shadow-lg shadow-black transition-shadow">
                     <div class="flex flex-col gap-1">
                         <p class="font-satisfy text-3xl font-bold">Overnight Swimming</p>
                         <p class="font-black text-4xl">PHP 8,500</p>
                         <p class="font-extrabold text-xs">(20 pax)</p>
                     </div>
                 </div>
-                <div class="package-container md:w-96 w-full bg-primary p-10 flex flex-col gap-5 rounded-lg text-center text-primary shadow-lg shadow-[--color-primary-shadow] transition-shadow">
+                <div class="package-container md:w-96 w-full bg-primary p-10 flex flex-col gap-5 rounded-lg text-center text-primary shadow-lg shadow-black transition-shadow">
                     <div class="flex flex-col gap-1">
                         <p class="font-satisfy text-3xl font-bold">Swimming</p>
                         <p class="font-black text-4xl">PHP 14,500</p>
                         <p class="font-extrabold text-xs">(22 hrs)</p>
                     </div>
                 </div>
-                <div class="package-container md:w-96 w-full bg-primary p-10 flex flex-col gap-5 rounded-lg text-center text-primary shadow-lg shadow-[--color-primary-shadow] transition-shadow">
+                <div class="package-container md:w-96 w-full bg-primary p-10 flex flex-col gap-5 rounded-lg text-center text-primary shadow-lg shadow-black transition-shadow">
                     <div class="flex flex-col gap-1">
                         <p class="font-satisfy text-3xl font-bold">Events Venue (Function and Pool Area)</p>
                         <p class="font-black text-4xl">PHP 20,000</p>
@@ -310,6 +310,8 @@
                 // navbar.classList.remove("shadow-2xl");
                 navbar.classList.add("bg-transparent");
                 navbar.classList.add("text-secondary");
+                navbar.classList.remove("shadow-2xl");
+                navbar.classList.remove("shadow-black");
                 navbar.classList.remove("text-primary");
             } else {
                 navbarTitle.style.display = "block";
@@ -317,6 +319,8 @@
                 // navbar.classList.add("shadow-2xl");
                 navbar.classList.remove("text-secondary");
                 navbar.classList.add("text-primary");
+                navbar.classList.add("shadow-2xl");
+                navbar.classList.add("shadow-black");
                 navbar.classList.remove("bg-transparent");
             }
 

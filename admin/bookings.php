@@ -65,6 +65,7 @@ $result = $stmt->get_result();
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../tailwind.css">
+    <link rel="stylesheet" href="../css/theme.css">
     <script src="https://cdn.lordicon.com/lordicon.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="../node_modules/axios/dist/axios.min.js"></script>
@@ -78,7 +79,7 @@ $result = $stmt->get_result();
         $activeLink = "bookings.php";
         include "../components/admin_navbar.php";
         ?>
-        <div class="flex-1 p-8 bg-slate-200 h-screen">
+        <div class="flex-1 p-8 bg-secondary h-screen">
             <h1 class="text-3xl font-bold text-gray-800 mb-6">Bookings</h1>
 
             <!-- <div class="w-full flex flex-row justify-between gap-3 p-3">
@@ -94,7 +95,7 @@ $result = $stmt->get_result();
                     <input type="submit" value="Search" class="p-2 bg-slate-800 text-white rounded-md cursor-pointer" />
                 </form>
             </div> -->
-            <div class="bg-white rounded-lg shadow mb-6 p-5">
+            <div class="bg-secondary rounded-lg shadow mb-6 p-5">
                 <table id="bookings-table" class="stripe">
                     <thead>
                         <tr>
