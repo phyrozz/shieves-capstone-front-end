@@ -1,4 +1,4 @@
-<nav id="navbar" class="flex items-center text-primary bg-primary w-full py-2 px-5 fixed top-0 z-50">
+<nav id="navbar" class="flex items-center text-secondary bg-primary w-full py-2 px-5 fixed top-0 z-50">
     <div class="flex justify-start items-center flex-1">
         <ul class="flex flex-row gap-5 items-center">
             <h1 id="navbar-title" class="font-satisfy font-extrabold text-xl md:block hidden text-nowrap cursor-default">Museo de San Pedro</h1>
@@ -67,7 +67,7 @@ document.querySelectorAll('.home-item').forEach(item => {
 
 function bounceNavbarItem(target) {
     var tl = new TimelineMax({ paused: true });
-    tl.to(target, { y: -20, duration: 0.1, ease: "easeIn" })
+    tl.to(target, { y: -10, duration: 0.1, ease: "easeIn" })
     .to(target, { y: 0, duration: 0.1, ease: "easeOut" });
 
     if (!tl.isActive()) {

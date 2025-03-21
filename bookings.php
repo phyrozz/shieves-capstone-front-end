@@ -10,6 +10,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="tailwind.css">
+    <link rel="stylesheet" href="css/theme.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
@@ -22,27 +23,27 @@
 </head>
 <body>
     <?php include "./components/navbar.php"; ?>
-    <div class="h-screen w-full bg-gradient-to-br from-slate-950 to-violet-950 flex justify-center items-center">
+    <div class="h-screen w-full bg-gradient-to-br bg-secondary flex justify-center items-center">
         <div id="booking-form-container" class="container">
-            <div class="max-w-md mx-auto bg-slate-950 rounded-lg shadow-2xl overflow-hidden">
+            <div class="max-w-md mx-auto bg-primary rounded-lg shadow-2xl overflow-hidden">
                 <div class="py-4 px-6">
-                    <h2 class="text-3xl font-bold text-white font-satisfy text-center p-3">Book an Event</h2>
+                    <h2 class="text-3xl font-bold text-primary font-satisfy text-center p-3">Book an Event</h2>
                     <form id="booking-form" method="POST" class="mt-4">
                         <div class="mb-4">
-                            <label for="name" class="block text-gray-300 font-bold text-sm pb-2 tracking-wide">NAME</label>
-                            <input type="text" id="name" name="name" class="form-input w-full p-2 bg-gray-800 text-white rounded-md shadow-lg" required>
+                            <label for="name" class="block text-primary font-bold text-sm pb-2 tracking-wide">NAME</label>
+                            <input type="text" id="name" name="name" class="form-input w-full p-2 rounded-md shadow-lg" required>
                         </div>
                         <div class="mb-4">
-                            <label for="email" class="block text-gray-300 font-bold text-sm pb-2 tracking-wide">EMAIL</label>
-                            <input type="email" id="email" name="email" class="form-input w-full p-2 bg-gray-800 text-white rounded-md shadow-lg">
+                            <label for="email" class="block text-primary font-bold text-sm pb-2 tracking-wide">EMAIL</label>
+                            <input type="email" id="email" name="email" class="form-input w-full p-2 rounded-md shadow-lg">
                         </div>
                         <div class="mb-4">
-                            <label for="phonenumber" class="block text-gray-300 font-bold text-sm pb-2 tracking-wide">MOBILE NUMBER</label>
-                            <input type="text" id="phonenumber" name="phonenumber" pattern="^09\d{9}$" title="Invalid mobile number" class="form-input w-full p-2 bg-gray-800 text-white rounded-md shadow-lg" required>
+                            <label for="phonenumber" class="block text-primary font-bold text-sm pb-2 tracking-wide">MOBILE NUMBER</label>
+                            <input type="text" id="phonenumber" name="phonenumber" pattern="^09\d{9}$" title="Invalid mobile number" class="form-input w-full p-2 rounded-md shadow-lg" required>
                         </div>
                         <div class="mb-4">
-                            <label for="package" class="block text-gray-300 font-bold text-sm pb-2 tracking-wide">CHOOSE A PACKAGE</label>
-                            <select type="text" id="package" name="package" class="form-input w-full p-2 bg-gray-800 text-white rounded-md shadow-lg" required>
+                            <label for="package" class="block text-primary font-bold text-sm pb-2 tracking-wide">CHOOSE A PACKAGE</label>
+                            <select type="text" id="package" name="package" class="form-input w-full p-2 rounded-md shadow-lg" required>
                                 <?php
                                 include "./conn.php";
                                 // Retrieve all package names
@@ -59,12 +60,12 @@
                             </select>
                         </div>
                         <div class="mb-4">
-                            <label for="checkinout" class="block text-gray-300 font-bold text-sm pb-2 tracking-wide">CHECK-IN & OUT</label>
-                            <input id="checkinout" name="checkinout" type="text" class="form-input w-full p-2 bg-gray-800 text-white rounded-md shadow-lg" required />
+                            <label for="checkinout" class="block text-primary font-bold text-sm pb-2 tracking-wide">CHECK-IN & OUT</label>
+                            <input id="checkinout" name="checkinout" type="text" class="form-input w-full p-2 rounded-md shadow-lg" required />
                         </div>
                         
                         <div class="flex w-full justify-end items-center">
-                            <button id="booknow" type="button" class="text-xs font-bold tracking-wider bg-gray-800 px-5 py-2 rounded-md hover:bg-gray-900 cursor-pointer transition-all text-white">BOOK NOW</button>
+                            <button id="booknow" type="button" class="text-xs font-bold tracking-wider px-5 py-2 border border-[--color-text-primary] bg-transparent hover:bg-[--color-text-primary] hover:text-[--color-text-secondary] text-primary rounded-md cursor-pointer transition-all">BOOK NOW</button>
                         </div>
                     </form>
                 </div>
@@ -72,6 +73,11 @@
         </div>
     </div>
     <script>
+        // change navbar text color to secondary when the page has loaded
+        document.getElementById("navbar").classList.remove("text-secondary");
+        document.getElementById("navbar").classList.add("text-primary");
+        document.getElementById("navbar").classList.add("shadow-lg");
+
         gsap.from("#booking-form-container", { scale: 0, duration: 0.25, ease: "easeInOut" });
 
         flatpickr('#checkinout', {

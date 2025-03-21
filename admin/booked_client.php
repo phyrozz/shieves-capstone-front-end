@@ -65,6 +65,7 @@ $result = $stmt->get_result();
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../tailwind.css">
+    <link rel="stylesheet" href="../css/theme.css">
     <script src="https://cdn.lordicon.com/lordicon.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="../node_modules/axios/dist/axios.min.js"></script>
@@ -73,9 +74,9 @@ $result = $stmt->get_result();
     <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
 </head>
 <body>
-<div class="flex min-h-screen bg-slate-200">
+<div class="flex min-h-screen bg-secondary">
     <?php include "../components/admin_navbar.php"; ?>
-    <div class="flex-1 p-8 bg-gradient-to-br from-white to-slate-100 h-screen" style="padding-left: 300px;">
+    <div class="flex-1 p-8 bg-gradient-to-br bg-secondary h-screen" style="padding-left: 300px;">
         <div class="p-5">
             <table id="bookings-table" class="stripe">
                 <thead>

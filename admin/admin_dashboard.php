@@ -15,6 +15,7 @@ if (!isset($_SESSION["username"])) {
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="../tailwind.css">
+<link rel="stylesheet" href="../css/theme.css">
 <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -23,10 +24,10 @@ if (!isset($_SESSION["username"])) {
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="../node_modules/axios/dist/axios.min.js"></script>
 </head>
-<div class="flex min-h-screen bg-slate-200">
+<div class="flex min-h-screen bg-secondary">
         <?php include "../components/admin_navbar.php"; ?>
-        <div class="flex-1 p-8 bg-gradient-to-br from-white to-slate-100 h-screen col-span-9 pl-72">
-<body class="bg-gray-100">
+        <div class="flex-1 p-8 bg-gradient-to-br bg-secondary h-screen col-span-9 pl-72">
+<body class="bg-secondary">
         <div class="bg-white p-6 rounded-lg shadow mb-6">
             <h3 class="text-lg font-semibold text-gray-700 mb-4">Booking Calendar</h3>
             <div id="calendar" class="h-3/4"></div>
