@@ -1,0 +1,11 @@
+.swiper-button-prev, .swiper-button-next {
+    color: var(--color-text-primary) !important;
+}
+
+.swiper-pagination-bullet {
+    background-color: var(--color-text-secondary) !important;
+}
+  
+.swiper-pagination-bullet-active {
+    background-color: var(--color-text-primary) !important;
+}

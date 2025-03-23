@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="tailwind.css">
     <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/swiper.css">
     <link rel="stylesheet" href="node_modules/swiper/swiper-bundle.min.css">
     <script src="https://cdn.lordicon.com/lordicon.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
