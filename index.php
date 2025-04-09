@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="tailwind.css">
     <link rel="stylesheet" href="css/theme.css">
     <link rel="stylesheet" href="css/swiper.css">
+    <link rel="stylesheet" href="css/flip.css">
     <link rel="stylesheet" href="node_modules/swiper/swiper-bundle.min.css">
     <script src="https://cdn.lordicon.com/lordicon.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
@@ -195,22 +196,46 @@
             <div class="w-full text-center mt-20 mb-0">
                 <h1 class="font-satisfy text-5xl text-primary">or book with our other <b><u>Packages!</u></b></h1>
             </div>
-            <div class="flex flex-row gap-3 flex-wrap justify-center cursor-default">
-                <div class="package-container md:w-96 w-full bg-primary p-10 flex flex-col gap-5 rounded-lg text-center text-primary shadow-lg shadow-black transition-shadow">
-                    <div class="flex flex-col gap-1">
-                        <p class="font-satisfy text-3xl font-bold">Wedding Package</p>
-                        <p class="font-black text-4xl">PHP 50,000</p>
-                        <p class="font-extrabold text-xs">(50 pax)</p>
+            <div class="flex flex-row gap-3 h-full flex-wrap justify-center cursor-default">
+                <div class="flip-card h-full md:w-96 w-full cursor-pointer" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <!-- Front side -->
+                        <div class="flip-card-front package-container bg-primary p-10 flex flex-col gap-5 rounded-lg text-center text-primary shadow-lg shadow-black transition-shadow">
+                            <div class="flex flex-col gap-1">
+                                <p class="font-satisfy text-3xl font-bold">Wedding Package</p>
+                                <p class="font-black text-4xl">PHP 50,000</p>
+                                <p class="font-extrabold text-xs">(50 pax)</p>
+                            </div>
+                        </div>
+                        <!-- Back side with extra details -->
+                        <div class="flip-card-back package-container bg-secondary p-10 flex flex-col gap-5 rounded-lg text-center text-primary shadow-lg shadow-black transition-shadow">
+                            <h2 class="text-2xl font-bold">Wedding Package Details</h2>
+                            <p class="text-sm">Additional information about the wedding package, including services, decor, and timeline.</p>
+                        </div>
                     </div>
                 </div>
-                <div class="package-container md:w-96 w-full bg-primary p-10 flex flex-col gap-5 rounded-lg text-center text-primary shadow-lg shadow-black transition-shadow">
-                    <div class="flex flex-col gap-1">
-                        <p class="font-satisfy text-3xl font-bold">Daytime Swimming</p>
-                        <p class="font-black text-4xl">PHP 7,000</p>
-                        <p class="font-extrabold text-xs">(25 pax)</p>
+                <div class="flip-card md:w-96 w-full cursor-pointer" onclick="this.classList.toggle('flipped')">
+                    <div class="flip-card-inner">
+                        <!-- Front side -->
+                        <div class="flip-card-front package-container bg-primary p-10 flex flex-col gap-5 rounded-lg text-center text-primary shadow-lg shadow-black transition-shadow">
+                            <div class="flex flex-col gap-1">
+                                <p class="font-satisfy text-3xl font-bold">Daytime Swimming</p>
+                                <p class="font-black text-4xl">PHP 7,000</p>
+                                <p class="font-extrabold text-xs">(25 pax)</p>
+                            </div>
+                        </div>
+                        <!-- Back side -->
+                        <div class="flip-card-back package-container bg-secondary p-10 flex flex-col gap-5 rounded-lg text-center text-primary shadow-lg shadow-black transition-shadow">
+                            <h2 class="text-2xl font-bold">Daytime Swimming Info</h2>
+                            <p class="text-sm">Details about daytime swimming services, schedule, and amenities.</p>
+                        </div>
                     </div>
                 </div>
-                <div class="package-container md:w-96 w-full bg-primary p-10 flex flex-col gap-5 rounded-lg text-center text-primary shadow-lg shadow-black transition-shadow">
+
+                
+
+
+                <!-- <div class="package-container md:w-96 w-full bg-primary p-10 flex flex-col gap-5 rounded-lg text-center text-primary shadow-lg shadow-black transition-shadow">
                     <div class="flex flex-col gap-1">
                         <p class="font-satisfy text-3xl font-bold">Overnight Swimming</p>
                         <p class="font-black text-4xl">PHP 8,500</p>
@@ -224,13 +249,14 @@
                         <p class="font-extrabold text-xs">(22 hrs)</p>
                     </div>
                 </div>
+                
                 <div class="package-container md:w-96 w-full bg-primary p-10 flex flex-col gap-5 rounded-lg text-center text-primary shadow-lg shadow-black transition-shadow">
                     <div class="flex flex-col gap-1">
                         <p class="font-satisfy text-3xl font-bold">Events Venue (Function and Pool Area)</p>
                         <p class="font-black text-4xl">PHP 20,000</p>
                         <p class="font-extrabold text-xs">(8 hrs - 50/75/100 pax)</p>
                     </div>
-                </div>
+                </div> -->
             </div>
 
             <div class="text-primary flex flex-col gap-0 w-full mt-10">
