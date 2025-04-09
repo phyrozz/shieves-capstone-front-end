@@ -8,6 +8,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="tailwind.css">
     <link rel="stylesheet" href="css/theme.css">
+    <link rel="stylesheet" href="css/swiper.css">
     <link rel="stylesheet" href="node_modules/swiper/swiper-bundle.min.css">
     <script src="https://cdn.lordicon.com/lordicon.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
@@ -306,21 +307,15 @@
 
             if (pageYOffset < 400) {
                 navbarTitle.style.display = "none";
-                navbar.classList.remove("bg-primary");
+                navbar.classList.remove("bg-tertiary");
                 // navbar.classList.remove("shadow-2xl");
                 navbar.classList.add("bg-transparent");
                 navbar.classList.add("text-secondary");
-                navbar.classList.remove("shadow-2xl");
-                navbar.classList.remove("shadow-black");
                 navbar.classList.remove("text-primary");
             } else {
                 navbarTitle.style.display = "block";
-                navbar.classList.add("bg-primary");
+                navbar.classList.add("bg-tertiary");
                 // navbar.classList.add("shadow-2xl");
-                navbar.classList.remove("text-secondary");
-                navbar.classList.add("text-primary");
-                navbar.classList.add("shadow-2xl");
-                navbar.classList.add("shadow-black");
                 navbar.classList.remove("bg-transparent");
             }
 

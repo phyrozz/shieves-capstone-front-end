@@ -74,8 +74,8 @@
     </div>
     <script>
         // change navbar text color to secondary when the page has loaded
-        document.getElementById("navbar").classList.remove("text-secondary");
-        document.getElementById("navbar").classList.add("text-primary");
+        document.getElementById("navbar").classList.remove("bg-transparent");
+        document.getElementById("navbar").classList.add("bg-tertiary");
         document.getElementById("navbar").classList.add("shadow-lg");
 
         gsap.from("#booking-form-container", { scale: 0, duration: 0.25, ease: "easeInOut" });

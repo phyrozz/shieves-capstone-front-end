@@ -2,6 +2,7 @@
     --color-primary: #C3979F;
     --color-primary-shadow: #A37D7D;
     --color-secondary: #E1FAF9;
+    --color-tertiary: #023C40;
     --color-accent: #78FFD6;
     --color-text-primary: #023C40;
     --color-text-secondary: #E1FAF9;
@@ -17,6 +18,10 @@
 
 .bg-secondary {
     background-color: var(--color-secondary);
+}
+
+.bg-tertiary {
+    background-color: var(--color-tertiary);
 }
 
 .bg-accent {
