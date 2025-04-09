@@ -8,7 +8,7 @@
         }
     ],
     "require": {
-        "xendit/xendit-php": "^5.0",
-        "ramsey/uuid": "^4.7"
+        "ramsey/uuid": "^4.7",
+        "phpmailer/phpmailer": "^6.9"
     }
 }
