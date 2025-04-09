@@ -307,21 +307,15 @@
 
             if (pageYOffset < 400) {
                 navbarTitle.style.display = "none";
-                navbar.classList.remove("bg-primary");
+                navbar.classList.remove("bg-tertiary");
                 // navbar.classList.remove("shadow-2xl");
                 navbar.classList.add("bg-transparent");
                 navbar.classList.add("text-secondary");
-                navbar.classList.remove("shadow-2xl");
-                navbar.classList.remove("shadow-black");
                 navbar.classList.remove("text-primary");
             } else {
                 navbarTitle.style.display = "block";
-                navbar.classList.add("bg-primary");
+                navbar.classList.add("bg-tertiary");
                 // navbar.classList.add("shadow-2xl");
-                navbar.classList.remove("text-secondary");
-                navbar.classList.add("text-primary");
-                navbar.classList.add("shadow-2xl");
-                navbar.classList.add("shadow-black");
                 navbar.classList.remove("bg-transparent");
             }
 
