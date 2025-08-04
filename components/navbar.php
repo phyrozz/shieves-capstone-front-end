@@ -1,7 +1,7 @@
 <nav id="navbar" class="flex items-center text-secondary bg-transparent w-full py-2 px-5 fixed top-0 z-50">
     <div class="flex justify-start items-center flex-1">
         <ul class="flex flex-row gap-5 items-center">
-            <h1 id="navbar-title" class="font-satisfy font-extrabold text-xl md:block hidden text-nowrap cursor-default">Museo de San Pedro</h1>
+            <h1 id="navbar-title" class="font-satisfy font-extrabold text-xl md:block hidden text-nowrap cursor-default">J.M. Apilado Resort</h1>
             <a href="/index.php" class="navbar-item font-bold text-sm p-3 rounded-md text-center">
                 <li class="flex flex-row items-center gap-2"> 
                     <p class="navbar-item-text text-nowrap">HOME</p>
@@ -64,16 +64,6 @@ document.querySelectorAll('.home-item').forEach(item => {
         onHomeItemHoverOut(item);
     });
 });
-
-function bounceNavbarItem(target) {
-    var tl = new TimelineMax({ paused: true });
-    tl.to(target, { y: -10, duration: 0.1, ease: "easeIn" })
-    .to(target, { y: 0, duration: 0.1, ease: "easeOut" });
-
-    if (!tl.isActive()) {
-        tl.play(0);
-    }
-}
 
 function onHomeItemHoverIn(target) {
     var tl = new TimelineMax({ paused: true });

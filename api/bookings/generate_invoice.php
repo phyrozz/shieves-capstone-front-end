@@ -1,6 +1,5 @@
 <?php
 require '../../vendor/autoload.php';
-require '../../fpdf/fpdf.php';
 require '../../conn.php';
 
 use Ramsey\Uuid\Uuid;
@@ -90,7 +89,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt->close();
 
         // Generate the PDF invoice
-        $pdf = new FPDF();
+        $pdf = new \FPDF();
         $pdf->AddPage();
 
         // Add a custom font (optional, make sure the font file is available)

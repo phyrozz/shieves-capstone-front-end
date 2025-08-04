@@ -73,6 +73,11 @@
         </div>
     </div>
     <script>
+        // validate name field (must only accept letters and spaces)
+        document.getElementById("name").addEventListener("input", function() {
+            this.value = this.value.replace(/[^a-zA-Z\s]/g, '');
+        });
+
         // change navbar text color to secondary when the page has loaded
         document.getElementById("navbar").classList.remove("bg-transparent");
         document.getElementById("navbar").classList.add("bg-tertiary");
@@ -107,6 +112,12 @@
 
             // Submit form data to generate invoice
             const formData = new FormData(form);
+
+            // trim whitespace from name, email, phone number
+            formData.set('name', formData.get('name').trim());
+            formData.set('email', formData.get('email').trim());
+            formData.set('phonenumber', formData.get('phonenumber').trim());
+
             formData.append('package_name', packageName);
             formData.append('package_price', packagePrice);
 

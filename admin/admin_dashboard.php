@@ -9,7 +9,7 @@ if (!isset($_SESSION["username"])) {
 ?>
 <html>
     <head>
-        <title>Museo de San Pedro Admin Dashboard</title>
+        <title>J.M. Apilado Resort Admin Dashboard</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.min.css">
 <link rel="preconnect" href="https://fonts.googleapis.com">

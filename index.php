@@ -13,13 +13,13 @@
     <script src="https://cdn.lordicon.com/lordicon.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="node_modules/swiper/swiper-bundle.min.js"></script>
-    <title>Museo de San Pedro</title>
+    <title>J.M. Apilado Resort</title>
 </head>
 <body>
     <?php include "./components/navbar.php"; ?>
     <div class="flex flex-col h-[75vh] justify-center items-center text-secondary cursor-default">
         <p class="font-satisfy md:text-2xl text-lg">Welcome to</p>
-        <h1 class="md:text-6xl text-4xl font-satisfy text-center text-pretty font-bold header-text">Museo de San Pedro</h1>
+        <h1 class="md:text-6xl text-4xl font-satisfy text-center text-pretty font-bold header-text">J.M. Apilado Resort</h1>
         <div id="header-bg" class="absolute -z-50 bg-[url(/assets/bg.jpg)] filter brightness-50 bg-cover mask h-screen w-full"></div>
     </div>
 
@@ -51,8 +51,8 @@
         <div id="our-location" class="m-10 mt-20 flex flex-col gap-10 items-center">
             <div class="text-primary md:mx-40 mx-0 md:text-left text-center">
                 <h1 class="font-satisfy text-6xl font-bold mb-10">Where to find?</h1>
-                <p class="text-sm font-bold mb-5">Museo De San Pedro is located at #122 Magsasaysay, San Pedro City, Laguna.</p>
-                <p class="text-sm">It's only a 17-minute drive from HBC San Pedro. You can also take a jeepney ride on the "estrella trip" route, heading to Magsasay (beside HBC). Advise the driver to drop you off at "Museo De San Pedro" in front of Villa Consolascion. Alternatively, use the Waze Mobile App to locate us.</p>
+                <p class="text-sm font-bold mb-5">J.M. Apilado Resort is located at #122 Magsasaysay, San Pedro City, Laguna.</p>
+                <p class="text-sm">It's only a 17-minute drive from HBC San Pedro. You can also take a jeepney ride on the "estrella trip" route, heading to Magsasay (beside HBC). Advise the driver to drop you off at "Museo de San Pedro" in front of Villa Consolascion. Alternatively, use the Waze Mobile App to locate us.</p>
                 <div class="rounded-2xl overflow-hidden my-10 shadow-2xl shadow-black">
                     <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d941.3497232969933!2d121.03387312189574!3d14.338998936361174!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397d6e6c433d123%3A0x4be58cfd35018b40!2sMuseo%20de%20San%20Pedro!5e1!3m2!1sen!2sph!4v1714867684158!5m2!1sen!2sph" width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
                 </div>

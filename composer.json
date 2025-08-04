@@ -9,6 +9,8 @@
     ],
     "require": {
         "xendit/xendit-php": "^5.0",
-        "ramsey/uuid": "^4.7"
+        "ramsey/uuid": "^4.7",
+        "setasign/fpdf": "^1.8",
+        "fpdf/fpdf": "^1.86"
     }
 }
