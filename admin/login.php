@@ -5,26 +5,44 @@ session_start();
 
 if($_SERVER["REQUEST_METHOD"]=="POST")
 {
-  $username=$_POST["username"];
-  $password=$_POST["password"];
+  $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
+  $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
 
-  $sql= "SELECT * FROM admins WHERE username= '".$username."' AND password= '".$password."' ";
-
-  $result=mysqli_query($conn, $sql);
-
-  $row=mysqli_fetch_array($result);
-
-  if($row)
-  {
-    $_SESSION ["username"]=$username;
-    
-    header("location:booked_client.php");
+  if (!$username || !$password) {
+    $_SESSION["error"] = "Invalid input. Please try again.";
+    header("Location: " . $_SERVER["PHP_SELF"]);
     exit();
   }
 
-  else
-  {
-    $_SESSION["error"] = "Incorrect username or password. Please try again.";
+  $stmt = $conn->prepare("SELECT id, username, password FROM admins WHERE username = ?");
+  $stmt->bind_param("s", $username);
+  $stmt->execute();
+  $result = $stmt->get_result();
+  $user = $result->fetch_assoc();
+
+  // Verify password hash
+  if ($user && password_verify($password, $user['password'])) {
+    // Regenerate session ID to prevent session fixation
+    session_regenerate_id(true);
+    
+    // Minimal user data in session
+    $_SESSION["user_id"] = $user['id'];
+    $_SESSION["username"] = $user['username'];
+    
+    // Session timeout
+    $_SESSION['last_activity'] = time();
+    
+    // CSRF token
+    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
+    
+    header("location: booked_client.php");
+    exit();
+  } else {
+    $_SESSION["error"] = "Invalid credentials. Please try again.";
+    
+    // // Delay to prevent brute force attacks
+    // sleep(1);
+    
     header("Location: " . $_SERVER["PHP_SELF"]);
     exit();
   }
@@ -56,13 +74,29 @@ if($_SERVER["REQUEST_METHOD"]=="POST")
           <input type="password" name="password" class="mt-1 mb-5 p-2 rounded-md transition-all" minlength="8" maxlength="255" required />
         </div>
         <div class="w-full flex flex-row justify-end items-center">
-          <input id="login-btn" type="submit" class="text-xs font-bold tracking-wider px-5 py-2 border border-[--color-text-primary] bg-transparent hover:bg-[--color-text-primary] hover:text-[--color-text-secondary] rounded-md cursor-pointer transition-all" value="LOGIN" />
+          <button id="login-btn" type="submit" class="text-xs font-bold tracking-wider px-5 py-2 border border-[--color-text-primary] bg-transparent hover:bg-[--color-text-primary] hover:text-[--color-text-secondary] rounded-md cursor-pointer transition-all flex items-center gap-2">
+            <span>LOGIN</span>
+            <!-- <svg id="login-spinner" class="animate-spin h-4 w-4 hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+              <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+              <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+            </svg> -->
+          </button>
+          <script>
+            
+          </script>
         </div>
       </form>
     </div>
   </div>
 
   <script>
+    document.querySelector('form').addEventListener('submit', function() {
+      const spinner = document.getElementById('login-spinner');
+      const loginBtn = document.getElementById('login-btn');
+      spinner.classList.remove('hidden');
+      loginBtn.disabled = true;
+    });
+
     gsap.from("#login-container", { scale: 0, duration: 0.25, ease: "easeInOut" });
 
     <?php if (isset($_SESSION['error'])): ?>

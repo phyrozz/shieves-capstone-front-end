@@ -7,17 +7,17 @@
                     <p class="navbar-item-text text-nowrap">HOME</p>
                 </li>
             </a>
-            <a href="#showcase" class="navbar-item font-bold text-sm p-3 rounded-md text-center">
+            <a href="../showcase.php" class="navbar-item font-bold text-sm p-3 rounded-md text-center">
                 <li class="flex flex-row items-center gap-2"> 
                     <p class="navbar-item-text text-nowrap">SHOWCASE</p>
                 </li>
             </a>
-            <a href="#our-location" class="navbar-item font-bold text-sm p-3 rounded-md text-center">
+            <a href="../index.php#our-location" class="navbar-item font-bold text-sm p-3 rounded-md text-center">
                 <li class="flex flex-row items-center gap-2"> 
                     <p class="navbar-item-text text-nowrap">OUR LOCATION</p>
                 </li>
             </a>
-            <a href="#packages" class="navbar-item font-bold text-sm p-3 rounded-md text-center">
+            <a href="../index.php#packages" class="navbar-item font-bold text-sm p-3 rounded-md text-center">
                 <li class="flex flex-row items-center gap-2"> 
                     <p class="navbar-item-text text-nowrap">PACKAGES</p>
                 </li>
