@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="tailwind.css">
     <link rel="stylesheet" href="css/theme.css">
     <link rel="stylesheet" href="css/swiper.css">
+    <link rel="stylesheet" href="css/flip.css">
     <link rel="stylesheet" href="node_modules/swiper/swiper-bundle.min.css">
     <script src="https://cdn.lordicon.com/lordicon.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
@@ -127,6 +128,7 @@
                 <h1 class="font-satisfy text-5xl text-primary">or book with our other <b><u>Packages!</u></b></h1>
             </div>
 
+
             <h1 class="w-full text-center font-bold uppercase tracking-widest text-primary">Swimming</h1>
             <div class="flex flex-row flex-wrap justify-center gap-3">                
                 <div class="package-container md:w-96 w-full bg-primary p-10 flex flex-col gap-5 rounded-lg text-center text-primary shadow-lg shadow-black transition-shadow">
@@ -137,6 +139,10 @@
                         <p class="font-extrabold text-xs">8 AM - 6 PM</p>
                     </div>
                 </div>
+
+                
+
+
                 <div class="package-container md:w-96 w-full bg-primary p-10 flex flex-col gap-5 rounded-lg text-center text-primary shadow-lg shadow-black transition-shadow">
                     <div class="flex flex-col gap-1">
                         <p class="font-satisfy text-3xl font-bold">Overnight Swimming</p>
