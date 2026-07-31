@@ -128,17 +128,122 @@
                 <h1 class="font-satisfy text-5xl text-primary">or book with our other <b><u>Packages!</u></b></h1>
             </div>
 
+<!code na binago ko> 
+     <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Resort Packages</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 
-            <h1 class="w-full text-center font-bold uppercase tracking-widest text-primary">Swimming</h1>
-            <div class="flex flex-row flex-wrap justify-center gap-3">                
-                <div class="package-container md:w-96 w-full bg-primary p-10 flex flex-col gap-5 rounded-lg text-center text-primary shadow-lg shadow-black transition-shadow">
-                    <div class="flex flex-col gap-1">
-                        <p class="font-satisfy text-3xl font-bold">Daytime Swimming</p>
-                        <p class="font-black text-4xl">PHP 7,000</p>
-                        <p class="font-extrabold text-xs">(25 pax)</p>
-                        <p class="font-extrabold text-xs">8 AM - 6 PM</p>
-                    </div>
-                </div>
+  <!-- Flip + Hover CSS -->
+  <style>
+    .perspective { perspective: 1000px; }
+    .preserve-3d { transform-style: preserve-3d; transition: transform 0.7s; }
+    .backface-hidden { backface-visibility: hidden; position: absolute; inset: 0; }
+    .rotate-y-180 { transform: rotateY(180deg); }
+    .hover-expand:hover { transform: scale(1.05); transition: transform 0.3s ease; }
+  </style>
+</head>
+<body style="background-color:#F5F5F5;" class="p-10">
+
+  <!-- ✅ Flex wrapper -->
+  <div class="flex flex-wrap justify-center gap-6 mt-8">
+
+    <!-- Daytime Swimming -->
+    <div class="perspective w-80 h-64 cursor-pointer hover-expand" onclick="flipCard(this)">
+      <div class="preserve-3d relative w-full h-full">
+        <div style="background-color:#C68C98; color:#194A40; box-shadow:0 12px 18px rgba(0,0,0,0.3);" 
+             class="backface-hidden p-6 rounded-lg text-center flex flex-col justify-center">
+          <p class="text-2xl font-bold">Daytime Swimming</p>
+          <p class="font-black text-3xl">PHP 7,000</p>
+          <p class="font-extrabold text-xs">(25 pax)</p>
+          <p class="font-extrabold text-xs">2:00 PM - 9:00 PM</p>
+        </div>
+        <div class="backface-hidden rotate-y-180 bg-white p-6 flex items-center justify-center rounded-lg" 
+             style="box-shadow:0 12px 18px rgba(0,0,0,0.3);">
+          <p class="text-gray-700 text-sm">Daytime Swimming: PHP 7,000 for 25 pax, 2:00 PM - 9:00 PM</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Overnight Swimming -->
+    <div class="perspective w-80 h-64 cursor-pointer hover-expand" onclick="flipCard(this)">
+      <div class="preserve-3d relative w-full h-full">
+        <div style="background-color:#C68C98; color:#194A40; box-shadow:0 12px 18px rgba(0,0,0,0.3);" 
+             class="backface-hidden p-6 rounded-lg text-center flex flex-col justify-center">
+          <p class="text-2xl font-bold">Overnight Swimming</p>
+          <p class="font-black text-3xl">PHP 8,500</p>
+          <p class="font-extrabold text-xs">(25 pax)</p>
+          <p class="font-extrabold text-xs">7:00 PM - 7:00 AM</p>
+        </div>
+        <div class="backface-hidden rotate-y-180 bg-white p-6 flex items-center justify-center rounded-lg" 
+             style="box-shadow:0 12px 18px rgba(0,0,0,0.3);">
+          <p class="text-gray-700 text-sm">Overnight Swimming: PHP 8,500 for 25 pax, 7:00 PM - 7:00 AM</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Swimming (22 hrs) -->
+    <div class="perspective w-80 h-64 cursor-pointer hover-expand" onclick="flipCard(this)">
+      <div class="preserve-3d relative w-full h-full">
+        <div style="background-color:#C68C98; color:#194A40; box-shadow:0 12px 18px rgba(0,0,0,0.3);" 
+             class="backface-hidden p-6 rounded-lg text-center flex flex-col justify-center">
+          <p class="text-2xl font-bold">Swimming (22 hrs)</p>
+          <p class="font-black text-3xl">PHP 14,500</p>
+          <p class="font-extrabold text-xs">(25 pax)</p>
+          <p class="font-extrabold text-xs">2:00 PM - 12:00 NN</p>
+        </div>
+        <div class="backface-hidden rotate-y-180 bg-white p-6 flex items-center justify-center rounded-lg" 
+             style="box-shadow:0 12px 18px rgba(0,0,0,0.3);">
+          <p class="text-gray-700 text-sm">Swimming (22 hrs): PHP 14,500 for 25 pax, 2:00 PM - 12:00 NN</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Function & Pool Area -->
+    <div class="perspective w-80 h-64 cursor-pointer hover-expand" onclick="flipCard(this)">
+      <div class="preserve-3d relative w-full h-full">
+        <div style="background-color:#C68C98; color:#194A40; box-shadow:0 12px 18px rgba(0,0,0,0.3);" 
+             class="backface-hidden p-6 rounded-lg text-center flex flex-col justify-center">
+          <p class="text-2xl font-bold">Function & Pool Area</p>
+          <p class="font-black text-3xl">PHP 20,000</p>
+          <p class="font-extrabold text-xs">(50–100 pax)</p>
+          <p class="font-extrabold text-xs">2:00 PM - 9:00 PM</p>
+        </div>
+        <div class="backface-hidden rotate-y-180 bg-white p-6 flex items-center justify-center rounded-lg" 
+             style="box-shadow:0 12px 18px rgba(0,0,0,0.3);">
+          <p class="text-gray-700 text-sm">Function & Pool Area: PHP 20,000 (50–100 pax), 2:00 PM - 9:00 PM</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Wedding Package -->
+    <div class="perspective w-80 h-64 cursor-pointer hover-expand" onclick="flipCard(this)">
+      <div class="preserve-3d relative w-full h-full">
+        <div style="background-color:#C68C98; color:#194A40; box-shadow:0 12px 18px rgba(0,0,0,0.3);" 
+             class="backface-hidden p-6 rounded-lg text-center flex flex-col justify-center">
+          <p class="text-2xl font-bold">Wedding Package</p>
+          <p class="font-black text-3xl">PHP 50,000</p>
+        </div>
+        <div class="backface-hidden rotate-y-180 bg-white p-6 flex items-center justify-center rounded-lg" 
+             style="box-shadow:0 12px 18px rgba(0,0,0,0.3);">
+          <p class="text-gray-700 text-sm">Wedding Package: PHP 50,000</p>
+        </div>
+      </div>
+    </div>
+
+  </div> <!-- ✅ End of flex wrapper -->
+
+  <!-- Script -->
+  <script>
+    function flipCard(card) {
+      card.querySelector('.preserve-3d').classList.toggle('rotate-y-180');
+    }
+  </script>
+</body>
+</html>
+<!tuloy bukas>
 
                 
 
