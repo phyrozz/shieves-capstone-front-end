@@ -134,7 +134,7 @@
                 } else {
                     Swal.fire({
                         title: 'Booking Successful!',
-                        text: 'An invoice will be generated for you. Please download and present it to the receptionist to verify your booking.',
+                        text: 'An invoice will be generated for you. Please check downloaded invoice and present it to the receptionist to verify your booking.',
                         icon: 'success',
                         confirmButtonText: 'OK'
                     });

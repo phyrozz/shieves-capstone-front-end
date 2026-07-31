@@ -1,54 +1,31 @@
 <?php
 include "../conn.php";
-
 session_start();
 
-if($_SERVER["REQUEST_METHOD"]=="POST")
-{
-  $username = filter_input(INPUT_POST, 'username', FILTER_SANITIZE_STRING);
-  $password = filter_input(INPUT_POST, 'password', FILTER_SANITIZE_STRING);
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $username = trim($_POST["username"] ?? '');
+    $password = $_POST["password"] ?? '';
 
-  if (!$username || !$password) {
-    $_SESSION["error"] = "Invalid input. Please try again.";
-    header("Location: " . $_SERVER["PHP_SELF"]);
-    exit();
-  }
+    // Use prepared statement
+    $stmt = $conn->prepare("SELECT id, username, password FROM admins WHERE username = ? LIMIT 1");
+    $stmt->bind_param("s", $username);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $admin = $result->fetch_assoc();
 
-  $stmt = $conn->prepare("SELECT id, username, password FROM admins WHERE username = ?");
-  $stmt->bind_param("s", $username);
-  $stmt->execute();
-  $result = $stmt->get_result();
-  $user = $result->fetch_assoc();
-
-  // Verify password hash
-  if ($user && password_verify($password, $user['password'])) {
-    // Regenerate session ID to prevent session fixation
-    session_regenerate_id(true);
-    
-    // Minimal user data in session
-    $_SESSION["user_id"] = $user['id'];
-    $_SESSION["username"] = $user['username'];
-    
-    // Session timeout
-    $_SESSION['last_activity'] = time();
-    
-    // CSRF token
-    $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
-    
-    header("location: booked_client.php");
-    exit();
-  } else {
-    $_SESSION["error"] = "Invalid credentials. Please try again.";
-    
-    // // Delay to prevent brute force attacks
-    // sleep(1);
-    
-    header("Location: " . $_SERVER["PHP_SELF"]);
-    exit();
-  }
+    if ($admin && password_verify($password, $admin['password'])) {
+        // Login success
+        $_SESSION["username"] = $admin['username'];
+        header("location: admin_dashboard.php");
+        exit();
+    } else {
+        // Invalid credentials
+        $_SESSION["error"] = "Incorrect username or password. Please try again.";
+        header("Location: " . $_SERVER["PHP_SELF"]);
+        exit();
+    }
 }
 ?>
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
