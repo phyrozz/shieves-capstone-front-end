@@ -128,7 +128,6 @@
                 <h1 class="font-satisfy text-5xl text-primary">or book with our other <b><u>Packages!</u></b></h1>
             </div>
 
-<!code na binago ko> 
      <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -153,16 +152,27 @@
     <!-- Daytime Swimming -->
     <div class="perspective w-80 h-64 cursor-pointer hover-expand" onclick="flipCard(this)">
       <div class="preserve-3d relative w-full h-full">
-        <div style="background-color:#C68C98; color:#194A40; box-shadow:0 12px 18px rgba(0,0,0,0.3);" 
-             class="backface-hidden p-6 rounded-lg text-center flex flex-col justify-center">
-          <p class="text-2xl font-bold">Daytime Swimming</p>
+        <div style="box-shadow:0 12px 18px rgba(0,0,0,0.3);" 
+             class="bg-primary text-primary backface-hidden p-6 rounded-lg text-center flex flex-col justify-center">
+          <p class="text-2xl font-bold font-satisfy">Daytime Swimming</p>
           <p class="font-black text-3xl">PHP 7,000</p>
           <p class="font-extrabold text-xs">(25 pax)</p>
           <p class="font-extrabold text-xs">2:00 PM - 9:00 PM</p>
         </div>
-        <div class="backface-hidden rotate-y-180 bg-white p-6 flex items-center justify-center rounded-lg" 
+        <div class="backface-hidden rotate-y-180 bg-primary text-primary p-6 flex items-center justify-center rounded-lg" 
              style="box-shadow:0 12px 18px rgba(0,0,0,0.3);">
-          <p class="text-gray-700 text-sm">Daytime Swimming: PHP 7,000 for 25 pax, 2:00 PM - 9:00 PM</p>
+            <div class="w-full">
+                <h1 class="text-2xl font-bold text-center mb-4 font-satisfy">Includes</h1>
+                <ul>
+                    <li>1 Kubo</li>
+                    <li>3 AC Room</li>
+                    <li>AC Videoke Room</li>
+                    <li>Ihawan</li>
+                    <li>Tables & Chairs</li>
+                    <li>Kiddie & Adult Pool</li>
+                    <li>Parking Space</li>
+                </ul>
+            </div>
         </div>
       </div>
     </div>
@@ -170,16 +180,27 @@
     <!-- Overnight Swimming -->
     <div class="perspective w-80 h-64 cursor-pointer hover-expand" onclick="flipCard(this)">
       <div class="preserve-3d relative w-full h-full">
-        <div style="background-color:#C68C98; color:#194A40; box-shadow:0 12px 18px rgba(0,0,0,0.3);" 
-             class="backface-hidden p-6 rounded-lg text-center flex flex-col justify-center">
-          <p class="text-2xl font-bold">Overnight Swimming</p>
+        <div style="box-shadow:0 12px 18px rgba(0,0,0,0.3);" 
+             class="bg-primary text-primary backface-hidden p-6 rounded-lg text-center flex flex-col justify-center">
+          <p class="text-2xl font-bold font-satisfy">Overnight Swimming</p>
           <p class="font-black text-3xl">PHP 8,500</p>
           <p class="font-extrabold text-xs">(25 pax)</p>
           <p class="font-extrabold text-xs">7:00 PM - 7:00 AM</p>
         </div>
-        <div class="backface-hidden rotate-y-180 bg-white p-6 flex items-center justify-center rounded-lg" 
+        <div class="backface-hidden rotate-y-180 bg-primary text-primary p-6 flex items-center justify-center rounded-lg" 
              style="box-shadow:0 12px 18px rgba(0,0,0,0.3);">
-          <p class="text-gray-700 text-sm">Overnight Swimming: PHP 8,500 for 25 pax, 7:00 PM - 7:00 AM</p>
+            <div class="w-full">
+                <h1 class="text-2xl font-bold text-center mb-4 font-satisfy">Includes</h1>
+                <ul>
+                    <li>1 Kubo</li>
+                    <li>3 AC Room</li>
+                    <li>AC Videoke Room</li>
+                    <li>Ihawan</li>
+                    <li>Tables & Chairs</li>
+                    <li>Kiddie & Adult Pool</li>
+                    <li>Parking Space</li>
+                </ul>
+            </div>
         </div>
       </div>
     </div>
@@ -187,25 +208,36 @@
     <!-- Swimming (22 hrs) -->
     <div class="perspective w-80 h-64 cursor-pointer hover-expand" onclick="flipCard(this)">
       <div class="preserve-3d relative w-full h-full">
-        <div style="background-color:#C68C98; color:#194A40; box-shadow:0 12px 18px rgba(0,0,0,0.3);" 
-             class="backface-hidden p-6 rounded-lg text-center flex flex-col justify-center">
-          <p class="text-2xl font-bold">Swimming (22 hrs)</p>
+        <div style="box-shadow:0 12px 18px rgba(0,0,0,0.3);" 
+             class="bg-primary text-primary backface-hidden p-6 rounded-lg text-center flex flex-col justify-center">
+          <p class="text-2xl font-bold font-satisfy">Swimming (22 hrs)</p>
           <p class="font-black text-3xl">PHP 14,500</p>
           <p class="font-extrabold text-xs">(25 pax)</p>
           <p class="font-extrabold text-xs">2:00 PM - 12:00 NN</p>
         </div>
-        <div class="backface-hidden rotate-y-180 bg-white p-6 flex items-center justify-center rounded-lg" 
+        <div class="backface-hidden rotate-y-180 bg-primary text-primary p-6 flex items-center justify-center rounded-lg" 
              style="box-shadow:0 12px 18px rgba(0,0,0,0.3);">
-          <p class="text-gray-700 text-sm">Swimming (22 hrs): PHP 14,500 for 25 pax, 2:00 PM - 12:00 NN</p>
+            <div class="w-full">
+                <h1 class="text-2xl font-bold text-center mb-4 font-satisfy">Includes</h1>
+                <ul>
+                    <li>1 Kubo</li>
+                    <li>3 AC Room</li>
+                    <li>AC Videoke Room</li>
+                    <li>Ihawan</li>
+                    <li>Tables & Chairs</li>
+                    <li>Kiddie & Adult Pool</li>
+                    <li>Parking Space</li>
+                </ul>
+            </div>
         </div>
       </div>
     </div>
 
     <!-- Function & Pool Area -->
-    <div class="perspective w-80 h-64 cursor-pointer hover-expand" onclick="flipCard(this)">
+    <!-- <div class="perspective w-80 h-64 cursor-pointer hover-expand">
       <div class="preserve-3d relative w-full h-full">
-        <div style="background-color:#C68C98; color:#194A40; box-shadow:0 12px 18px rgba(0,0,0,0.3);" 
-             class="backface-hidden p-6 rounded-lg text-center flex flex-col justify-center">
+        <div style="box-shadow:0 12px 18px rgba(0,0,0,0.3);" 
+             class="bg-primary text-primary backface-hidden p-6 rounded-lg text-center flex flex-col justify-center">
           <p class="text-2xl font-bold">Function & Pool Area</p>
           <p class="font-black text-3xl">PHP 20,000</p>
           <p class="font-extrabold text-xs">(50–100 pax)</p>
@@ -215,11 +247,11 @@
              style="box-shadow:0 12px 18px rgba(0,0,0,0.3);">
           <p class="text-gray-700 text-sm">Function & Pool Area: PHP 20,000 (50–100 pax), 2:00 PM - 9:00 PM</p>
         </div>
-      </div>
+      </div> -->
     </div>
 
     <!-- Wedding Package -->
-    <div class="perspective w-80 h-64 cursor-pointer hover-expand" onclick="flipCard(this)">
+    <!-- <div class="perspective w-80 h-64 cursor-pointer hover-expand">
       <div class="preserve-3d relative w-full h-full">
         <div style="background-color:#C68C98; color:#194A40; box-shadow:0 12px 18px rgba(0,0,0,0.3);" 
              class="backface-hidden p-6 rounded-lg text-center flex flex-col justify-center">
@@ -231,7 +263,7 @@
           <p class="text-gray-700 text-sm">Wedding Package: PHP 50,000</p>
         </div>
       </div>
-    </div>
+    </div> -->
 
   </div> <!-- ✅ End of flex wrapper -->
 
@@ -243,12 +275,11 @@
   </script>
 </body>
 </html>
-<!tuloy bukas>
 
                 
 
 
-                <div class="package-container md:w-96 w-full bg-primary p-10 flex flex-col gap-5 rounded-lg text-center text-primary shadow-lg shadow-black transition-shadow">
+                <!-- <div class="package-container md:w-96 w-full bg-primary p-10 flex flex-col gap-5 rounded-lg text-center text-primary shadow-lg shadow-black transition-shadow">
                     <div class="flex flex-col gap-1">
                         <p class="font-satisfy text-3xl font-bold">Overnight Swimming</p>
                         <p class="font-black text-4xl">PHP 8,500</p>
@@ -294,7 +325,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> -->
         <div class="flex flex-col gap-10 items-center bg-tertiary w-full pb-20">
             <div class="text-secondary flex flex-col gap-0 w-full mt-12">
                 <p class="text-center">Ready to stay in? <a class="hover:underline font-bold" href="./bookings.php">Book now</a> online!</p>
