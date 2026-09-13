@@ -128,26 +128,16 @@
                 <h1 class="font-satisfy text-5xl text-primary">or book with our other <b><u>Packages!</u></b></h1>
             </div>
 
-     <!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Resort Packages</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-
-  <!-- Flip + Hover CSS -->
-  <style>
+            <style>
     .perspective { perspective: 1000px; }
     .preserve-3d { transform-style: preserve-3d; transition: transform 0.7s; }
     .backface-hidden { backface-visibility: hidden; position: absolute; inset: 0; }
     .rotate-y-180 { transform: rotateY(180deg); }
     .hover-expand:hover { transform: scale(1.05); transition: transform 0.3s ease; }
-  </style>
-</head>
-<body style="background-color:#F5F5F5;" class="p-10">
+            </style>
 
   <!-- ✅ Flex wrapper -->
-  <div class="flex flex-wrap justify-center gap-6 mt-8">
+            <div class="flex flex-wrap justify-center gap-6 mt-8">
 
     <!-- Daytime Swimming -->
     <div class="perspective w-80 h-64 cursor-pointer hover-expand" onclick="flipCard(this)">
@@ -248,8 +238,6 @@
           <p class="text-gray-700 text-sm">Function & Pool Area: PHP 20,000 (50–100 pax), 2:00 PM - 9:00 PM</p>
         </div>
       </div> -->
-    </div>
-
     <!-- Wedding Package -->
     <!-- <div class="perspective w-80 h-64 cursor-pointer hover-expand">
       <div class="preserve-3d relative w-full h-full">
@@ -273,8 +261,6 @@
       card.querySelector('.preserve-3d').classList.toggle('rotate-y-180');
     }
   </script>
-</body>
-</html>
 
                 
 
@@ -326,6 +312,8 @@
                 </div>
             </div>
         </div> -->
+        </div>
+
         <div class="flex flex-col gap-10 items-center bg-tertiary w-full pb-20">
             <div class="text-secondary flex flex-col gap-0 w-full mt-12">
                 <p class="text-center">Ready to stay in? <a class="hover:underline font-bold" href="./bookings.php">Book now</a> online!</p>
