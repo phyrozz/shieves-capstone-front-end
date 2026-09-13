@@ -21,29 +21,50 @@
     <script src="/node_modules/axios/dist/axios.min.js"></script>
     <script src="/node_modules/flatpickr/dist/flatpickr.min.js"></script>
 </head>
-<body>
+<body class="min-h-screen bg-secondary text-primary select-none">
     <?php include "./components/navbar.php"; ?>
-    <div class="h-screen w-full bg-gradient-to-br bg-secondary flex justify-center items-center">
-        <div id="booking-form-container" class="container">
-            <div class="max-w-md mx-auto bg-primary rounded-lg shadow-2xl overflow-hidden">
-                <div class="py-4 px-6">
-                    <h2 class="text-3xl font-bold text-primary font-satisfy text-center p-3">Book an Event</h2>
-                    <form id="booking-form" method="POST" class="mt-4">
-                        <div class="mb-4">
-                            <label for="name" class="block text-primary font-bold text-sm pb-2 tracking-wide">NAME</label>
-                            <input type="text" id="name" name="name" class="form-input w-full p-2 rounded-md shadow-lg" required>
+    <main class="relative min-h-screen overflow-hidden px-5 pb-12 pt-28 sm:px-8 md:pt-32">
+        <div class="absolute inset-0 -z-10 bg-gradient-to-br from-[var(--color-secondary)] via-[var(--color-secondary)] to-[var(--color-primary)] opacity-70"></div>
+        <div class="absolute -left-28 top-32 -z-10 h-80 w-80 rounded-full bg-primary opacity-30 blur-3xl"></div>
+        <div class="absolute -bottom-32 -right-20 -z-10 h-96 w-96 rounded-full bg-tertiary opacity-20 blur-3xl"></div>
+
+        <div id="booking-form-container" class="mx-auto grid w-full max-w-6xl overflow-hidden rounded-3xl bg-secondary shadow-2xl lg:grid-cols-5">
+            <aside class="flex flex-col justify-between bg-tertiary p-8 text-secondary sm:p-10 lg:col-span-2">
+                <div>
+                    <p class="font-satisfy text-4xl">Your resort escape</p>
+                    <div class="mt-8 h-px w-16 bg-accent"></div>
+                    <h1 class="mt-6 text-3xl font-bold leading-tight">Make your next celebration memorable.</h1>
+                    <p class="mt-4 text-sm leading-6 text-secondary opacity-80">Reserve your event date in a few simple steps. We’ll prepare an invoice for your booking after submission.</p>
+                </div>
+                <div class="mt-10 grid gap-3 text-sm sm:grid-cols-3 lg:grid-cols-1">
+                    <p><span class="mr-2 text-accent">01</span>Choose a package</p>
+                    <p><span class="mr-2 text-accent">02</span>Select your dates</p>
+                    <p><span class="mr-2 text-accent">03</span>Receive your invoice</p>
+                </div>
+            </aside>
+
+            <section class="p-7 sm:p-10 lg:col-span-3">
+                <div class="mb-8">
+                    <p class="text-xs font-bold uppercase tracking-[0.2em] opacity-60">Online reservation</p>
+                    <h2 class="mt-2 font-satisfy text-5xl font-bold">Book an event</h2>
+                    <p class="mt-2 text-sm opacity-75">Tell us a little about your preferred stay.</p>
+                </div>
+                <form id="booking-form" method="POST" class="grid gap-5 sm:grid-cols-2">
+                        <div class="sm:col-span-2">
+                            <label for="name" class="mb-2 block text-xs font-bold tracking-wider">FULL NAME</label>
+                            <input type="text" id="name" name="name" autocomplete="name" class="form-input w-full rounded-xl border border-[var(--color-primary-shadow)] bg-white px-4 py-3 text-primary outline-none transition focus:border-[var(--color-tertiary)] focus:ring-2 focus:ring-[var(--color-accent)]" required>
                         </div>
-                        <div class="mb-4">
-                            <label for="email" class="block text-primary font-bold text-sm pb-2 tracking-wide">EMAIL</label>
-                            <input type="email" id="email" name="email" class="form-input w-full p-2 rounded-md shadow-lg">
+                        <div>
+                            <label for="email" class="mb-2 block text-xs font-bold tracking-wider">EMAIL ADDRESS</label>
+                            <input type="email" id="email" name="email" autocomplete="email" class="form-input w-full rounded-xl border border-[var(--color-primary-shadow)] bg-white px-4 py-3 text-primary outline-none transition focus:border-[var(--color-tertiary)] focus:ring-2 focus:ring-[var(--color-accent)]" required>
                         </div>
-                        <div class="mb-4">
-                            <label for="phonenumber" class="block text-primary font-bold text-sm pb-2 tracking-wide">MOBILE NUMBER</label>
-                            <input type="text" id="phonenumber" name="phonenumber" pattern="^09\d{9}$" title="Invalid mobile number" class="form-input w-full p-2 rounded-md shadow-lg" required>
+                        <div>
+                            <label for="phonenumber" class="mb-2 block text-xs font-bold tracking-wider">MOBILE NUMBER</label>
+                            <input type="tel" id="phonenumber" name="phonenumber" autocomplete="tel" pattern="^09\d{9}$" title="Use an 11-digit mobile number beginning with 09" placeholder="09XXXXXXXXX" class="form-input w-full rounded-xl border border-[var(--color-primary-shadow)] bg-white px-4 py-3 text-primary outline-none transition focus:border-[var(--color-tertiary)] focus:ring-2 focus:ring-[var(--color-accent)]" required>
                         </div>
-                        <div class="mb-4">
-                            <label for="package" class="block text-primary font-bold text-sm pb-2 tracking-wide">CHOOSE A PACKAGE</label>
-                            <select type="text" id="package" name="package" class="form-input w-full p-2 rounded-md shadow-lg" required>
+                        <div>
+                            <label for="package" class="mb-2 block text-xs font-bold tracking-wider">CHOOSE A PACKAGE</label>
+                            <select id="package" name="package" class="form-input w-full rounded-xl border border-[var(--color-primary-shadow)] bg-white px-4 py-3 text-primary outline-none transition focus:border-[var(--color-tertiary)] focus:ring-2 focus:ring-[var(--color-accent)]" required>
                                 <?php
                                 include "./conn.php";
                                 // Retrieve all package names
@@ -59,19 +80,18 @@
                                 ?>
                             </select>
                         </div>
-                        <div class="mb-4">
-                            <label for="checkinout" class="block text-primary font-bold text-sm pb-2 tracking-wide">CHECK-IN & OUT</label>
-                            <input id="checkinout" name="checkinout" type="text" class="form-input w-full p-2 rounded-md shadow-lg" required />
+                        <div class="sm:col-span-2">
+                            <label for="checkinout" class="mb-2 block text-xs font-bold tracking-wider">EVENT DATE RANGE</label>
+                            <input id="checkinout" name="checkinout" type="text" placeholder="Select your preferred dates" class="form-input w-full rounded-xl border border-[var(--color-primary-shadow)] bg-white px-4 py-3 text-primary outline-none transition focus:border-[var(--color-tertiary)] focus:ring-2 focus:ring-[var(--color-accent)]" required>
                         </div>
-                        
-                        <div class="flex w-full justify-end items-center">
-                            <button id="booknow" type="button" class="text-xs font-bold tracking-wider px-5 py-2 border border-[--color-text-primary] bg-transparent hover:bg-[--color-text-primary] hover:text-[--color-text-secondary] text-primary rounded-md cursor-pointer transition-all">BOOK NOW</button>
+                        <div class="flex flex-col gap-3 border-t border-[var(--color-primary-shadow)] pt-5 sm:col-span-2 sm:flex-row sm:items-center sm:justify-between">
+                            <p class="text-xs leading-5 opacity-70">You’ll receive a downloadable invoice to present at the resort.</p>
+                            <button id="booknow" type="button" class="rounded-xl bg-tertiary px-6 py-3 text-xs font-bold tracking-wider text-secondary transition hover:scale-[1.01] hover:bg-primary-shadow focus:outline-none focus:ring-2 focus:ring-[var(--color-accent)]">GENERATE BOOKING INVOICE</button>
                         </div>
-                    </form>
-                </div>
-            </div>
+                </form>
+            </section>
         </div>
-    </div>
+    </main>
     <script>
         // validate name field (must only accept letters and spaces)
         document.getElementById("name").addEventListener("input", function() {
