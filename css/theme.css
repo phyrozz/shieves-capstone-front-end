@@ -35,3 +35,42 @@
 .text-secondary {
     color: var(--color-text-secondary);
 }
+
+/* Navigation feedback shared by the customer site and admin portal. */
+.customer-nav-link {
+    position: relative;
+    transition: color 180ms ease, background-color 180ms ease, transform 180ms ease;
+}
+
+.customer-nav-link::after {
+    content: "";
+    position: absolute;
+    right: 0.75rem;
+    bottom: 0.35rem;
+    left: 0.75rem;
+    height: 2px;
+    border-radius: 999px;
+    background: currentColor;
+    transform: scaleX(0);
+    transform-origin: center;
+    transition: transform 180ms ease;
+}
+
+.customer-nav-link:hover,
+.customer-nav-link:focus-visible {
+    background-color: rgba(225, 250, 249, 0.16);
+    transform: translateY(-2px);
+    outline: none;
+}
+
+.customer-nav-link:hover::after,
+.customer-nav-link:focus-visible::after {
+    transform: scaleX(1);
+}
+
+.admin-nav-link:hover,
+.admin-nav-link:focus-visible {
+    transform: translateX(4px);
+    box-shadow: 0 4px 10px rgba(2, 60, 64, 0.18);
+    outline: none;
+}

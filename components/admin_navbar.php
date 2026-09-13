@@ -6,11 +6,11 @@ function adminNavLink(string $href, string $label, string $currentPage): string 
     $isActive = $currentPage === $href;
     $classes = $isActive
         ? 'bg-primary-shadow text-secondary font-semibold'
-        : 'hover:bg-primary-shadow hover:text-secondary';
+        : 'admin-nav-link hover:bg-primary-shadow hover:text-secondary';
     $ariaCurrent = $isActive ? ' aria-current="page"' : '';
 
     return sprintf(
-        '<a href="%s"%s class="block rounded"><div class="p-2 rounded cursor-pointer transition-colors %s">%s</div></a>',
+        '<a href="%s"%s class="block rounded"><div class="p-2 rounded cursor-pointer transition-all duration-200 %s">%s</div></a>',
         htmlspecialchars($href, ENT_QUOTES, 'UTF-8'),
         $ariaCurrent,
         $classes,
@@ -29,6 +29,6 @@ function adminNavLink(string $href, string $label, string $currentPage): string 
         </div>
     </div>
     <div class="mt-auto">
-        <a href="logout.php" class="block rounded"><div class="p-2 rounded cursor-pointer transition-colors hover:bg-primary-shadow hover:text-secondary">Logout</div></a>
+        <a href="logout.php" class="block rounded"><div class="admin-nav-link p-2 rounded cursor-pointer transition-all duration-200 hover:bg-primary-shadow hover:text-secondary">Logout</div></a>
     </div>
 </div>

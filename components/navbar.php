@@ -2,27 +2,27 @@
     <div class="flex justify-start items-center flex-1">
         <ul class="flex flex-row gap-5 items-center">
             <h1 id="navbar-title" class="font-satisfy font-extrabold text-xl md:block hidden text-nowrap cursor-default">J.M. Apilado Resort</h1>
-            <a href="/index.php" class="navbar-item font-bold text-sm p-3 rounded-md text-center">
+            <a href="/index.php" class="navbar-item customer-nav-link font-bold text-sm p-3 rounded-md text-center">
                 <li class="flex flex-row items-center gap-2"> 
                     <p class="navbar-item-text text-nowrap">HOME</p>
                 </li>
             </a>
-            <a href="../showcase.php" class="navbar-item font-bold text-sm p-3 rounded-md text-center">
+            <a href="../showcase.php" class="navbar-item customer-nav-link font-bold text-sm p-3 rounded-md text-center">
                 <li class="flex flex-row items-center gap-2"> 
                     <p class="navbar-item-text text-nowrap">SHOWCASE</p>
                 </li>
             </a>
-            <a href="../index.php#our-location" class="navbar-item font-bold text-sm p-3 rounded-md text-center">
+            <a href="../index.php#our-location" class="navbar-item customer-nav-link font-bold text-sm p-3 rounded-md text-center">
                 <li class="flex flex-row items-center gap-2"> 
                     <p class="navbar-item-text text-nowrap">OUR LOCATION</p>
                 </li>
             </a>
-            <a href="../index.php#packages" class="navbar-item font-bold text-sm p-3 rounded-md text-center">
+            <a href="../index.php#packages" class="navbar-item customer-nav-link font-bold text-sm p-3 rounded-md text-center">
                 <li class="flex flex-row items-center gap-2"> 
                     <p class="navbar-item-text text-nowrap">PACKAGES</p>
                 </li>
             </a>
-            <a href="/bookings.php" class="navbar-item font-bold text-sm p-3 rounded-md text-center">
+            <a href="/bookings.php" class="navbar-item customer-nav-link font-bold text-sm p-3 rounded-md text-center">
                 <li class="flex flex-row items-center gap-2"> 
                     <p class="navbar-item-text text-nowrap">BOOK NOW</p>
                 </li>
@@ -48,38 +48,3 @@
 
 
 
-<script>
-document.querySelectorAll('.navbar-item').forEach(item => {
-    item.addEventListener('mouseenter', () => {
-        bounceNavbarItem(item);
-    });
-});
-document.querySelectorAll('.home-item').forEach(item => {
-    item.addEventListener('mouseenter', () => {
-        onHomeItemHoverIn(item);
-    });
-});
-document.querySelectorAll('.home-item').forEach(item => {
-    item.addEventListener('mouseleave', () => {
-        onHomeItemHoverOut(item);
-    });
-});
-
-function onHomeItemHoverIn(target) {
-    var tl = new TimelineMax({ paused: true });
-    tl.to(target, { scale: 1.05, duration: 0.1, ease: "easeIn" });
-
-    if (!tl.isActive()) {
-        tl.play(0);
-    }
-}
-
-function onHomeItemHoverOut(target) {
-    var tl = new TimelineMax({ paused: true });
-    tl.to(target, { scale: 1, duration: 0.25, ease: "easeOut" });
-
-    if (!tl.isActive()) {
-        tl.play(0);
-    }
-}
-</script>
