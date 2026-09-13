@@ -1,12 +1,11 @@
-<nav id="navbar" class="flex items-center text-secondary bg-transparent w-full py-2 px-5 fixed top-0 z-50">
-    <div class="flex justify-start items-center flex-1">
-        <ul class="flex flex-row gap-5 items-center">
-            <h1 id="navbar-title" class="font-satisfy font-extrabold text-xl md:block hidden text-nowrap cursor-default">J.M. Apilado Resort</h1>
-            <a href="/index.php" class="navbar-item customer-nav-link font-bold text-sm p-3 rounded-md text-center">
-                <li class="flex flex-row items-center gap-2"> 
-                    <p class="navbar-item-text text-nowrap">HOME</p>
-                </li>
-            </a>
+<nav id="navbar" class="customer-navbar flex items-center text-secondary bg-transparent w-full py-2 px-5 fixed top-0 z-50">
+    <div class="flex w-full justify-between items-center">
+        <a id="navbar-title" href="/index.php" class="font-satisfy font-extrabold text-xl text-nowrap transition-opacity hover:opacity-80 focus:outline-none focus-visible:underline">J.M. Apilado Resort</a>
+        <button id="customer-menu-toggle" class="customer-menu-toggle" type="button" aria-expanded="false" aria-controls="customer-nav-links">
+            <span class="sr-only">Toggle navigation</span>
+            <span></span><span></span><span></span>
+        </button>
+        <ul id="customer-nav-links" class="customer-nav-links flex flex-row gap-5 items-center">
             <a href="../showcase.php" class="navbar-item customer-nav-link font-bold text-sm p-3 rounded-md text-center">
                 <li class="flex flex-row items-center gap-2"> 
                     <p class="navbar-item-text text-nowrap">SHOWCASE</p>
@@ -45,6 +44,25 @@
         </a>
     </div> -->
 </nav>
+
+<script>
+// Toggle the customer navigation menu
+(() => {
+    const toggle = document.getElementById('customer-menu-toggle');
+    const links = document.getElementById('customer-nav-links');
+    if (!toggle || !links) return;
+
+    toggle.addEventListener('click', () => {
+        const isOpen = links.classList.toggle('is-open');
+        toggle.setAttribute('aria-expanded', String(isOpen));
+    });
+
+    links.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+        links.classList.remove('is-open');
+        toggle.setAttribute('aria-expanded', 'false');
+    }));
+})();
+</script>
 
 
 

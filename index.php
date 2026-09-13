@@ -18,21 +18,25 @@
 </head>
 <body>
     <?php include "./components/navbar.php"; ?>
-    <div class="flex flex-col h-[75vh] justify-center items-center text-secondary cursor-default select-none">
+    <div class="relative flex flex-col h-[75vh] justify-center items-center text-secondary cursor-default select-none">
         <p class="text-lg tracking-widest uppercase pb-4">Welcome to</p>
         <h1 class="md:text-6xl text-4xl font-satisfy text-center text-pretty font-bold header-text">J.M. Apilado Resort</h1>
+        <a class="scroll-explore-cue" href="#showcase" aria-label="Scroll down to explore the resort">
+            <span>Scroll to explore</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M12 5v13m0 0 5-5m-5 5-5-5"/></svg>
+        </a>
         <div id="header-bg" class="absolute -z-50 bg-[url(/assets/bg.jpg)] filter brightness-50 bg-cover mask h-screen w-full"></div>
     </div>
 
     <div class="flex md:flex-row flex-col justify-center flex-wrap bg-gradient-to-br bg-secondary gap-5 select-none">
         <!-- Showcase component -->
-        <div id="showcase" class="grid grid-cols-2 pt-40 pb-20 md:px-48 px-10 gap-12 justify-center items-center">
+        <div id="showcase" class="grid grid-cols-1 md:grid-cols-2 pt-24 md:pt-40 pb-16 md:pb-20 md:px-48 px-5 sm:px-10 gap-8 md:gap-12 justify-center items-center">
             <div class="w-full md:col-span-1 col-span-2 text-primary md:text-end text-center leading-3">
-                <h1 class="text-6xl font-satisfy font-bold mb-8">A Resort Like No Other...</h1>
+                <h1 class="text-4xl md:text-6xl font-satisfy font-bold mb-8">A Resort Like No Other...</h1>
                 <p class="text-sm text-pretty mb-3">Welcome to the <u><b>ultimate getaway</b></u> at our serene resort, where we offer a variety of packages to suit every occasion and preference. Nestled in a picturesque location, our resort provides the perfect backdrop for your dream wedding. Exchange vows amidst stunning natural beauty, with customized wedding packages designed to create unforgettable memories. For those seeking relaxation and a touch of romance, our night swimming experience offers a tranquil escape under the stars, with beautifully lit pools and a serene ambiance. Our overnight packages provide a comfortable and luxurious stay, allowing you to unwind and recharge in our elegantly appointed rooms.</p>
                 <p class="text-sm text-pretty">In addition to our specialized packages, our resort features an array of amenities to enhance your stay. Enjoy delectable cuisine at our on-site restaurant, indulge in a rejuvenating spa treatment, or explore the nearby attractions for a taste of local culture. Whether you're planning a grand celebration or a peaceful retreat, our dedicated staff is here to ensure that your experience is nothing short of exceptional. Discover the perfect blend of luxury and tranquility at our resort, where every moment is crafted to provide you with a memorable and relaxing stay.</p>
             </div>
-            <div class="w-full h-[500px] cursor-pointer md:col-span-1 col-span-2 transition-all md:hover:scale-105 md:hover:rotate-3 shadow-2xl hover:shadow-slate-300 shadow-black">
+            <div class="w-full h-72 md:h-[500px] cursor-pointer md:col-span-1 col-span-1 transition-all md:hover:scale-105 md:hover:rotate-3 shadow-2xl hover:shadow-slate-300 shadow-black">
                 <div class="swiper-container w-full h-full relative overflow-hidden">
                     <div class="swiper-wrapper">
                         <div class="swiper-slide"><img class="w-full h-full object-cover" src="assets/showcase-1.jpg" alt="Image 1"></div>
@@ -49,9 +53,9 @@
         </div>
         
 
-        <div id="our-location" class="m-10 mt-20 flex flex-col gap-10 items-center">
+        <div id="our-location" class="m-5 md:m-10 mt-16 md:mt-20 flex flex-col gap-10 items-center">
             <div class="text-primary md:mx-40 mx-0 md:text-left text-center">
-                <h1 class="font-satisfy text-6xl font-bold mb-10">Where to find?</h1>
+                <h1 class="font-satisfy text-4xl md:text-6xl font-bold mb-10">Where to find?</h1>
                 <p class="text-sm font-bold mb-5">J.M. Apilado Resort is located at #122 Magsasaysay, San Pedro City, Laguna.</p>
                 <p class="text-sm">It's only a 17-minute drive from HBC San Pedro. You can also take a jeepney ride on the "estrella trip" route, heading to Magsasay (beside HBC). Advise the driver to drop you off at "Museo de San Pedro" in front of Villa Consolascion. Alternatively, use the Waze Mobile App to locate us.</p>
                 <div class="rounded-2xl overflow-hidden my-10 shadow-2xl shadow-black">
@@ -60,7 +64,7 @@
             </div>
             
             <div id="packages" class="w-full text-center mt-20 mb-0">
-                <h1 class="font-satisfy text-6xl font-bold text-primary">Events Packages</h1>
+                <h1 class="font-satisfy text-4xl md:text-6xl font-bold text-primary">Events Packages</h1>
             </div>
             <div class="flex flex-row gap-3 flex-wrap justify-center cursor-default">
                 <!-- Package price cards -->
@@ -125,7 +129,7 @@
             </div>
 
             <div class="w-full text-center mt-20 mb-0">
-                <h1 class="font-satisfy text-5xl text-primary">or book with our other <b><u>Packages!</u></b></h1>
+                <h1 class="font-satisfy text-3xl md:text-5xl text-primary">or book with our other <b><u>Packages!</u></b></h1>
             </div>
 
             <style>

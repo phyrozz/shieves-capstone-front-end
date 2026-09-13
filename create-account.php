@@ -73,8 +73,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
 </head>
 <body>
-    <div class="w-screen h-screen bg-gradient-to-br from-slate-950 to-violet-950 flex justify-center items-center text-slate-50">
-        <div id="signup-container" class="w-96 bg-slate-950 flex flex-col items-start rounded-lg shadow-2xl shadow-slate-950 px-8 py-10">
+    <div class="min-h-screen bg-gradient-to-br from-slate-950 to-violet-950 flex justify-center items-center text-slate-50 p-4">
+        <div id="signup-container" class="w-full max-w-md bg-slate-950 flex flex-col items-start rounded-lg shadow-2xl shadow-slate-950 px-6 sm:px-8 py-10">
             <h1 class="font-black text-3xl font-satisfy">Create New Account</h1>
             <form class="flex flex-col w-full py-5" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" method="post">
                 <?php if (!empty($errors)): ?>
