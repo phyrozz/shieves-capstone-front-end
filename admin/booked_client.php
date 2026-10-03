@@ -18,6 +18,12 @@ function adminBookingStatusTone(string $name, string $kind): string {
     return 'tone-neutral';
 }
 
+function adminBookingDateLabel(?string $value): string {
+    if (!$value || strpos($value, '0000-00-00') === 0) return 'Unavailable';
+    $timestamp = strtotime($value);
+    return $timestamp === false ? 'Unavailable' : date('M j, Y', $timestamp);
+}
+
 // Retrieve all possible statuses
 $statusStmt = $conn->prepare("SELECT id, name FROM statuses");
 $statusStmt->execute();
@@ -57,7 +63,7 @@ $totalStmt->close();
 $totalPages = ceil($totalRecords / $limit);
 
 // Get records for the current page
-$query = "SELECT bookings.id as booking_id, bookings.name AS full_name, bookings.email, bookings.phone_number, bookings.status_id, statuses.name AS status_name, bookings.payment_status_id, packages.name AS package_name, packages.price as package_price, payment_statuses.name as payment_status_name
+$query = "SELECT bookings.id as booking_id, bookings.name AS full_name, bookings.email, bookings.phone_number, bookings.time_in, bookings.time_out, bookings.status_id, statuses.name AS status_name, bookings.payment_status_id, packages.name AS package_name, packages.price as package_price, payment_statuses.name as payment_status_name
           FROM bookings 
           INNER JOIN statuses ON bookings.status_id = statuses.id
           INNER JOIN packages ON bookings.package_id = packages.id
@@ -129,6 +135,8 @@ $result = $stmt->get_result();
         .tone-cancelled { background-color:#fee2e2; color:#991b1b; border-color:#fecaca; }
         .tone-success { background-color:#dcfce7; color:#166534; border-color:#bbf7d0; }
         .tone-neutral { background-color:#f1f5f9; color:#475569; border-color:#cbd5e1; }
+        .booking-date-range { display:grid; gap:3px; min-width:125px; font-size:12px; line-height:1.3; }
+        .booking-date-range strong { color:#64748b; font-size:10px; letter-spacing:.04em; text-transform:uppercase; }
     </style>
     <script src="https://cdn.lordicon.com/lordicon.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
@@ -153,6 +161,7 @@ $result = $stmt->get_result();
                         <th scope="col">EMAIL</th>
                         <th scope="col">CONTACT NUMBER</th>
                         <th scope="col">PACKAGE</th>
+                        <th scope="col">BOOKING DATES</th>
                         <th scope="col">STATUS</th>
                         <th scope="col">PAYMENT STATUS</th>
                     </tr>
@@ -164,6 +173,12 @@ $result = $stmt->get_result();
                         <td><p><?= htmlspecialchars($row["email"]) ?></p></td>
                         <td><p><?= htmlspecialchars($row["phone_number"]) ?></p></td>
                         <td><p><?= htmlspecialchars($row["package_name"]) ?></p></td>
+                        <td data-order="<?= htmlspecialchars((string)$row["time_in"], ENT_QUOTES, 'UTF-8') ?>">
+                            <div class="booking-date-range">
+                                <span><strong>In</strong> <?= htmlspecialchars(adminBookingDateLabel($row["time_in"]), ENT_QUOTES, 'UTF-8') ?></span>
+                                <span><strong>Out</strong> <?= htmlspecialchars(adminBookingDateLabel($row["time_out"]), ENT_QUOTES, 'UTF-8') ?></span>
+                            </div>
+                        </td>
                         <td data-order="<?= htmlspecialchars($row["status_name"], ENT_QUOTES, 'UTF-8') ?>">
                             <select class="status-pill <?= adminBookingStatusTone($row["status_name"], 'booking') ?>" data-booking-id="<?= htmlspecialchars((string)$row["booking_id"], ENT_QUOTES, 'UTF-8') ?>" data-status-kind="booking" data-saved-value="<?= (int)$row["status_id"] ?>" aria-label="Booking status for <?= htmlspecialchars($row["full_name"], ENT_QUOTES, 'UTF-8') ?>" disabled>
                                 <?php foreach ($statuses as $status): ?>
