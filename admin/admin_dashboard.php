@@ -73,16 +73,20 @@ include "../conn.php";
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    const events = <?php
+    const dashboardData = <?php
         $stmt = $conn->prepare("SELECT bookings.id AS booking_id,
                                        bookings.name AS customer_name,
                                        COALESCE(packages.name, 'Unavailable package') AS package_name,
                                        bookings.time_in AS time_in,
                                        bookings.time_out AS time_out,
-                                       COALESCE(statuses.name, 'Unavailable') AS status
+                                       bookings.status_id AS status_id,
+                                       COALESCE(statuses.name, 'Unavailable') AS status,
+                                       bookings.payment_status_id AS payment_status_id,
+                                       COALESCE(payment_statuses.name, 'Unavailable') AS payment_status
                                 FROM bookings
                                 LEFT JOIN packages ON bookings.package_id = packages.id
                                 LEFT JOIN statuses ON bookings.status_id = statuses.id
+                                LEFT JOIN payment_statuses ON bookings.payment_status_id = payment_statuses.id
                                 ORDER BY bookings.time_in DESC, bookings.id DESC");
         $stmt->execute();
         $result = $stmt->get_result();
@@ -95,14 +99,42 @@ document.addEventListener('DOMContentLoaded', function() {
                 'title' => $row['customer_name'] . ' - ' . $row['package_name'],
                 'start' => $row['time_in'],
                 'end' => $row['time_out'],
+                'bookingStatusId' => (int)$row['status_id'],
                 'status' => $row['status'],
+                'paymentStatusId' => (int)$row['payment_status_id'],
+                'paymentStatus' => $row['payment_status'],
                 'conflict' => false,
             ];
         }
         $stmt->close();
+
+        $bookingStatusStmt = $conn->prepare('SELECT id, name FROM statuses ORDER BY id');
+        $bookingStatusStmt->execute();
+        $bookingStatuses = [];
+        $bookingStatusResult = $bookingStatusStmt->get_result();
+        while ($status = $bookingStatusResult->fetch_assoc()) {
+            $bookingStatuses[] = ['id' => (int)$status['id'], 'name' => $status['name']];
+        }
+        $bookingStatusStmt->close();
+
+        $paymentStatusStmt = $conn->prepare('SELECT id, name FROM payment_statuses ORDER BY id');
+        $paymentStatusStmt->execute();
+        $paymentStatuses = [];
+        $paymentStatusResult = $paymentStatusStmt->get_result();
+        while ($status = $paymentStatusResult->fetch_assoc()) {
+            $paymentStatuses[] = ['id' => (int)$status['id'], 'name' => $status['name']];
+        }
+        $paymentStatusStmt->close();
         $conn->close();
-        echo json_encode($dashboardBookings, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT) ?: '[]';
+        echo json_encode([
+            'events' => $dashboardBookings,
+            'bookingStatuses' => $bookingStatuses,
+            'paymentStatuses' => $paymentStatuses,
+        ], JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT) ?: '{"events":[],"bookingStatuses":[],"paymentStatuses":[]}';
     ?>;
+    const events = dashboardData.events;
+    const bookingStatuses = dashboardData.bookingStatuses;
+    const paymentStatuses = dashboardData.paymentStatuses;
 
     const normalizeStatus = value => String(value || '').trim().toLowerCase();
     const isBooked = value => ['booked', 'confirmed'].includes(normalizeStatus(value));
@@ -153,6 +185,86 @@ document.addEventListener('DOMContentLoaded', function() {
     // The query sorts by check-in date because the bookings table has no created_at field.
     const latestBookingId = events.length ? events[0].id : null;
 
+    function buildStatusOptions(options, selectedId) {
+        return options.map(option => `<option value="${Number(option.id)}" ${Number(option.id) === Number(selectedId) ? 'selected' : ''}>${escapeHtml(option.name)}</option>`).join('');
+    }
+
+    function openStatusEditor(booking) {
+        Swal.fire({
+            title: 'Booking Details',
+            html: `
+                <div style="text-align:left;line-height:1.6">
+                    <p><strong>Customer:</strong> ${escapeHtml(booking.customerName)}</p>
+                    <p><strong>Package:</strong> ${escapeHtml(booking.packageName)}</p>
+                    <p><strong>Check-in:</strong> ${escapeHtml(displayDate(booking.start))}</p>
+                    <p><strong>Check-out:</strong> ${escapeHtml(displayDate(booking.end))}</p>
+                    <label style="display:block;margin-top:14px;font-weight:600">Booking status
+                        <select id="dashboard-booking-status" style="display:block;width:100%;margin:6px 0 12px;padding:9px;border:1px solid #cbd5e1;border-radius:8px">
+                            ${buildStatusOptions(bookingStatuses, booking.bookingStatusId)}
+                        </select>
+                    </label>
+                    <label style="display:block;font-weight:600">Payment status
+                        <select id="dashboard-payment-status" style="display:block;width:100%;margin:6px 0;padding:9px;border:1px solid #cbd5e1;border-radius:8px">
+                            ${buildStatusOptions(paymentStatuses, booking.paymentStatusId)}
+                        </select>
+                    </label>
+                </div>
+            `,
+            showCancelButton: true,
+            confirmButtonText: 'Save statuses',
+            cancelButtonText: 'Close',
+            showLoaderOnConfirm: true,
+            didOpen: popup => {
+                const bookingSelect = popup.querySelector('#dashboard-booking-status');
+                const paymentSelect = popup.querySelector('#dashboard-payment-status');
+                const syncCancellation = () => {
+                    const isCancelled = ['cancelled', 'canceled'].includes(normalizeStatus(bookingSelect.selectedOptions[0]?.textContent));
+                    if (isCancelled) {
+                        const cancelledOption = Array.from(paymentSelect.options).find(option => ['cancelled', 'canceled'].includes(normalizeStatus(option.textContent)));
+                        if (cancelledOption) paymentSelect.value = cancelledOption.value;
+                    }
+                    paymentSelect.disabled = isCancelled;
+                };
+                bookingSelect.addEventListener('change', syncCancellation);
+                syncCancellation();
+            },
+            preConfirm: async () => {
+                const newStatusId = document.getElementById('dashboard-booking-status').value;
+                const newPaymentStatusId = document.getElementById('dashboard-payment-status').value;
+                try {
+                    const response = await fetch('../api/admin/update_status.php', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        credentials: 'same-origin',
+                        body: JSON.stringify({
+                            booking_id: booking.id,
+                            status_type: 'both',
+                            new_status_id: newStatusId,
+                            new_payment_status_id: newPaymentStatusId
+                        })
+                    });
+                    const result = await response.json().catch(() => ({}));
+                    if (!response.ok || !result.success) {
+                        throw new Error(result.message || 'The statuses could not be saved.');
+                    }
+                    return result;
+                } catch (error) {
+                    Swal.showValidationMessage(error.message || 'The statuses could not be saved. Please try again.');
+                    return false;
+                }
+            },
+            allowOutsideClick: () => !Swal.isLoading()
+        }).then(result => {
+            if (result.isConfirmed) {
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Statuses updated',
+                    text: result.value.message || 'Booking and payment statuses updated.'
+                }).then(() => window.location.reload());
+            }
+        });
+    }
+
 var calendarEl = document.getElementById('calendar');
 var calendar = new FullCalendar.Calendar(calendarEl, {
     initialView: 'dayGridMonth',
@@ -192,9 +304,6 @@ var calendar = new FullCalendar.Calendar(calendarEl, {
         const clickedEvent = events.find(e => String(e.id) === String(info.event.id));
         if (!clickedEvent) return;
 
-        let statusLabel = clickedEvent.status || 'Unavailable';
-        let statusColor = info.event.textColor || '#334155';
-
         if (clickedEvent.conflict) {
             let conflicts = events.filter(e => {
                 if (e.id === clickedEvent.id) return false;
@@ -224,24 +333,15 @@ var calendar = new FullCalendar.Calendar(calendarEl, {
                 icon: 'warning',
                 title: 'Booking conflict',
                 html: conflictHtml,
-                confirmButtonText: 'Close',
-                confirmButtonColor: '#d33'
+                showCancelButton: true,
+                confirmButtonText: 'Edit statuses',
+                cancelButtonText: 'Close',
+                confirmButtonColor: '#0f766e'
+            }).then(result => {
+                if (result.isConfirmed) openStatusEditor(clickedEvent);
             });
         } else {
-            Swal.fire({
-                title: 'Booking Details',
-                html: `
-                    <div style="text-align: left; line-height: 1.6;">
-                        <p><strong>Customer:</strong> ${escapeHtml(clickedEvent.customerName)}</p>
-                        <p><strong>Package:</strong> ${escapeHtml(clickedEvent.packageName)}</p>
-                        <p><strong>Status:</strong> <span style="color:${statusColor}; font-weight:bold;">${escapeHtml(statusLabel)}</span></p>
-                        <p><strong>Check-in:</strong> ${escapeHtml(displayDate(clickedEvent.start))}</p>
-                        <p><strong>Check-out:</strong> ${escapeHtml(displayDate(clickedEvent.end))}</p>
-                    </div>
-                `,
-                confirmButtonText: 'Close',
-                width: 500
-            });
+            openStatusEditor(clickedEvent);
         }
     }
 });

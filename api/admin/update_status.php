@@ -22,14 +22,17 @@ if (!is_array($payload)) {
 
 $bookingId = $payload['booking_id'] ?? null;
 $newStatusId = filter_var($payload['new_status_id'] ?? null, FILTER_VALIDATE_INT);
+$newPaymentStatusId = filter_var($payload['new_payment_status_id'] ?? null, FILTER_VALIDATE_INT);
 $statusType = $payload['status_type'] ?? 'booking';
-if ((!is_string($bookingId) && !is_int($bookingId)) || trim((string)$bookingId) === '' || $newStatusId === false || $newStatusId < 1) {
+if ((!is_string($bookingId) && !is_int($bookingId)) || trim((string)$bookingId) === '' || $newStatusId === false || $newStatusId < 1
+    || ($statusType === 'both' && ($newPaymentStatusId === false || $newPaymentStatusId < 1))) {
     respond(400, ['success' => false, 'message' => 'A booking and valid status are required.']);
 }
 
 $statusConfig = [
     'booking' => ['table' => 'statuses', 'column' => 'status_id'],
     'payment' => ['table' => 'payment_statuses', 'column' => 'payment_status_id'],
+    'both' => ['table' => 'statuses', 'column' => 'status_id'],
 ];
 if (!is_string($statusType) || !isset($statusConfig[$statusType])) {
     respond(400, ['success' => false, 'message' => 'Invalid status type.']);
@@ -48,9 +51,20 @@ try {
         respond(400, ['success' => false, 'message' => 'That status is not available.']);
     }
 
-    $isBookingCancellation = $statusType === 'booking'
+    if ($statusType === 'both') {
+        $paymentCheckStmt = $conn->prepare('SELECT id FROM payment_statuses WHERE id = ?');
+        $paymentCheckStmt->bind_param('i', $newPaymentStatusId);
+        $paymentCheckStmt->execute();
+        $paymentStatusExists = $paymentCheckStmt->get_result()->num_rows > 0;
+        $paymentCheckStmt->close();
+        if (!$paymentStatusExists) {
+            respond(400, ['success' => false, 'message' => 'That payment status is not available.']);
+        }
+    }
+
+    $isBookingCancellation = in_array($statusType, ['booking', 'both'], true)
         && in_array(strtolower(trim($selectedStatus['name'])), ['cancelled', 'canceled'], true);
-    $cancelledPaymentStatusId = null;
+    $effectivePaymentStatusId = $statusType === 'both' ? $newPaymentStatusId : null;
     if ($isBookingCancellation) {
         $paymentStatusStmt = $conn->prepare("SELECT id FROM payment_statuses WHERE LOWER(TRIM(name)) IN ('cancelled', 'canceled') ORDER BY id LIMIT 1");
         $paymentStatusStmt->execute();
@@ -59,7 +73,7 @@ try {
         if (!$cancelledPaymentStatus) {
             respond(409, ['success' => false, 'message' => 'A cancelled payment status is not configured. No status was changed.']);
         }
-        $cancelledPaymentStatusId = (int)$cancelledPaymentStatus['id'];
+        $effectivePaymentStatusId = (int)$cancelledPaymentStatus['id'];
     }
 
     $bookingStmt = $conn->prepare('SELECT id FROM bookings WHERE id = ? LIMIT 1');
@@ -74,9 +88,9 @@ try {
     if (!$conn->begin_transaction()) {
         throw new RuntimeException('Could not start the status update transaction.');
     }
-    if ($isBookingCancellation) {
+    if ($statusType === 'both' || $isBookingCancellation) {
         $updateStmt = $conn->prepare('UPDATE bookings SET status_id = ?, payment_status_id = ? WHERE id = ?');
-        $updateStmt->bind_param('iis', $newStatusId, $cancelledPaymentStatusId, $bookingId);
+        $updateStmt->bind_param('iis', $newStatusId, $effectivePaymentStatusId, $bookingId);
     } else {
         $statusColumn = $statusConfig[$statusType]['column'];
         $updateStmt = $conn->prepare("UPDATE bookings SET {$statusColumn} = ? WHERE id = ?");
@@ -92,8 +106,9 @@ try {
     $conn->close();
     respond(200, [
         'success' => true,
-        'message' => $isBookingCancellation ? 'Booking and payment statuses updated.' : 'Status updated successfully.',
-        'payment_status_id' => $isBookingCancellation ? $cancelledPaymentStatusId : null,
+        'message' => ($statusType === 'both' || $isBookingCancellation) ? 'Booking and payment statuses updated.' : 'Status updated successfully.',
+        'booking_status_id' => in_array($statusType, ['booking', 'both'], true) ? $newStatusId : null,
+        'payment_status_id' => ($statusType === 'both' || $isBookingCancellation) ? $effectivePaymentStatusId : null,
     ]);
 } catch (Throwable $exception) {
     if (isset($conn) && $conn instanceof mysqli) {
