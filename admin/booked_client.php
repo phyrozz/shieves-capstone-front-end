@@ -1,10 +1,21 @@
 <?php
-include "../conn.php";
-
 session_start();
 
 if (!isset($_SESSION["username"])) {
     header("location: login.php");
+    exit;
+}
+
+include "../conn.php";
+
+function adminBookingStatusTone(string $name, string $kind): string {
+    $normalized = strtolower(trim($name));
+    if ($normalized === 'pending') return 'tone-pending';
+    if (in_array($normalized, ['cancelled', 'canceled'], true)) return 'tone-cancelled';
+    if (($kind === 'booking' && $normalized === 'booked') || ($kind === 'payment' && $normalized === 'paid')) {
+        return 'tone-success';
+    }
+    return 'tone-neutral';
 }
 
 // Retrieve all possible statuses
@@ -16,6 +27,15 @@ while ($statusRow = $statusesResult->fetch_assoc()) {
     $statuses[] = $statusRow;
 }
 $statusStmt->close();
+
+$paymentStatusStmt = $conn->prepare("SELECT id, name FROM payment_statuses ORDER BY id");
+$paymentStatusStmt->execute();
+$paymentStatusesResult = $paymentStatusStmt->get_result();
+$paymentStatuses = [];
+while ($paymentStatusRow = $paymentStatusesResult->fetch_assoc()) {
+    $paymentStatuses[] = $paymentStatusRow;
+}
+$paymentStatusStmt->close();
 
 $limit = 20; // Number of records per page
 $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
@@ -37,7 +57,7 @@ $totalStmt->close();
 $totalPages = ceil($totalRecords / $limit);
 
 // Get records for the current page
-$query = "SELECT bookings.id as booking_id, bookings.name AS full_name, bookings.email, bookings.phone_number, bookings.status_id, statuses.name AS status_name, packages.name AS package_name, packages.price as package_price, payment_statuses.name as payment_status_name
+$query = "SELECT bookings.id as booking_id, bookings.name AS full_name, bookings.email, bookings.phone_number, bookings.status_id, statuses.name AS status_name, bookings.payment_status_id, packages.name AS package_name, packages.price as package_price, payment_statuses.name as payment_status_name
           FROM bookings 
           INNER JOIN statuses ON bookings.status_id = statuses.id
           INNER JOIN packages ON bookings.package_id = packages.id
@@ -66,6 +86,50 @@ $result = $stmt->get_result();
     <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../tailwind.css">
     <link rel="stylesheet" href="../css/theme.css">
+    <style>
+        .status-edit-toolbar {
+            display:flex;
+            align-items:center;
+            flex-wrap:wrap;
+            gap:12px;
+            margin:0 0 16px;
+        }
+        .status-edit-button {
+            border:0;
+            border-radius:8px;
+            padding:10px 15px;
+            background:#0f766e;
+            color:#fff;
+            font:600 14px/1.2 Inter,"Segoe UI",sans-serif;
+            cursor:pointer;
+        }
+        .status-edit-button:hover { background:#115e59; }
+        .status-edit-button:focus-visible { outline:3px solid #5eead4; outline-offset:2px; }
+        .status-edit-message { color:#475569; font-size:13px; }
+        .status-edit-message.is-error { color:#b91c1c; }
+        .status-pill {
+            appearance:none;
+            min-width:112px;
+            border:1px solid transparent;
+            border-radius:999px;
+            padding:7px 12px;
+            font:600 13px/1.2 Inter,"Segoe UI",sans-serif;
+            opacity:1;
+        }
+        .status-pill:disabled { opacity:1; cursor:default; }
+        .status-pill:not(:disabled) {
+            padding-right:27px;
+            cursor:pointer;
+            background-image:linear-gradient(45deg,transparent 50%,currentColor 50%),linear-gradient(135deg,currentColor 50%,transparent 50%);
+            background-position:calc(100% - 13px) 50%,calc(100% - 8px) 50%;
+            background-size:5px 5px,5px 5px;
+            background-repeat:no-repeat;
+        }
+        .tone-pending { background-color:#fef3c7; color:#92400e; border-color:#fde68a; }
+        .tone-cancelled { background-color:#fee2e2; color:#991b1b; border-color:#fecaca; }
+        .tone-success { background-color:#dcfce7; color:#166534; border-color:#bbf7d0; }
+        .tone-neutral { background-color:#f1f5f9; color:#475569; border-color:#cbd5e1; }
+    </style>
     <script src="https://cdn.lordicon.com/lordicon.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <script src="../node_modules/axios/dist/axios.min.js"></script>
@@ -78,6 +142,10 @@ $result = $stmt->get_result();
     <?php include "../components/admin_navbar.php"; ?>
     <div class="flex-1 p-8 bg-gradient-to-br bg-secondary h-screen" style="padding-left: 300px;">
         <div class="p-5">
+            <div class="status-edit-toolbar">
+                <button class="status-edit-button" type="button" id="status-edit-toggle" aria-pressed="false">Enable status editing</button>
+                <span class="status-edit-message" id="status-edit-message" role="status" aria-live="polite">Status editing is off. Enable editing to change booking or payment status.</span>
+            </div>
             <table id="bookings-table" class="stripe">
                 <thead>
                     <tr>
@@ -96,18 +164,20 @@ $result = $stmt->get_result();
                         <td><p><?= htmlspecialchars($row["email"]) ?></p></td>
                         <td><p><?= htmlspecialchars($row["phone_number"]) ?></p></td>
                         <td><p><?= htmlspecialchars($row["package_name"]) ?></p></td>
-                        <td>
-                            <?php if ($row["payment_status_name"] == "Paid"): ?>
-                            <p><?= htmlspecialchars($row["status_name"]) ?></p>
-                            <?php else: ?>
-                            <select onchange='updateStatus(this, "<?= $row["booking_id"] ?>")'>
+                        <td data-order="<?= htmlspecialchars($row["status_name"], ENT_QUOTES, 'UTF-8') ?>">
+                            <select class="status-pill <?= adminBookingStatusTone($row["status_name"], 'booking') ?>" data-booking-id="<?= htmlspecialchars((string)$row["booking_id"], ENT_QUOTES, 'UTF-8') ?>" data-status-kind="booking" data-saved-value="<?= (int)$row["status_id"] ?>" aria-label="Booking status for <?= htmlspecialchars($row["full_name"], ENT_QUOTES, 'UTF-8') ?>" disabled>
                                 <?php foreach ($statuses as $status): ?>
-                                    <option value='<?= htmlspecialchars($status["id"]) ?>' <?= $row["status_id"] == $status["id"] ? "selected" : "" ?>><?= htmlspecialchars($status["name"]) ?></option>
+                                    <option value="<?= (int)$status["id"] ?>" data-tone="<?= adminBookingStatusTone($status["name"], 'booking') ?>" <?= (int)$row["status_id"] === (int)$status["id"] ? "selected" : "" ?>><?= htmlspecialchars($status["name"], ENT_QUOTES, 'UTF-8') ?></option>
                                 <?php endforeach; ?>
-                            </select>                                
-                            <?php endif; ?>
+                            </select>
                         </td>
-                        <td><p><?= htmlspecialchars($row["payment_status_name"]) ?></p></td>
+                        <td data-order="<?= htmlspecialchars($row["payment_status_name"], ENT_QUOTES, 'UTF-8') ?>">
+                            <select class="status-pill <?= adminBookingStatusTone($row["payment_status_name"], 'payment') ?>" data-booking-id="<?= htmlspecialchars((string)$row["booking_id"], ENT_QUOTES, 'UTF-8') ?>" data-status-kind="payment" data-saved-value="<?= (int)$row["payment_status_id"] ?>" aria-label="Payment status for <?= htmlspecialchars($row["full_name"], ENT_QUOTES, 'UTF-8') ?>" disabled>
+                                <?php foreach ($paymentStatuses as $status): ?>
+                                    <option value="<?= (int)$status["id"] ?>" data-tone="<?= adminBookingStatusTone($status["name"], 'payment') ?>" <?= (int)$row["payment_status_id"] === (int)$status["id"] ? "selected" : "" ?>><?= htmlspecialchars($status["name"], ENT_QUOTES, 'UTF-8') ?></option>
+                                <?php endforeach; ?>
+                            </select>
+                        </td>
                     </tr>
                 <?php endwhile; ?>
                 </tbody>
@@ -117,16 +187,71 @@ $result = $stmt->get_result();
 </div>
 
 <script>
-    function updateStatus(select, bookingId) {
-        const newStatusId = select.value;
-        axios.post('../api/admin/update_status.php', { booking_id: bookingId, new_status_id: newStatusId })
-            .then(response => {
-                console.log(response.data);
-            })
-            .catch(error => {
-                console.error('There was an error!', error);
-            });
+    const statusEditToggle = document.getElementById('status-edit-toggle');
+    const statusEditMessage = document.getElementById('status-edit-message');
+    const statusSelects = Array.from(document.querySelectorAll('.status-pill'));
+    const statusTones = ['tone-pending', 'tone-cancelled', 'tone-success', 'tone-neutral'];
+    let statusEditingEnabled = false;
+
+    function applyStatusTone(select) {
+        select.classList.remove(...statusTones);
+        select.classList.add(select.selectedOptions[0]?.dataset.tone || 'tone-neutral');
     }
+
+    statusEditToggle.addEventListener('click', () => {
+        statusEditingEnabled = !statusEditingEnabled;
+        statusEditToggle.setAttribute('aria-pressed', String(statusEditingEnabled));
+        statusEditToggle.textContent = statusEditingEnabled ? 'Disable status editing' : 'Enable status editing';
+        statusSelects.forEach(select => {
+            select.disabled = !statusEditingEnabled || select.dataset.saving === 'true';
+        });
+        statusEditMessage.classList.remove('is-error');
+        statusEditMessage.textContent = statusEditingEnabled
+            ? 'Status editing is on. Changes save automatically.'
+            : 'Status editing is off.';
+    });
+
+    document.getElementById('bookings-table').addEventListener('change', async event => {
+        const select = event.target.closest('.status-pill');
+        if (!select || !statusEditingEnabled) return;
+
+        const previousValue = select.dataset.savedValue;
+        const selectedValue = select.value;
+        select.dataset.saving = 'true';
+        select.disabled = true;
+        applyStatusTone(select);
+        statusEditMessage.classList.remove('is-error');
+        statusEditMessage.textContent = 'Saving status…';
+
+        try {
+            const response = await fetch('../api/admin/update_status.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'same-origin',
+                body: JSON.stringify({
+                    booking_id: select.dataset.bookingId,
+                    status_type: select.dataset.statusKind,
+                    new_status_id: selectedValue
+                })
+            });
+            const result = await response.json().catch(() => ({}));
+            if (!response.ok || !result.success) {
+                throw new Error(result.message || 'The status could not be saved.');
+            }
+            select.dataset.savedValue = selectedValue;
+            const statusCell = select.closest('td');
+            if (statusCell) statusCell.dataset.order = select.selectedOptions[0].textContent.trim();
+            statusEditMessage.textContent = `${select.dataset.statusKind === 'payment' ? 'Payment' : 'Booking'} status saved.`;
+        } catch (error) {
+            select.value = previousValue;
+            applyStatusTone(select);
+            statusEditMessage.classList.add('is-error');
+            statusEditMessage.textContent = error.message || 'The status could not be saved. Please try again.';
+        } finally {
+            delete select.dataset.saving;
+            select.disabled = !statusEditingEnabled;
+        }
+    });
 
     new DataTable('#bookings-table', {});
 </script>

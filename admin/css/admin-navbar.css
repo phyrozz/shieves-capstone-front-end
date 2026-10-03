@@ -1,0 +1,39 @@
+/* Shared navbar appearance. All selectors stay inside the sidebar. */
+.admin-sidebar {
+    width:240px;
+    background:#073f43;
+    color:#e1faf9;
+    padding:32px 20px;
+    z-index:10;
+    font-family:Inter,"Segoe UI",sans-serif;
+    font-size:14px;
+    line-height:1.5;
+}
+.admin-sidebar,.admin-sidebar * { box-sizing:border-box; }
+.admin-sidebar h2 {
+    color:#e1faf9;
+    font-family:Satisfy,cursive;
+    font-size:23px;
+    font-weight:700;
+    line-height:1.35;
+    margin:0 0 42px;
+}
+.admin-sidebar a {
+    display:block;
+    border-radius:9px;
+    text-decoration:none;
+}
+.admin-sidebar a > div {
+    padding:13px 16px;
+    margin-bottom:7px;
+    color:#bfd4d4;
+    font-size:14px;
+}
+.admin-sidebar a[aria-current="page"] > div {
+    background:#21575a;
+    color:#fff;
+    font-weight:600;
+    box-shadow:inset 3px 0 #78ffd6;
+}
+.admin-sidebar a:hover > div { background:#21575a; color:#fff; }
+.admin-sidebar a:focus-visible { outline:3px solid #35b59b; outline-offset:3px; }

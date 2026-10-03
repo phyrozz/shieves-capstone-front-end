@@ -19,7 +19,8 @@ function adminNavLink(string $href, string $label, string $currentPage): string 
 }
 ?>
 
-<div class="w-64 bg-primary text-primary p-6 fixed min-h-screen flex flex-col justify-between">
+<link rel="stylesheet" href="css/admin-navbar.css">
+<div class="admin-sidebar w-64 bg-primary text-primary p-6 fixed min-h-screen flex flex-col justify-between">
     <div>
         <h2 class="text-2xl font-bold mb-6 font-satisfy">J.M. Apilado Resort</h2>
         <div class="space-y-2">
