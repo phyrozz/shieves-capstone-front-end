@@ -1,14 +1,18 @@
-<?php 
-include "../conn.php";
-
+<?php
 session_start();
 
 if (!isset($_SESSION["username"])) {
     header("location: login.php");
+    exit;
 }
+
+include "../conn.php";
 ?>
-<html>
+<!DOCTYPE html>
+<html lang="en">
     <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>J.M. Apilado Resort Admin Dashboard</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.min.css">
@@ -24,76 +28,102 @@ if (!isset($_SESSION["username"])) {
 <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
 <script src="../node_modules/axios/dist/axios.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<style>
+    .dashboard-bookings-table { width:100%; min-width:760px; border-collapse:separate; border-spacing:0; }
+    .dashboard-bookings-table th { padding:13px 16px; background:#f1f5f9; color:#475569; font-size:11px; font-weight:700; letter-spacing:.06em; text-align:left; white-space:nowrap; }
+    .dashboard-bookings-table td { padding:14px 16px; border-top:1px solid #e8edf2; color:#334155; font-size:13px; vertical-align:middle; }
+    .dashboard-bookings-table tbody tr:hover { background:#f8fafc; }
+    .dashboard-status-pill,.dashboard-conflict-pill { display:inline-flex; align-items:center; border:1px solid transparent; border-radius:999px; padding:5px 10px; font-size:12px; font-weight:600; white-space:nowrap; }
+    .dashboard-status-pending { background:#fef3c7; border-color:#fde68a; color:#92400e; }
+    .dashboard-status-booked { background:#dcfce7; border-color:#bbf7d0; color:#166534; }
+    .dashboard-status-cancelled { background:#fee2e2; border-color:#fecaca; color:#991b1b; }
+    .dashboard-status-other { background:#f1f5f9; border-color:#cbd5e1; color:#475569; }
+    .dashboard-conflict-yes { background:#fee2e2; border-color:#fecaca; color:#991b1b; }
+    .dashboard-conflict-no { background:#f1f5f9; border-color:#cbd5e1; color:#475569; }
+</style>
 </head>
+<body class="bg-secondary">
 <div class="flex min-h-screen bg-secondary">
         <?php include "../components/admin_navbar.php"; ?>
-        <div class="flex-1 p-8 bg-gradient-to-br bg-secondary h-screen col-span-9 pl-72">
-<body class="bg-secondary">
+        <main class="flex-1 min-w-0 p-8 bg-gradient-to-br bg-secondary pl-72">
         <div class="bg-white p-6 rounded-lg shadow mb-6">
             <h3 class="text-lg font-semibold text-gray-700 mb-4">Booking Calendar</h3>
             <div id="calendar" class="h-3/4"></div>
         </div>
         <h3 class="text-lg font-semibold text-gray-700 mb-4">Recent Bookings</h3>
         <div class="overflow-x-auto">
-            <table class="w-full bg-white shadow rounded-lg">
+            <table class="dashboard-bookings-table bg-white shadow rounded-lg">
                 <thead>
                     <tr class="bg-gray-200 text-gray-600 uppercase text-sm leading-normal">
-                        <th class="py-3 px-6 text-left">Booking ID</th>
-                        <th class="py-3 px-6 text-left">Guest Name</th>
-                        <th class="py-3 px-6 text-left">Check-in</th>
-                        <th class="py-3 px-6 text-left">Check-out</th>
-                        <th class="py-3 px-6 text-left">Status</th>
+                        <th scope="col">Booking ID</th>
+                        <th scope="col">Guest Name</th>
+                        <th scope="col">Check-in</th>
+                        <th scope="col">Check-out</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">Conflict</th>
                     </tr>
                 </thead>
-                <tbody class="text-gray-600 text-sm font-light" id="bookings-table-body">
-                    <!-- Bookings will be populated here -->
+                <tbody id="bookings-table-body">
                 </tbody>
             </table>
         </div>
-    </div>
+        <p class="mt-3 text-xs text-gray-500">Showing the 10 latest check-in dates.</p>
+        </main>
 </div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
-    var events = [<?php 
-        include "../conn.php";
-                
+    const events = <?php
         $stmt = $conn->prepare("SELECT bookings.id AS booking_id,
-                                       bookings.name AS customer_name, 
-                                       packages.name AS package_name, 
-                                       bookings.time_in AS time_in, 
+                                       bookings.name AS customer_name,
+                                       COALESCE(packages.name, 'Unavailable package') AS package_name,
+                                       bookings.time_in AS time_in,
                                        bookings.time_out AS time_out,
-                                       bookings.payment_status_id AS status
+                                       COALESCE(statuses.name, 'Unavailable') AS status
                                 FROM bookings
-                                INNER JOIN packages 
-                                ON bookings.package_id = packages.id");
+                                LEFT JOIN packages ON bookings.package_id = packages.id
+                                LEFT JOIN statuses ON bookings.status_id = statuses.id
+                                ORDER BY bookings.time_in DESC, bookings.id DESC");
         $stmt->execute();
         $result = $stmt->get_result();
-
+        $dashboardBookings = [];
         while ($row = $result->fetch_assoc()) {
-            $color = "";
-            $statusLabel = "";
-            switch ($row['status']) {
-                case 1: $color = "gray"; $statusLabel="Pending"; break;
-                case 2: $color = "orange"; $statusLabel="Confirmed"; break;
-                case 3: $color = "red"; $statusLabel="Cancelled"; break;
-                default: $color = "green"; $statusLabel="Available"; break;
-            }
-
-            echo "{";
-            echo "id: '" . $row['booking_id'] . "',";
-            echo "title: '" . $row['customer_name'] . " - " . $row['package_name'] . "',";
-            echo "start: '" . $row['time_in'] . "',";
-            echo "end: '" . $row['time_out'] . "',";
-            echo "status: '" . $statusLabel . "',";
-            echo "color: '" . $color . "',";
-            echo "conflict: false";
-            echo "},";
+            $dashboardBookings[] = [
+                'id' => (string)$row['booking_id'],
+                'customerName' => $row['customer_name'],
+                'packageName' => $row['package_name'],
+                'title' => $row['customer_name'] . ' - ' . $row['package_name'],
+                'start' => $row['time_in'],
+                'end' => $row['time_out'],
+                'status' => $row['status'],
+                'conflict' => false,
+            ];
         }
-
         $stmt->close();
         $conn->close();
-    ?>];
+        echo json_encode($dashboardBookings, JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_AMP | JSON_HEX_QUOT) ?: '[]';
+    ?>;
+
+    const normalizeStatus = value => String(value || '').trim().toLowerCase();
+    const isBooked = value => ['booked', 'confirmed'].includes(normalizeStatus(value));
+    const escapeHtml = value => String(value ?? '').replace(/[&<>"']/g, character => ({
+        '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[character]));
+    function displayDate(value) {
+        if (!value) return 'Unavailable';
+        const date = new Date(`${String(value).slice(0, 10)}T00:00:00Z`);
+        if (Number.isNaN(date.getTime())) return 'Unavailable';
+        return new Intl.DateTimeFormat('en-PH', {
+            day: 'numeric', month: 'short', year: 'numeric', timeZone: 'UTC'
+        }).format(date);
+    }
+    const statusTone = value => {
+        const status = normalizeStatus(value);
+        if (status === 'pending') return 'pending';
+        if (['booked', 'confirmed'].includes(status)) return 'booked';
+        if (['cancelled', 'canceled'].includes(status)) return 'cancelled';
+        return 'other';
+    };
 
     // ------------------ CONFLICT CHECKER ------------------
     function checkConflicts() {
@@ -102,11 +132,11 @@ document.addEventListener('DOMContentLoaded', function() {
                 let a = events[i];
                 let b = events[j];
 
-                if (a.status === "Confirmed" && b.status === "Confirmed") {
-                    let startA = new Date(a.start);
-                    let endA   = new Date(a.end);
-                    let startB = new Date(b.start);
-                    let endB   = new Date(b.end);
+                if (isBooked(a.status) && isBooked(b.status)) {
+                    let startA = new Date(`${String(a.start).slice(0, 10)}T00:00:00Z`);
+                    let endA   = new Date(`${String(a.end).slice(0, 10)}T00:00:00Z`);
+                    let startB = new Date(`${String(b.start).slice(0, 10)}T00:00:00Z`);
+                    let endB   = new Date(`${String(b.end).slice(0, 10)}T00:00:00Z`);
 
                     if (startA < endB && startB < endA) {
                         a.conflict = true;
@@ -120,13 +150,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // ------------------ CALENDAR ------------------
 
-    // Find the latest booking by created_at or fallback to last element
-let latestBookingId = null;
-if (events.length > 0) {
-    // Assuming your booking object has created_at or id sequence
-    let sorted = [...events].sort((a, b) => new Date(b.created_at || b.start) - new Date(a.created_at || a.start));
-    latestBookingId = sorted[0].id;
-}
+    // The query sorts by check-in date because the bookings table has no created_at field.
+    const latestBookingId = events.length ? events[0].id : null;
 
 var calendarEl = document.getElementById('calendar');
 var calendar = new FullCalendar.Calendar(calendarEl, {
@@ -137,13 +162,13 @@ var calendar = new FullCalendar.Calendar(calendarEl, {
         right: 'dayGridMonth,timeGridWeek,timeGridDay'
     },
     events: events.map(e => {
-        let bgColor, borderColor, textColor = "white";
-
-        switch (e.status) {
-            case 1: bgColor = "gray"; borderColor = "darkgray"; break;   // Pending
-            case 2: bgColor = "orange"; borderColor = "darkorange"; break; // Booked
-            case 3: bgColor = "red"; borderColor = "darkred"; break;     // Cancelled
-            default: bgColor = "green"; borderColor = "darkgreen"; break; // Available
+        let bgColor = "#e2e8f0", borderColor = "#94a3b8", textColor = "#334155";
+        switch (normalizeStatus(e.status)) {
+            case 'pending': bgColor = '#fef3c7'; borderColor = '#f59e0b'; textColor = '#78350f'; break;
+            case 'booked':
+            case 'confirmed': bgColor = '#dcfce7'; borderColor = '#22c55e'; textColor = '#14532d'; break;
+            case 'cancelled':
+            case 'canceled': bgColor = '#fee2e2'; borderColor = '#ef4444'; textColor = '#7f1d1d'; break;
         }
 
         // Highlight the latest booking with a glow/bold border
@@ -164,46 +189,40 @@ var calendar = new FullCalendar.Calendar(calendarEl, {
         };
     }),
     eventClick: function(info) {
-        const clickedEvent = events.find(e => e.id == info.event.id);
+        const clickedEvent = events.find(e => String(e.id) === String(info.event.id));
+        if (!clickedEvent) return;
 
-        let statusLabel = "green";
-        let statusColor = info.event.backgroundColor || "green";
-
-        switch (info.event.extendedProps.status) {
-            case 1: statusLabel = "Pending"; statusColor = "gray"; break;
-            case 2: statusLabel = "Booked"; statusColor = "orange"; break;
-            case 3: statusLabel = "Cancelled"; statusColor = "red"; break;
-            default: statusLabel = "Available"; statusColor = "green"; break;
-        }
+        let statusLabel = clickedEvent.status || 'Unavailable';
+        let statusColor = info.event.textColor || '#334155';
 
         if (clickedEvent.conflict) {
             let conflicts = events.filter(e => {
                 if (e.id === clickedEvent.id) return false;
-                if (e.status !== 2) return false;
+                if (!isBooked(e.status)) return false;
 
-                let startA = new Date(clickedEvent.start);
-                let endA   = new Date(clickedEvent.end);
-                let startB = new Date(e.start);
-                let endB   = new Date(e.end);
+                let startA = new Date(`${String(clickedEvent.start).slice(0, 10)}T00:00:00Z`);
+                let endA   = new Date(`${String(clickedEvent.end).slice(0, 10)}T00:00:00Z`);
+                let startB = new Date(`${String(e.start).slice(0, 10)}T00:00:00Z`);
+                let endB   = new Date(`${String(e.end).slice(0, 10)}T00:00:00Z`);
 
                 return (startA < endB && startB < endA);
             });
 
             let conflictHtml = `
                 <p><strong>Clicked Booking:</strong><br>
-                ${clickedEvent.title}<br>
-                ${clickedEvent.start} → ${clickedEvent.end}</p>
+                ${escapeHtml(clickedEvent.customerName)}<br>
+                ${escapeHtml(displayDate(clickedEvent.start))} – ${escapeHtml(displayDate(clickedEvent.end))}</p>
                 <hr><p><strong>Overlapping with:</strong></p>
             `;
             conflicts.forEach(c => {
                 conflictHtml += `
-                    <p>🔸 ${c.title}<br>${c.start} → ${c.end}</p>
+                    <p>${escapeHtml(c.customerName)}<br>${escapeHtml(displayDate(c.start))} – ${escapeHtml(displayDate(c.end))}</p>
                 `;
             });
 
             Swal.fire({
                 icon: 'warning',
-                title: '⚠️ Conflict Detected',
+                title: 'Booking conflict',
                 html: conflictHtml,
                 confirmButtonText: 'Close',
                 confirmButtonColor: '#d33'
@@ -213,11 +232,11 @@ var calendar = new FullCalendar.Calendar(calendarEl, {
                 title: 'Booking Details',
                 html: `
                     <div style="text-align: left; line-height: 1.6;">
-                        <p><strong>Customer:</strong> ${info.event.title.split(' - ')[0]}</p>
-                        <p><strong>Package:</strong> ${(info.event.title.split(' - ')[1] || "N/A")}</p>
-                        <p><strong>Status:</strong> <span style="color:${statusColor}; font-weight:bold;">${statusLabel}</span></p>
-                        <p><strong>Check-in:</strong> ${info.event.start.toISOString().slice(0,16).replace('T',' ')}</p>
-                        <p><strong>Check-out:</strong> ${info.event.end ? info.event.end.toISOString().slice(0,16).replace('T',' ') : 'N/A'}</p>
+                        <p><strong>Customer:</strong> ${escapeHtml(clickedEvent.customerName)}</p>
+                        <p><strong>Package:</strong> ${escapeHtml(clickedEvent.packageName)}</p>
+                        <p><strong>Status:</strong> <span style="color:${statusColor}; font-weight:bold;">${escapeHtml(statusLabel)}</span></p>
+                        <p><strong>Check-in:</strong> ${escapeHtml(displayDate(clickedEvent.start))}</p>
+                        <p><strong>Check-out:</strong> ${escapeHtml(displayDate(clickedEvent.end))}</p>
                     </div>
                 `,
                 confirmButtonText: 'Close',
@@ -233,16 +252,20 @@ calendar.render();
     // ------------------ BOOKINGS TABLE ------------------
     function populateBookingsTable() {
         const tableBody = document.getElementById('bookings-table-body');
-        events.forEach(event => {
+        if (!events.length) {
+            tableBody.innerHTML = '<tr><td colspan="6" class="py-8 text-center text-gray-500">No bookings found.</td></tr>';
+            return;
+        }
+        events.slice(0, 10).forEach(event => {
             if(event.title !== "Available") {
                 const row = tableBody.insertRow();
                 row.innerHTML = `
-                    <td class="py-3 px-6 text-left whitespace-nowrap">${event.id || ''}</td>
-                    <td class="py-3 px-6 text-left">${event.title.split(' - ')[0]}</td>
-                    <td class="py-3 px-6 text-left">${event.start}</td>
-                    <td class="py-3 px-6 text-left">${event.end}</td>
-                    <td class="py-3 px-6 text-left">${event.status}</td>
-                    <td class="py-3 px-6 text-left">${event.conflict ? "⚠️ Yes" : "No"}</td>
+                    <td class="py-3 px-6 text-left whitespace-nowrap font-mono text-xs">${escapeHtml(event.id || '')}</td>
+                    <td class="py-3 px-6 text-left">${escapeHtml(event.customerName || 'Unavailable')}</td>
+                    <td class="py-3 px-6 text-left whitespace-nowrap">${escapeHtml(displayDate(event.start))}</td>
+                    <td class="py-3 px-6 text-left whitespace-nowrap">${escapeHtml(displayDate(event.end))}</td>
+                    <td class="py-3 px-6 text-left"><span class="dashboard-status-pill dashboard-status-${statusTone(event.status)}">${escapeHtml(event.status || 'Unavailable')}</span></td>
+                    <td class="py-3 px-6 text-left"><span class="dashboard-conflict-pill dashboard-conflict-${event.conflict ? 'yes' : 'no'}">${event.conflict ? 'Yes' : 'No'}</span></td>
                 `;
             }
         });
