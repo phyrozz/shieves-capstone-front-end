@@ -145,6 +145,10 @@ $result = $stmt->get_result();
             const newStatusId = select.value;
             axios.post('../api/admin/update_status.php', { booking_id: bookingId, new_status_id: newStatusId })
                 .then(response => {
+                    if (response.data?.success && response.data.payment_status_id) {
+                        window.location.reload();
+                        return;
+                    }
                     console.log(response.data);
                 })
                 .catch(error => {

@@ -256,7 +256,19 @@ $result = $stmt->get_result();
             select.dataset.savedValue = selectedValue;
             const statusCell = select.closest('td');
             if (statusCell) statusCell.dataset.order = select.selectedOptions[0].textContent.trim();
-            statusEditMessage.textContent = `${select.dataset.statusKind === 'payment' ? 'Payment' : 'Booking'} status saved.`;
+            if (select.dataset.statusKind === 'booking' && result.payment_status_id) {
+                const paymentSelect = select.closest('tr')?.querySelector('select[data-status-kind="payment"]');
+                const paymentValue = String(result.payment_status_id);
+                const paymentOption = paymentSelect && Array.from(paymentSelect.options).find(option => option.value === paymentValue);
+                if (paymentSelect && paymentOption) {
+                    paymentSelect.value = paymentValue;
+                    paymentSelect.dataset.savedValue = paymentValue;
+                    applyStatusTone(paymentSelect);
+                    const paymentCell = paymentSelect.closest('td');
+                    if (paymentCell) paymentCell.dataset.order = paymentOption.textContent.trim();
+                }
+            }
+            statusEditMessage.textContent = result.message || `${select.dataset.statusKind === 'payment' ? 'Payment' : 'Booking'} status saved.`;
         } catch (error) {
             select.value = previousValue;
             applyStatusTone(select);
