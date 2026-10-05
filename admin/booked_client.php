@@ -92,6 +92,7 @@ $result = $stmt->get_result();
     <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../tailwind.css">
     <link rel="stylesheet" href="../css/theme.css">
+    <link rel="stylesheet" href="css/reports.css">
     <style>
         .status-edit-toolbar {
             display:flex;
@@ -145,10 +146,15 @@ $result = $stmt->get_result();
     <script src="https://code.jquery.com/jquery-3.7.0.js"></script>
     <script src="https://cdn.datatables.net/2.0.8/js/dataTables.js"></script>
 </head>
-<body>
-<div class="flex min-h-screen bg-secondary">
-    <?php include "../components/admin_navbar.php"; ?>
-    <div class="flex-1 p-8 bg-gradient-to-br bg-secondary h-screen" style="padding-left: 300px;">
+<body class="sales-report">
+<div class="report-sidebar"><?php include "../components/admin_navbar.php"; ?></div>
+<main class="report-main">
+    <header class="report-header">
+        <div>
+            <h1>Client Booking</h1>
+            <p class="muted">Review guest details and manage booking statuses.</p>
+        </div>
+    </header>
         <div class="p-5">
             <div class="status-edit-toolbar">
                 <button class="status-edit-button" type="button" id="status-edit-toggle" aria-pressed="false">Enable status editing</button>
@@ -198,8 +204,7 @@ $result = $stmt->get_result();
                 </tbody>
             </table>
         </div>
-    </div>
-</div>
+</main>
 
 <script>
     const statusEditToggle = document.getElementById('status-edit-toggle');

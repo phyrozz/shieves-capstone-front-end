@@ -20,6 +20,7 @@ include "../conn.php";
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="../tailwind.css">
 <link rel="stylesheet" href="../css/theme.css">
+<link rel="stylesheet" href="css/reports.css">
 <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.10.2/main.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -29,6 +30,7 @@ include "../conn.php";
 <script src="../node_modules/axios/dist/axios.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <style>
+    .dashboard-section-title { margin:0 0 16px; }
     .dashboard-bookings-table { width:100%; min-width:760px; border-collapse:separate; border-spacing:0; }
     .dashboard-bookings-table th { padding:13px 16px; background:#f1f5f9; color:#475569; font-size:11px; font-weight:700; letter-spacing:.06em; text-align:left; white-space:nowrap; }
     .dashboard-bookings-table td { padding:14px 16px; border-top:1px solid #e8edf2; color:#334155; font-size:13px; vertical-align:middle; }
@@ -42,15 +44,20 @@ include "../conn.php";
     .dashboard-conflict-no { background:#f1f5f9; border-color:#cbd5e1; color:#475569; }
 </style>
 </head>
-<body class="bg-secondary">
-<div class="flex min-h-screen bg-secondary">
-        <?php include "../components/admin_navbar.php"; ?>
-        <main class="flex-1 min-w-0 p-8 bg-gradient-to-br bg-secondary pl-72">
+<body class="sales-report">
+<div class="report-sidebar"><?php include "../components/admin_navbar.php"; ?></div>
+<main class="report-main">
+        <header class="report-header">
+            <div>
+                <h1>Dashboard</h1>
+                <p class="muted">Booking calendar and recent guest reservations.</p>
+            </div>
+        </header>
         <div class="bg-white p-6 rounded-lg shadow mb-6">
-            <h3 class="text-lg font-semibold text-gray-700 mb-4">Booking Calendar</h3>
+            <h3 class="dashboard-section-title text-lg font-semibold text-gray-700">Booking Calendar</h3>
             <div id="calendar" class="h-3/4"></div>
         </div>
-        <h3 class="text-lg font-semibold text-gray-700 mb-4">Recent Bookings</h3>
+        <h3 class="dashboard-section-title text-lg font-semibold text-gray-700">Recent Bookings</h3>
         <div class="overflow-x-auto">
             <table class="dashboard-bookings-table bg-white shadow rounded-lg">
                 <thead>
@@ -69,7 +76,6 @@ include "../conn.php";
         </div>
         <p class="mt-3 text-xs text-gray-500">Showing the 10 latest check-in dates.</p>
         </main>
-</div>
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {

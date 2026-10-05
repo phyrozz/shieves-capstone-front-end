@@ -46,16 +46,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         <div>
           <p class="font-satisfy text-3xl">J.M. Apilado Resort</p>
           <div class="mt-10 h-px w-16 bg-accent"></div>
-          <h1 class="mt-6 text-3xl font-bold leading-tight">Welcome back,<br>administrator.</h1>
+          <h1 class="mt-6 text-3xl font-bold leading-tight">Welcome back!
           <p class="mt-4 text-sm leading-6 text-secondary opacity-80">Sign in to manage bookings, client details, and resort reports.</p>
         </div>
-        <p class="text-xs tracking-widest text-secondary opacity-60">ADMIN PORTAL</p>
       </div>
 
       <div class="p-8 sm:p-12 md:col-span-3">
         <div class="mb-9">
           <p class="font-satisfy text-3xl md:hidden">J.M. Apilado Resort</p>
-          <p class="mt-2 text-xs font-bold uppercase tracking-[0.2em] opacity-60">Secure access</p>
           <h2 class="mt-2 text-3xl font-black">Admin login</h2>
           <p class="mt-2 text-sm leading-6 opacity-75">Enter your credentials to continue to the dashboard.</p>
         </div>

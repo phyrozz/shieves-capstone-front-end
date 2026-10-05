@@ -155,12 +155,18 @@ $average = $summary['paid_count'] ? (float)$summary['revenue'] / $summary['paid_
     <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../tailwind.css"><link rel="stylesheet" href="../css/theme.css"><link rel="stylesheet" href="css/reports.css">
 </head>
-<body class="sales-report">
+<body class="sales-report select-none">
     <div class="report-sidebar"><?php include __DIR__ . '/../components/admin_navbar.php'; ?></div>
     <main class="report-main">
         <header class="report-header">
-            <div><p class="eyebrow">Admin / Reports</p><h1>Sales report</h1><p class="muted">A clear view of your resort’s booking performance.</p></div>
-            <div class="header-actions"><span class="currency-tag">PHP · Philippine peso</span><?php if (!$error): ?><a class="button button-dark" href="<?= reportEscape(reportUrl(array_merge($filters, ['search' => $search, 'export' => 'csv']))) ?>">↓ Export CSV</a><?php endif; ?></div>
+            <div>
+                <!-- <p class="eyebrow">Admin / Reports</p> -->
+                <h1>Sales report</h1>
+                <p class="muted">A clear view of your resort’s booking performance.</p>
+            </div>
+            <div class="header-actions">
+                <!-- <span class="currency-tag">PHP · Philippine peso</span> -->
+                <?php if (!$error): ?><a class="button button-dark" href="<?= reportEscape(reportUrl(array_merge($filters, ['search' => $search, 'export' => 'csv']))) ?>">↓ Export CSV</a><?php endif; ?></div>
         </header>
         <form class="report-filters panel" method="get" action="reports.php">
             <label>Period<select name="period" id="report-period"><?php foreach (['month' => 'This month', 'last-month' => 'Last month', 'year' => 'This year', 'custom' => 'Custom dates'] as $value => $label): ?><option value="<?= $value ?>" <?php if (isset($presets[$value])): ?>data-start="<?= $presets[$value][0]->format('Y-m-d') ?>" data-end="<?= $presets[$value][1]->format('Y-m-d') ?>"<?php endif; ?> <?= $period === $value ? 'selected' : '' ?>><?= $label ?></option><?php endforeach; ?></select></label>
@@ -194,9 +200,9 @@ $average = $summary['paid_count'] ? (float)$summary['revenue'] / $summary['paid_
         <section class="panel transaction-panel"><div class="section-heading"><div><p class="eyebrow">Booking records</p><h2>Paid bookings <span class="count-badge"><?= number_format($totalRows) ?></span></h2></div><form class="transaction-search" method="get" action="reports.php"><?php foreach ($filters as $key => $value): ?><input type="hidden" name="<?= reportEscape($key) ?>" value="<?= reportEscape($value) ?>"><?php endforeach; ?><label class="sr-only" for="transaction-search">Search paid bookings by guest, email or booking ID</label><input id="transaction-search" name="search" type="search" placeholder="Guest, email or booking ID" value="<?= reportEscape($search) ?>" maxlength="100"><button class="button button-light" type="submit">Search</button><?php if ($search !== ''): ?><a class="reset-link" href="<?= reportEscape(reportUrl($filters)) ?>">Clear</a><?php endif; ?></form></div>
         <div class="table-scroll"><table class="transactions"><caption class="sr-only">Paid bookings for <?= reportEscape($rangeLabel) ?></caption><thead><tr><th scope="col">Guest / Booking ID</th><th scope="col">Package</th><th scope="col">Check-in</th><th scope="col">Check-out</th><th scope="col">Payment</th><th scope="col" class="amount-cell">Package value</th></tr></thead><tbody><?php foreach ($transactions as $row): ?><tr><td><strong><?= reportEscape($row['name']) ?></strong><span class="guest-email"><?= reportEscape($row['email']) ?></span><span class="booking-id" title="<?= reportEscape($row['id']) ?>"><?= reportEscape($row['id']) ?></span></td><td><?= reportEscape($row['package_name']) ?></td><td class="nowrap"><?= reportDisplayDate($row['time_in']) ?></td><td class="nowrap"><?= reportDisplayDate($row['time_out']) ?></td><td><span class="paid-badge">● Paid</span></td><td class="amount-cell"><strong><?= $row['amount'] === null ? 'Unavailable' : reportMoney($row['amount']) ?></strong></td></tr><?php endforeach; ?><?php if (!$transactions): ?><tr><td colspan="6"><div class="empty-state"><h3><?= $search !== '' ? 'No matching paid bookings' : 'No paid bookings in this period' ?></h3><p><?= $search !== '' ? 'Try another guest name, email or booking ID.' : 'Adjust the filters to view bookings from another period.' ?></p></div></td></tr><?php endif; ?></tbody></table></div>
         <footer class="table-footer"><span><?= $totalRows ? 'Showing ' . (($page - 1) * $pageSize + 1) . '–' . min($page * $pageSize, $totalRows) . ' of ' . number_format($totalRows) : '0 paid bookings' ?><?= $search !== '' ? ' matching your search' : '' ?></span><nav class="pagination" aria-label="Paid booking pages"><?php if ($page > 1): ?><a class="button button-light" rel="prev" href="<?= reportEscape(reportUrl(array_merge($filters, ['search' => $search, 'page' => $page - 1]))) ?>">← Previous</a><?php endif; ?><span>Page <?= $page ?> of <?= $totalPages ?></span><?php if ($page < $totalPages): ?><a class="button button-light" rel="next" href="<?= reportEscape(reportUrl(array_merge($filters, ['search' => $search, 'page' => $page + 1]))) ?>">Next →</a><?php endif; ?></nav></footer></section>
-        <aside class="report-basis"><span aria-hidden="true">ⓘ</span><p><strong>How this report is calculated.</strong> Values use current package prices for bookings marked Paid, grouped by check-in date. They may change when package prices change. Payment amounts, payment dates, methods and refunds are not recorded, so this report reflects booking value rather than cash collected. CSV exports include all paid bookings matching the current filters and search.</p></aside>
+        <!-- <aside class="report-basis"><span aria-hidden="true">ⓘ</span><p><strong>How this report is calculated.</strong> Values use current package prices for bookings marked Paid, grouped by check-in date. They may change when package prices change. Payment amounts, payment dates, methods and refunds are not recorded, so this report reflects booking value rather than cash collected. CSV exports include all paid bookings matching the current filters and search.</p></aside> -->
         <?php endif; ?>
-        <footer class="report-footer"><span>J.M. Apilado Resort</span><span>Sales reporting · Asia/Manila</span></footer>
+        <!-- <footer class="report-footer"><span>J.M. Apilado Resort</span><span>Sales reporting · Asia/Manila</span></footer> -->
     </main><script>
     (() => {
         const period = document.getElementById('report-period');
