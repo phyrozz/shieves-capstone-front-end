@@ -204,6 +204,32 @@ $average = $summary['paid_count'] ? (float)$summary['revenue'] / $summary['paid_
         <?php endif; ?>
         <!-- <footer class="report-footer"><span>J.M. Apilado Resort</span><span>Sales reporting · Asia/Manila</span></footer> -->
     </main><script>
+    // Auto-submit search form after typing stops for 400ms, and restore scroll position after page reload
+    (() => {
+        const searchForm = document.querySelector('.transaction-search');
+        const searchInput = document.getElementById('transaction-search');
+        if (!searchForm || !searchInput) return;
+
+        const scrollPositionKey = 'salesReportSearchScrollY';
+        let searchTimer;
+        searchInput.addEventListener('input', () => {
+            window.clearTimeout(searchTimer);
+            searchTimer = window.setTimeout(() => searchForm.requestSubmit(), 400);
+        });
+        searchForm.addEventListener('submit', () => {
+            window.clearTimeout(searchTimer);
+            sessionStorage.setItem(scrollPositionKey, String(window.scrollY));
+        });
+
+        const savedScrollPosition = sessionStorage.getItem(scrollPositionKey);
+        if (savedScrollPosition !== null) {
+            sessionStorage.removeItem(scrollPositionKey);
+            window.addEventListener('pageshow', () => {
+                window.requestAnimationFrame(() => window.scrollTo(0, Number(savedScrollPosition)));
+            }, { once: true });
+        }
+    })();
+
     (() => {
         const period = document.getElementById('report-period');
         const start = document.getElementById('report-start');
